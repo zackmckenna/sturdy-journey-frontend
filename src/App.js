@@ -48,7 +48,17 @@ const App = () => {
     console.log(username)
     console.log(name)
     console.log(password)
+    try {
+      const newUserObject = {
+        password: password,
+        name: name,
+        username: username
+      }
+      await accountService.createAccount(newUserObject)
+    } catch (exception) {
+      console.log(exception)
     }
+  }
 
 
   const toggleUserButton = () => {
