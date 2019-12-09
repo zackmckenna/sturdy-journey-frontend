@@ -29,5 +29,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3003"
+  "proxy": "http://localhost:3001",
+  "main": "index.js",
+  "repository": "git@github.com:zackmckenna/sturdy-journey-frontend.git",
+  "author": "Zack McKenna <zackmckenna@gmail.com>",
+  "license": "MIT"
 }
