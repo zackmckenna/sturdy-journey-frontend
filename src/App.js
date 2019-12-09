@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import rolesService from './services/roles';
 import usersService from './services/users';
+import notesService from './services/notes';
 import accountService from './services/account';
 import loginService from './services/login';
 import LoginForm from './components/LoginForm';
@@ -9,6 +10,7 @@ import NappzackNavbar from './components/NappzackNavbar';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import NewUser from './components/NewUser';
 import createAccount from './services/account';
+import { setUseProxies } from 'immer';
 
 
 const App = () => {
@@ -19,28 +21,56 @@ const App = () => {
   const [games, setGames] = useState([]);
   */
   const [user, setUser] = useState(null)
+  const [users, setUsers] = useState([])
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(null);
 
+  useEffect(() => {
+    usersService
+      .getAll().then(initialUsers => {
+        setUsers(initialUsers)
+      })
+  }, [])
+
+  useEffect(() => {
+    const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
+    if (loggedAppUserJSON) {
+      const user = JSON.parse(loggedAppUserJSON)
+      setUser(user)
+      notesService.setToken(user.token)
+    }
+  }, [])
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
       const user = await loginService.login({
-        username, password,
+        username, password
       })
+
+      window.localStorage.setItem(
+        'loggedAppUser', JSON.stringify(user)
+      )
       console.log(`Logging in with ${username} ${password}.`)
+      notesService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
+      console.log(user)
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
     }
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedAppUser')
+    setUser(null);
   }
 
   const handleCreateAccount = async (event) => {
@@ -94,7 +124,7 @@ const App = () => {
   }
 
   const loginForm = () => {
-    if (newUserButton) {
+    if (newUserButton || user) {
       return (
         null
       )
@@ -110,7 +140,10 @@ const App = () => {
   return (
 
     <>
-      <NappzackNavbar toggleUserButton={toggleUserButton}/>
+      <NappzackNavbar
+        toggleUserButton={toggleUserButton}
+        user={user}
+        handleLogout={handleLogout}/>
 
       <Notification
       notificationColor={'danger'}
@@ -118,7 +151,10 @@ const App = () => {
 
       {newUserForm()}
       {loginForm()}
-
+      <h1>Current User</h1>
+      {user ? <h2>{user.name}</h2> : null }
+      <h1>All Users</h1>
+      {users.map(user => <h4 key={user.id}>{user.name}</h4>)}
     </>
   );
 }

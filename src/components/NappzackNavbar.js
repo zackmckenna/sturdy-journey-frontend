@@ -15,7 +15,7 @@ import {
   Button
 } from 'reactstrap';
 
-const NappzackNavbar = ({ toggleUserButton }) => {
+const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -32,7 +32,7 @@ const NappzackNavbar = ({ toggleUserButton }) => {
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">nappzack</NavbarBrand>
-        <Button onClick={toggleUserButton} color='primary'>{buttonText()}</Button>
+        {user ? <Button onClick={handleLogout}>Log Out</Button> : <Button onClick={toggleUserButton} color='primary'>{buttonText()}</Button>}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
