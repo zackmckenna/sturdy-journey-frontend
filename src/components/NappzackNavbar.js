@@ -33,6 +33,7 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">nappzack</NavbarBrand>
         {user ? <Button onClick={handleLogout}>Log Out</Button> : <Button onClick={toggleUserButton} color='primary'>{buttonText()}</Button>}
+        {user ? <p>{user.name}</p> : null}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>

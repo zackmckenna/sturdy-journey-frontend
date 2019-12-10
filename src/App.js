@@ -7,11 +7,10 @@ import loginService from './services/login';
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification'
 import NappzackNavbar from './components/NappzackNavbar';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button } from 'reactstrap';
 import NewUser from './components/NewUser';
-import createAccount from './services/account';
-import { setUseProxies } from 'immer';
-
+import NoteForm from './components/NoteForm';
+import notes from './services/notes';
 
 const App = () => {
 
@@ -22,16 +21,28 @@ const App = () => {
   */
   const [user, setUser] = useState(null)
   const [users, setUsers] = useState([])
+  const [note, setNote] = useState('');
+  const [notes, setNotes] = useState([]);
+  const [userNotes, setUserNotes] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(null);
+  const [showNoteForm, setShowNoteForm] = useState(null)
 
   useEffect(() => {
     usersService
       .getAll().then(initialUsers => {
         setUsers(initialUsers)
+      })
+  }, [])
+
+  useEffect(() => {
+    notesService
+      .getAll().then(initialNotes => {
+        setNotes(initialNotes)
       })
   }, [])
 
@@ -54,6 +65,10 @@ const App = () => {
       window.localStorage.setItem(
         'loggedAppUser', JSON.stringify(user)
       )
+      console.log(user)
+
+      createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
+
       console.log(`Logging in with ${username} ${password}.`)
       notesService.setToken(user.token)
       setUser(user)
@@ -61,10 +76,7 @@ const App = () => {
       setPassword('')
       console.log(user)
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      createNotification('wrong credentials', setErrorMessage, 5000)
     }
   }
 
@@ -85,14 +97,49 @@ const App = () => {
         username: username
       }
       await accountService.createAccount(newUserObject)
+      toggleUserButton()
+      setSuccessMessage(`Welcome ${newUserObject.name}, your account has been created.`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
     } catch (exception) {
       console.log(exception)
     }
   }
 
+  const createNotification = (message, setNotification, time) => {
+    setNotification(message)
+    setTimeout(() => {
+      setNotification(null)
+    }, time)
+  }
+
+  const handleNoteSubmit = async (event) => {
+    event.preventDefault()
+    console.log(note)
+    try{
+      const newNoteObject = {
+        content: note,
+        user: user
+      }
+      await notesService.create(newNoteObject)
+      createNotification('Note has been added', setSuccessMessage, 5000)
+      toggleNoteForm()
+    } catch(exception) {
+      console.log(exception)
+    }
+  }
 
   const toggleUserButton = () => {
     setNewUserButton(!newUserButton)
+  }
+
+  const toggleNoteForm = () => {
+    setShowNoteForm(!showNoteForm)
+  }
+  // event handlers
+  const handleNoteChange = (event) => {
+    setNote(event.target.value);
   }
 
   const handlePasswordChange = (event) => {
@@ -123,6 +170,19 @@ const App = () => {
     }
   }
 
+  const noteForm = () => {
+    if (showNoteForm) {
+      return (
+        <NoteForm
+          handleNoteSubmit={handleNoteSubmit}
+          handleNoteChange={handleNoteChange}
+          toggleNoteForm={toggleNoteForm}/>
+      )
+    } else {
+      return null
+    }
+  }
+
   const loginForm = () => {
     if (newUserButton || user) {
       return (
@@ -149,12 +209,23 @@ const App = () => {
       notificationColor={'danger'}
       notificationText={errorMessage}/>
 
+      <Notification
+      notificationColor={'success'}
+      notificationText={successMessage}/>
+
       {newUserForm()}
       {loginForm()}
-      <h1>Current User</h1>
-      {user ? <h2>{user.name}</h2> : null }
+      {user ? <Button onClick={toggleNoteForm}>Add Note</Button> : null}
+      <h2>Current user notes</h2>
+      {console.log(notes.map(note => note))}
+      {noteForm()}
       <h1>All Users</h1>
       {users.map(user => <h4 key={user.id}>{user.name}</h4>)}
+      <h1>All notes:</h1>
+      {notes.map(note => <h5 id={note.id}>{note.content}</h5>)}
+
+
+
     </>
   );
 }
