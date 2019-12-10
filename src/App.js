@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import rolesService from './services/roles';
 import usersService from './services/users';
 import notesService from './services/notes';
 import accountService from './services/account';
@@ -10,7 +9,6 @@ import NappzackNavbar from './components/NappzackNavbar';
 import { Button } from 'reactstrap';
 import NewUser from './components/NewUser';
 import NoteForm from './components/NoteForm';
-import notes from './services/notes';
 
 const App = () => {
 
@@ -43,7 +41,7 @@ const App = () => {
     notesService
       .getAll().then(initialNotes => {
         setNotes(initialNotes)
-      })
+      });
   }, [])
 
   useEffect(() => {
@@ -66,9 +64,7 @@ const App = () => {
         'loggedAppUser', JSON.stringify(user)
       )
       console.log(user)
-
       createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
-
       console.log(`Logging in with ${username} ${password}.`)
       notesService.setToken(user.token)
       setUser(user)
@@ -79,6 +75,7 @@ const App = () => {
       createNotification('wrong credentials', setErrorMessage, 5000)
     }
   }
+
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedAppUser')
@@ -98,12 +95,10 @@ const App = () => {
       }
       await accountService.createAccount(newUserObject)
       toggleUserButton()
-      setSuccessMessage(`Welcome ${newUserObject.name}, your account has been created.`)
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
-    } catch (exception) {
-      console.log(exception)
+      createNotification(`Welcome ${newUserObject.name}, your account has been created.`, setSuccessMessage, 5000);
+    } catch (error) {
+      createNotification('username already taken', setErrorMessage, 5000);
+      console.log(error)
     }
   }
 
@@ -125,6 +120,9 @@ const App = () => {
       await notesService.create(newNoteObject)
       createNotification('Note has been added', setSuccessMessage, 5000)
       toggleNoteForm()
+      await notesService.getAll().then(newNotes => {
+        setNotes(newNotes)
+      })
     } catch(exception) {
       console.log(exception)
     }
@@ -154,6 +152,14 @@ const App = () => {
     setUsername(event.target.value);
   }
 
+  const handleDeleteNote = (event) => {
+    event.preventDefault()
+    if(window.confirm('are you sure you want to delete note?')) {
+      console.log(event.target.id);
+    }
+    notesService.deleteNote(event.target.id)
+  }
+
   const newUserForm = () => {
     if (newUserButton) {
       return(
@@ -177,6 +183,22 @@ const App = () => {
           handleNoteSubmit={handleNoteSubmit}
           handleNoteChange={handleNoteChange}
           toggleNoteForm={toggleNoteForm}/>
+      )
+    } else {
+      return null
+    }
+  }
+
+  const currentUserNotes = () => {
+    if (user) {
+      return (
+        <>
+        <h2>{user.name}'s Notes</h2>
+          <ul>
+            {notes.filter(note => note.user != null ? note.user.id === user.id : null)
+                  .map(note => note ? <h6 key={note.id}>{note.content}<Button key={note.id} id={note.id} onClick={handleDeleteNote} className='btn-sm'>delete</Button></h6> : null)}
+          </ul>
+        </>
       )
     } else {
       return null
@@ -216,16 +238,12 @@ const App = () => {
       {newUserForm()}
       {loginForm()}
       {user ? <Button onClick={toggleNoteForm}>Add Note</Button> : null}
-      <h2>Current user notes</h2>
-      {console.log(notes.map(note => note))}
+      {currentUserNotes()}
       {noteForm()}
       <h1>All Users</h1>
       {users.map(user => <h4 key={user.id}>{user.name}</h4>)}
       <h1>All notes:</h1>
       {notes.map(note => <h5 id={note.id}>{note.content}</h5>)}
-
-
-
     </>
   );
 }
