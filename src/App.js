@@ -8,7 +8,7 @@ import socketIoClient from 'socket.io-client'
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification'
 import NappzackNavbar from './components/NappzackNavbar';
-import { Button } from 'reactstrap';
+import { Button, ButtonGroup } from 'reactstrap';
 import NewUser from './components/NewUser';
 import NoteForm from './components/NoteForm';
 
@@ -309,13 +309,16 @@ const App = () => {
       <h1>All notes:</h1>
       {notes.map(note => <h5 id={note.id}>{note.content}</h5>)}
 
-      <h1>All concurrent users:</h1>
+      <h1>concurrent users log:</h1>
       {showCurrentUsers()}
-      <Button onClick={testSocket}>Socket.io Test</Button>
-      <Button onClick={testSocketLogin}>Socket.io Test Login</Button>
-      <Button onClick={connectSocket}>connect socket</Button>
-      <Button onClick={disconnectSocket}>disconnect socket</Button>
-      <Button onClick={addCurrentUser}>add current user</Button>
+
+      <ButtonGroup>
+        <Button color='primary' onClick={testSocket}>Socket.io Test</Button>
+        <Button onClick={testSocketLogin}>Socket.io Test Login</Button>
+        <Button color='success' onClick={connectSocket}>connect socket</Button>
+        <Button color='danger' onClick={disconnectSocket}>disconnect socket</Button>
+        <Button color='warning' onClick={addCurrentUser}>add current user</Button>
+      </ButtonGroup>
     </>
   );
 }
