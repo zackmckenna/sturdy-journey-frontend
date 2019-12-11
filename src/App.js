@@ -3,6 +3,7 @@ import usersService from './services/users';
 import notesService from './services/notes';
 import accountService from './services/account';
 import loginService from './services/login';
+import socketService from './services/socket';
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification'
 import NappzackNavbar from './components/NappzackNavbar';
@@ -205,6 +206,10 @@ const App = () => {
     }
   }
 
+  const testSocket = () => {
+    socketService.connect()
+  }
+
   const loginForm = () => {
     if (newUserButton || user) {
       return (
@@ -244,6 +249,8 @@ const App = () => {
       {users.map(user => <h4 key={user.id}>{user.name}</h4>)}
       <h1>All notes:</h1>
       {notes.map(note => <h5 id={note.id}>{note.content}</h5>)}
+
+      <Button onClick={testSocket}>Socket.io Test</Button>
     </>
   );
 }
