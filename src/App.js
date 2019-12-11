@@ -30,7 +30,8 @@ const App = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(null);
   const [showNoteForm, setShowNoteForm] = useState(null)
-  const socket = socketIoClient('http://localhost:3001/')
+  const [socket, setSocket] = useState(null);
+  const [currentUsers, setCurrentUsers] = useState([]);
 
   useEffect(() => {
     usersService
@@ -38,6 +39,24 @@ const App = () => {
         setUsers(initialUsers)
       })
   }, [])
+
+  useEffect(() => {
+    if (!socket) {
+      setSocket(socketIoClient('http://localhost:3001/'))
+    }
+    console.log('client already connected');
+  }, [socket, setSocket]);
+
+  useEffect(() => {
+    if (socket){
+        socket.on('set new users', user => {
+        console.log(currentUsers)
+        console.log(user)
+        setCurrentUsers(currentUsers.concat(user))
+        console.log(currentUsers)
+      })
+    }
+  }, [socket, setCurrentUsers, currentUsers]);
 
   useEffect(() => {
     notesService
@@ -66,6 +85,7 @@ const App = () => {
         'loggedAppUser', JSON.stringify(user)
       )
       console.log(user)
+      socket.emit('login', user.name);
       createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
       console.log(`Logging in with ${username} ${password}.`)
       notesService.setToken(user.token)
@@ -208,11 +228,45 @@ const App = () => {
   }
 
   const testSocket = () => {
-    socket.emit('button');
+    if (socket) {
+      socket.emit('button');
+    }
+  }
+
+  const connectSocket = () => {
+    setSocket(socketIoClient('http://localhost:3001/'))
+  }
+
+  const disconnectSocket = () => {
+    if (socket) {
+      socket.emit('disconnect')
+    }
   }
 
   const testSocketLogin = () => {
-    socket.emit('login', user);
+    if (user) {
+      socket.emit('login', user.name);
+    } else {
+      console.log('no user')
+    }
+  }
+
+  const addCurrentUser = () => {
+    if (user) {
+      socket.emit('add user', user.name);
+    } else {
+      console.log('no user')
+    }
+  }
+
+  const showCurrentUsers = () => {
+    if (currentUsers) {
+      return (
+        currentUsers.map(user => <p>{user}</p>)
+      )
+    } else {
+      return null
+    }
   }
 
   const loginForm = () => {
@@ -255,9 +309,13 @@ const App = () => {
       <h1>All notes:</h1>
       {notes.map(note => <h5 id={note.id}>{note.content}</h5>)}
 
+      <h1>All concurrent users:</h1>
+      {showCurrentUsers()}
       <Button onClick={testSocket}>Socket.io Test</Button>
       <Button onClick={testSocketLogin}>Socket.io Test Login</Button>
-
+      <Button onClick={connectSocket}>connect socket</Button>
+      <Button onClick={disconnectSocket}>disconnect socket</Button>
+      <Button onClick={addCurrentUser}>add current user</Button>
     </>
   );
 }
