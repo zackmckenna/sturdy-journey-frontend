@@ -4,6 +4,7 @@ import notesService from './services/notes';
 import accountService from './services/account';
 import loginService from './services/login';
 import socketService from './services/socket';
+import socketIoClient from 'socket.io-client'
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification'
 import NappzackNavbar from './components/NappzackNavbar';
@@ -12,7 +13,6 @@ import NewUser from './components/NewUser';
 import NoteForm from './components/NoteForm';
 
 const App = () => {
-
   /*
   const [roles, setRoles] = useState([]);
   const [users, setUsers] = useState([]);
@@ -30,6 +30,7 @@ const App = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(null);
   const [showNoteForm, setShowNoteForm] = useState(null)
+  const socket = socketIoClient('http://localhost:3001/')
 
   useEffect(() => {
     usersService
@@ -207,7 +208,11 @@ const App = () => {
   }
 
   const testSocket = () => {
-    socketService.connect()
+    socket.emit('button');
+  }
+
+  const testSocketLogin = () => {
+    socket.emit('login', user);
   }
 
   const loginForm = () => {
@@ -251,6 +256,8 @@ const App = () => {
       {notes.map(note => <h5 id={note.id}>{note.content}</h5>)}
 
       <Button onClick={testSocket}>Socket.io Test</Button>
+      <Button onClick={testSocketLogin}>Socket.io Test Login</Button>
+
     </>
   );
 }
