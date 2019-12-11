@@ -15,7 +15,7 @@ const LoginForm = (
         <Label for="password" className="mr-sm-2">Password</Label>
         <Input onChange={handlePasswordChange} type="password" name="password" id="password" placeholder="password"/>
       </FormGroup>
-      <Button>Submit</Button>
+      <Button color='success'>Login</Button>
     </Form>
   );
 }

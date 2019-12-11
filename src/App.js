@@ -3,14 +3,25 @@ import usersService from './services/users';
 import notesService from './services/notes';
 import accountService from './services/account';
 import loginService from './services/login';
-import socketService from './services/socket';
 import socketIoClient from 'socket.io-client'
+
+// component imports
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification'
 import NappzackNavbar from './components/NappzackNavbar';
-import { Button, ButtonGroup } from 'reactstrap';
+import TotalUsers from './components/TotalUsers';
+import UserNotes from './components/UserNotes';
+import Home from './components/Home';
+import SocketTests from './components/SocketTests';
 import NewUser from './components/NewUser';
+import TotalNotes from  './components/TotalNotes';
+import Footer from './components/PageFooter';
 import NoteForm from './components/NoteForm';
+
+import { Button, ButtonGroup } from 'reactstrap';
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import CurrentUserDisplay from './components/CurrentUsersDisplay';
 
 const App = () => {
   /*
@@ -198,35 +209,6 @@ const App = () => {
     }
   }
 
-  const noteForm = () => {
-    if (showNoteForm) {
-      return (
-        <NoteForm
-          handleNoteSubmit={handleNoteSubmit}
-          handleNoteChange={handleNoteChange}
-          toggleNoteForm={toggleNoteForm}/>
-      )
-    } else {
-      return null
-    }
-  }
-
-  const currentUserNotes = () => {
-    if (user) {
-      return (
-        <>
-        <h2>{user.name}'s Notes</h2>
-          <ul>
-            {notes.filter(note => note.user != null ? note.user.id === user.id : null)
-                  .map(note => note ? <h6 key={note.id}>{note.content}<Button key={note.id} id={note.id} onClick={handleDeleteNote} className='btn-sm'>delete</Button></h6> : null)}
-          </ul>
-        </>
-      )
-    } else {
-      return null
-    }
-  }
-
   const testSocket = () => {
     if (socket) {
       socket.emit('button');
@@ -259,15 +241,6 @@ const App = () => {
     }
   }
 
-  const showCurrentUsers = () => {
-    if (currentUsers) {
-      return (
-        currentUsers.map(user => <p>{user}</p>)
-      )
-    } else {
-      return null
-    }
-  }
 
   const loginForm = () => {
     if (newUserButton || user) {
@@ -284,41 +257,64 @@ const App = () => {
     }
   }
   return (
-
     <>
-      <NappzackNavbar
-        toggleUserButton={toggleUserButton}
-        user={user}
-        handleLogout={handleLogout}/>
+      <Router>
+        <NappzackNavbar
+          toggleUserButton={toggleUserButton}
+          user={user}
+          handleLogout={handleLogout}
+        />
+      <Notification
+        notificationColor={'danger'}
+        notificationText={errorMessage}/>
 
       <Notification
-      notificationColor={'danger'}
-      notificationText={errorMessage}/>
+        notificationColor={'success'}
+        notificationText={successMessage}/>
 
-      <Notification
-      notificationColor={'success'}
-      notificationText={successMessage}/>
-
-      {newUserForm()}
       {loginForm()}
-      {user ? <Button onClick={toggleNoteForm}>Add Note</Button> : null}
-      {currentUserNotes()}
-      {noteForm()}
-      <h1>All Users</h1>
-      {users.map(user => <h4 key={user.id}>{user.name}</h4>)}
-      <h1>All notes:</h1>
-      {notes.map(note => <h5 id={note.id}>{note.content}</h5>)}
+      {newUserForm()}
 
-      <h1>concurrent users log:</h1>
-      {showCurrentUsers()}
+        <Switch>
+          <Route path='/socketTests' component={() =>
+          <SocketTests
+            testSocket={testSocket}
+            testSocketLogin={testSocketLogin}
+            connectSocket={connectSocket}
+            disconnectSocket={disconnectSocket}
+            addCurrentUser={addCurrentUser}
+            /> } />
+          <Route path='/home' component={Home} />
+          <Route path='/total_users' render={() => <TotalUsers users={users}/>}/>
+          <Route path='/user_notes' render={() =>
+            <UserNotes
+              showNoteForm={showNoteForm}
+              user={user}
+              toggleNoteForm={toggleNoteForm}
+              notes={notes}
+              handleDeleteNote={handleDeleteNote}
+              handleNoteSubmit={handleNoteSubmit}
+              handleNoteChange={handleNoteChange}
+              note={note}
+              />}/>
+          <Route path='/total_notes' render={() => <TotalNotes notes={notes}/>}/>
+          <Route path='current_logged_users' render={() =>
+            <CurrentUserDisplay currentUsers={currentUsers}/>
+          }/>
+        </Switch>
+      </Router>
 
-      <ButtonGroup>
-        <Button color='primary' onClick={testSocket}>Socket.io Test</Button>
-        <Button onClick={testSocketLogin}>Socket.io Test Login</Button>
-        <Button color='success' onClick={connectSocket}>connect socket</Button>
-        <Button color='danger' onClick={disconnectSocket}>disconnect socket</Button>
-        <Button color='warning' onClick={addCurrentUser}>add current user</Button>
-      </ButtonGroup>
+      <CurrentUserDisplay
+        currentUsers={currentUsers}
+        testSocket={testSocket}
+        testSocketLogin={testSocketLogin}
+        addCurrentUser={addCurrentUser}
+        connectSocket={connectSocket}
+        disconnectSocket={disconnectSocket}
+      />
+
+      <Footer />
+
     </>
   );
 }
