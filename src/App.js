@@ -23,6 +23,7 @@ import { Button, ButtonGroup } from 'reactstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CurrentUserDisplay from './components/CurrentUsersDisplay';
 
+
 const App = () => {
   /*
   const [roles, setRoles] = useState([]);
@@ -55,17 +56,20 @@ const App = () => {
     if (!socket) {
       setSocket(socketIoClient('http://localhost:3001/'))
     }
-    console.log('client already connected');
+    console.log('socket client connected');
   }, [socket, setSocket]);
 
   useEffect(() => {
+    let isSubscribed = true;
+    console.log('use effect ran')
     if (socket){
         socket.on('visitors', users => {
         console.log(users)
         setCurrentUsers(users.filter(user => user !== null));
       })
-    setNumberPlayers(currentUsers.length);
+    numberPlayers !== currentUsers.length ? setNumberPlayers(currentUsers.length) : console.log('players up to date')
     console.log(numberPlayers)
+    return () => isSubscribed = false;
     }
   }, [socket, setNumberPlayers, numberPlayers, setCurrentUsers, currentUsers]);
 
@@ -95,15 +99,13 @@ const App = () => {
       window.localStorage.setItem(
         'loggedAppUser', JSON.stringify(user)
       )
-      console.log(user)
       socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
       createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
-      console.log(`Logging in with ${username} ${password}.`)
+      console.log(`Logging in with ${username}.`)
       notesService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
-      console.log(user)
     } catch (exception) {
       createNotification('wrong credentials', setErrorMessage, 5000)
     }

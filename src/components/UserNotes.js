@@ -13,7 +13,6 @@ const UserNotes = ({
   note
    }) => {
 
-  {}
   if (user) {
     if (showNoteForm) {
       return (
