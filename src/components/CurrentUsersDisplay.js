@@ -3,6 +3,7 @@ import SocketTests from './SocketTests';
 
 const CurrentUserDisplay = ({
   currentUsers,
+  numberPlayers,
   testSocket,
   testSocketLogin,
   connectSocket,
@@ -12,10 +13,9 @@ const CurrentUserDisplay = ({
   const currentFilteredUsers = currentUsers.filter(user => user != null)
 
   if (currentFilteredUsers) {
-    console.log(currentFilteredUsers)
     return (
       <>
-        <h2>Current Logged in Users</h2>
+        <h2>Current Logged in Users: {numberPlayers}</h2>
         <SocketTests
               testSocket={testSocket}
               testSocketLogin={testSocketLogin}

@@ -33,14 +33,14 @@ const App = () => {
   const [users, setUsers] = useState([])
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
-  const [userNotes, setUserNotes] = useState([]);
+  const [numberPlayers, setNumberPlayers] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [newUserButton, setNewUserButton] = useState(null);
-  const [showNoteForm, setShowNoteForm] = useState(null)
+  const [newUserButton, setNewUserButton] = useState(false);
+  const [showNoteForm, setShowNoteForm] = useState(false)
   const [socket, setSocket] = useState(null);
   const [currentUsers, setCurrentUsers] = useState([]);
 
@@ -62,11 +62,12 @@ const App = () => {
     if (socket){
         socket.on('visitors', users => {
         console.log(users)
-        setCurrentUsers(users);
-        console.log(currentUsers)
+        setCurrentUsers(users.filter(user => user !== null));
       })
+    setNumberPlayers(currentUsers.length);
+    console.log(numberPlayers)
     }
-  }, [socket, setCurrentUsers, currentUsers]);
+  }, [socket, setNumberPlayers, numberPlayers, setCurrentUsers, currentUsers]);
 
   useEffect(() => {
     notesService
@@ -109,7 +110,8 @@ const App = () => {
   }
 
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
     window.localStorage.removeItem('loggedAppUser')
     setUser(null);
   }
@@ -304,6 +306,7 @@ const App = () => {
       </Router>
 
       <CurrentUserDisplay
+        numberPlayers={numberPlayers}
         currentUsers={currentUsers}
         testSocket={testSocket}
         testSocketLogin={testSocketLogin}
