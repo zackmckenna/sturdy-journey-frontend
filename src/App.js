@@ -60,10 +60,9 @@ const App = () => {
 
   useEffect(() => {
     if (socket){
-        socket.on('set new users', user => {
-        console.log(currentUsers)
-        console.log(user)
-        setCurrentUsers(currentUsers.concat(user))
+        socket.on('visitors', users => {
+        console.log(users)
+        setCurrentUsers(users);
         console.log(currentUsers)
       })
     }
@@ -96,7 +95,7 @@ const App = () => {
         'loggedAppUser', JSON.stringify(user)
       )
       console.log(user)
-      socket.emit('login', user.name);
+      socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
       createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
       console.log(`Logging in with ${username} ${password}.`)
       notesService.setToken(user.token)

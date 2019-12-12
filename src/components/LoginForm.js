@@ -6,6 +6,7 @@ const LoginForm = (
   handlePasswordChange,
   handleLogin}) => {
   return (
+
     <Form inline onSubmit={handleLogin}>
       <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
         <Label for="exampleUsername" className="mr-sm-2">Username</Label>

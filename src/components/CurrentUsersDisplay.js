@@ -8,8 +8,11 @@ const CurrentUserDisplay = ({
   connectSocket,
   disconnectSocket,
   addCurrentUser } ) => {
-  if (currentUsers) {
-    console.log(currentUsers)
+
+  const currentFilteredUsers = currentUsers.filter(user => user != null)
+
+  if (currentFilteredUsers) {
+    console.log(currentFilteredUsers)
     return (
       <>
         <h2>Current Logged in Users</h2>
@@ -21,7 +24,7 @@ const CurrentUserDisplay = ({
               addCurrentUser={addCurrentUser}
             />
         <ul>
-          {currentUsers.map(user => <li>{user}</li>)}
+          {currentFilteredUsers.map(user => <li key={user.id}>{user.username}</li>)}
         </ul>
       </>
     )
