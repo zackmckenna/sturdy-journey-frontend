@@ -16,13 +16,13 @@ import SocketTests from './components/SocketTests';
 import NewUser from './components/NewUser';
 import TotalNotes from  './components/TotalNotes';
 import Footer from './components/PageFooter';
-import NoteForm from './components/NoteForm';
 
 import { Button, ButtonGroup } from 'reactstrap';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CurrentUserDisplay from './components/CurrentUsersDisplay';
 
+const socket = socketIoClient('http://localhost:3001/')
 
 const App = () => {
   /*
@@ -42,8 +42,8 @@ const App = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(false);
   const [showNoteForm, setShowNoteForm] = useState(false)
-  const [socket, setSocket] = useState(null);
   const [currentUsers, setCurrentUsers] = useState([]);
+  const [effectCounter, setEffectCounter] = useState(0);
 
   useEffect(() => {
     usersService
@@ -52,26 +52,31 @@ const App = () => {
       })
   }, [])
 
-  useEffect(() => {
-    if (!socket) {
-      setSocket(socketIoClient('http://localhost:3001/'))
-    }
-    console.log('socket client connected');
-  }, [socket, setSocket]);
+  // useEffect(() => {
+  //   if (!socket) {
+  //     setSocket(socketIoClient('http://localhost:3001/'))
+  //   }
+  //   console.log('socket client connected');
+  // }, [socket, setSocket]);
+
+
+  // useEffect(() => {
+  //   console.log('visitor use effect run')
+  //   socket.on('visitors', users => {
+  //     console.log(users)
+  //     setEffectCounter(effectCounter+1)
+  //     console.log(effectCounter)
+  //   })
+  // }, [])
 
   useEffect(() => {
-    let isSubscribed = true;
-    console.log('use effect ran')
-    if (socket){
-        socket.on('visitors', users => {
-        console.log(users)
-        setCurrentUsers(users.filter(user => user !== null));
-      })
-    numberPlayers !== currentUsers.length ? setNumberPlayers(currentUsers.length) : console.log('players up to date')
-    console.log(numberPlayers)
-    return () => isSubscribed = false;
-    }
-  }, [socket, setNumberPlayers, numberPlayers, setCurrentUsers, currentUsers]);
+    console.log('use effect ran, component mounted')
+    socket.on('visitors', users => {
+      const filteredUsers = users.filter(user => user !== null)
+      setCurrentUsers(filteredUsers);
+      numberPlayers !== filteredUsers.length ? setNumberPlayers(filteredUsers.length) : console.log('players up to date')
+    })
+  }, []);
 
   useEffect(() => {
     notesService
@@ -81,6 +86,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
+    console.log('set user run')
     const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
     if (loggedAppUserJSON) {
       const user = JSON.parse(loggedAppUserJSON)
@@ -218,10 +224,6 @@ const App = () => {
     }
   }
 
-  const connectSocket = () => {
-    setSocket(socketIoClient('http://localhost:3001/'))
-  }
-
   const disconnectSocket = () => {
     if (socket) {
       socket.emit('disconnect')
@@ -283,7 +285,6 @@ const App = () => {
           <SocketTests
             testSocket={testSocket}
             testSocketLogin={testSocketLogin}
-            connectSocket={connectSocket}
             disconnectSocket={disconnectSocket}
             addCurrentUser={addCurrentUser}
             /> } />
@@ -313,7 +314,6 @@ const App = () => {
         testSocket={testSocket}
         testSocketLogin={testSocketLogin}
         addCurrentUser={addCurrentUser}
-        connectSocket={connectSocket}
         disconnectSocket={disconnectSocket}
       />
 

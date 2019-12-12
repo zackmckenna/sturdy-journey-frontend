@@ -12,7 +12,6 @@ const SocketTests = ({
     <ButtonGroup>
       <Button color='primary' onClick={testSocket}>Socket.io Test</Button>
       <Button onClick={testSocketLogin}>Socket.io Test Login</Button>
-      <Button color='success' onClick={connectSocket}>connect socket</Button>
       <Button color='danger' onClick={disconnectSocket}>disconnect socket</Button>
       <Button color='warning' onClick={addCurrentUser}>add current user</Button>
     </ButtonGroup>
