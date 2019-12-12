@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
+// api services
 import usersService from './services/users';
 import notesService from './services/notes';
 import accountService from './services/account';
 import loginService from './services/login';
+import rolesService from './services/roles';
+import gamesService from './services/games';
 import socketIoClient from 'socket.io-client'
 
 // component imports
@@ -16,12 +20,14 @@ import SocketTests from './components/SocketTests';
 import NewUser from './components/NewUser';
 import TotalNotes from  './components/TotalNotes';
 import Footer from './components/PageFooter';
+import CurrentUserDisplay from './components/CurrentUsersDisplay';
 
+// reactstrap imports
 import { Button, ButtonGroup } from 'reactstrap';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CurrentUserDisplay from './components/CurrentUsersDisplay';
 
+// initialize socket.io socket
 const socket = socketIoClient('http://localhost:3001/')
 
 const App = () => {
@@ -43,12 +49,24 @@ const App = () => {
   const [newUserButton, setNewUserButton] = useState(false);
   const [showNoteForm, setShowNoteForm] = useState(false)
   const [currentUsers, setCurrentUsers] = useState([]);
-  const [effectCounter, setEffectCounter] = useState(0);
+  const [roles, setRoles] = useState([])
+  const [games, setGames] = useState([])
+
+
+
 
   useEffect(() => {
     usersService
       .getAll().then(initialUsers => {
         setUsers(initialUsers)
+      })
+  }, [])
+
+  useEffect(() => {
+    gamesService
+      .getAll().then(initialGames => {
+        setGames(initialGames)
+        console.log(initialGames)
       })
   }, [])
 
@@ -82,6 +100,15 @@ const App = () => {
     notesService
       .getAll().then(initialNotes => {
         setNotes(initialNotes)
+      });
+  }, [])
+
+  useEffect(() => {
+    rolesService
+      .getAll().then(initialRoles => {
+        setRoles(initialRoles)
+        console.log(initialRoles);
+        console.log(roles)
       });
   }, [])
 
