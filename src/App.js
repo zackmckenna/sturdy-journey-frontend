@@ -11,24 +11,20 @@ import gamesService from './services/bitGame';
 import socketIoClient from 'socket.io-client'
 
 // component imports
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import NappzackNavbar from './components/SkelNavbar';
-import TotalUsers from './components/TotalUsers';
-import UserNotes from './components/UserNotes';
-import Home from './components/Home';
-import SocketTests from './components/SocketTests';
-import NewUser from './components/NewUser';
-import TotalNotes from  './components/TotalNotes';
-import Footer from './components/PageFooter';
-import CurrentUserDisplay from './components/CurrentUsersDisplay';
-
-// reactstrap imports
-import { Button, ButtonGroup } from 'reactstrap';
+import TotalUsers from './components/TotalUsers'
+import UserNotes from './components/UserNotes'
+import Home from './components/Home'
+import SocketTests from './components/SocketTests'
+import NewUser from './components/NewUser'
+import TotalNotes from  './components/TotalNotes'
+// import Footer from './components/PageFooter'
+import CurrentUserDisplay from './components/CurrentUsersDisplay'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CreateRoleForm from './components/CreateRoleForm';
-import CreateGameLogic from './components/CreateGameLogic';
 
 // initialize socket.io socket
 const socket = socketIoClient('http://localhost:3001/')
@@ -62,22 +58,29 @@ const App = () => {
   const [roleActions, setRoleActions] = useState('')
   const [roleBoolean, setRoleBoolean] = useState(null)
 
-  const createGameName = useField('text')
-  const createMinPlayers = useField('number')
-  const createMaxPlayers = useField('number')
-  const createGameType = useField('text')
-  const createNumberPlayers = useField('number')
-  const createNumberCaptian = useField('number')
-  const createNumberMate = useField('number')
-  const createNumberMutineer = useField('number')
-  const createNumberFirstmate = useField('number')
-  const createNumberGood = useField('number')
-  const createNumberEvil = useField('number')
+  // const createGameName = useField('text')
+  // const createMinPlayers = useField('number')
+  // const createMaxPlayers = useField('number')
+  // const createGameType = useField('text')
+  // const createNumberPlayers = useField('number')
+  // const createNumberCaptian = useField('number')
+  // const createNumberMate = useField('number')
+  // const createNumberMutineer = useField('number')
+  // const createNumberFirstmate = useField('number')
+  // const createNumberGood = useField('number')
+  // const createNumberEvil = useField('number')
 
   useEffect(() => {
     usersService
       .getAll().then(initialUsers => {
         setUsers(initialUsers)
+      })
+  }, [])
+
+  useEffect(() => {
+    gamesService
+      .getAll().then(initialGames => {
+        setGames(initialGames)
       })
   }, [])
 
@@ -415,7 +418,11 @@ const App = () => {
             />}/>
           <Route path='/total_notes' render={() => <TotalNotes notes={notes}/>}/>
           <Route path='/current_logged_users' render={() =>
-            <CurrentUserDisplay numberPlayers={numberPlayers} currentUsers={currentUsers}/>
+            <CurrentUserDisplay
+              numberPlayers={numberPlayers}
+              currentUsers={currentUsers}
+              games={games}
+            />
           }/>
 
           <Route path='/create_role_form' render={() =>

@@ -1,0 +1,16 @@
+POST http://localhost:3001/api/bitGame HTTP/"1"."1"
+content-type: application/json
+
+  {
+    "gameName": "seawitched",
+    "minPlayers": "4",
+    "maxPlayers": "10",
+    "gameType": "bluffing",
+    "numberPlayer": "10",
+    "numberCaptian": "3",
+    "numberMate": "4",
+    "numberMutineer": "2",
+    "numberFirstMate": "1",
+    "numberGood": "2",
+    "numberEvil": "2"
+  }
