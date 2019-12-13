@@ -56,6 +56,9 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
             <NavItem>
               <NavLink tag={Link} to='current_logged_users'>Current Logged In Users</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to='create_role_form'>Create Role Form</NavLink>
+            </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Options

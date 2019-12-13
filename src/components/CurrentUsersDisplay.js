@@ -1,14 +1,15 @@
 import React from 'react';
-import SocketTests from './SocketTests';
+// import SocketTests from './SocketTests';
 
 const CurrentUserDisplay = ({
   currentUsers,
   numberPlayers,
-  testSocket,
-  testSocketLogin,
-  connectSocket,
-  disconnectSocket,
-  addCurrentUser } ) => {
+  // testSocket,
+  // testSocketLogin,
+  // connectSocket,
+  // disconnectSocket,
+  // addCurrentUser
+} ) => {
 
   const currentFilteredUsers = currentUsers.filter(user => user != null)
 
@@ -16,13 +17,13 @@ const CurrentUserDisplay = ({
     return (
       <>
         <h2>Current Logged in Users: {numberPlayers}</h2>
-        <SocketTests
+        {/* <SocketTests
               testSocket={testSocket}
               testSocketLogin={testSocketLogin}
               connectSocket={connectSocket}
               disconnectSocket={disconnectSocket}
               addCurrentUser={addCurrentUser}
-            />
+            /> */}
         <ul>
           {currentFilteredUsers.map(user => <li key={user.id}>{user.username}</li>)}
         </ul>

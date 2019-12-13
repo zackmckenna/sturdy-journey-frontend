@@ -12,7 +12,7 @@ import socketIoClient from 'socket.io-client'
 // component imports
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification'
-import NappzackNavbar from './components/NappzackNavbar';
+import NappzackNavbar from './components/SkelNavbar';
 import TotalUsers from './components/TotalUsers';
 import UserNotes from './components/UserNotes';
 import Home from './components/Home';
@@ -26,6 +26,7 @@ import CurrentUserDisplay from './components/CurrentUsersDisplay';
 import { Button, ButtonGroup } from 'reactstrap';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import CreateRoleForm from './components/CreateRoleForm';
 
 // initialize socket.io socket
 const socket = socketIoClient('http://localhost:3001/')
@@ -52,8 +53,11 @@ const App = () => {
   const [roles, setRoles] = useState([])
   const [games, setGames] = useState([])
 
-
-
+  const [roleName, setRoleName] = useState('')
+  const [roleAlignment, setRoleAlignment] = useState('')
+  const [roleDescription, setRoleDescription] = useState('')
+  const [roleActions, setRoleActions] = useState('')
+  const [roleBoolean, setRoleBoolean] = useState(null)
 
   useEffect(() => {
     usersService
@@ -151,6 +155,32 @@ const App = () => {
     setUser(null);
   }
 
+  const handleCreateRole = async (event) => {
+    event.preventDefault()
+    try {
+      const newRoleObject = {
+        name: roleName,
+        alignment: roleAlignment,
+        description: roleDescription,
+        actions: roleActions,
+      }
+      await rolesService.create(newRoleObject)
+      createNotification(`${roleName} created!`, setSuccessMessage, 5000)
+      rolesService
+      .getAll().then(initialRoles => {
+        setRoles(initialRoles)
+      })
+      setRoleActions('')
+      setRoleName('')
+      setRoleAlignment('')
+      setRoleDescription('')
+      setRoleBoolean('')
+    } catch (error) {
+      createNotification('could not create role', setErrorMessage, 5000);
+      console.log(error)
+    }
+  }
+
   const handleCreateAccount = async (event) => {
     event.preventDefault()
     console.log(username)
@@ -221,12 +251,50 @@ const App = () => {
     setUsername(event.target.value);
   }
 
-  const handleDeleteNote = (event) => {
+  //role event listeners
+  const handleRoleNameChange = (event) => {
+    setRoleName(event.target.value);
+  }
+
+  const handleRoleAlignmentChange = (event) => {
+    setRoleAlignment(event.target.value);
+  }
+
+  const handleRoleDescriptionChange = (event) => {
+    setRoleDescription(event.target.value);
+  }
+
+  const handleRoleActionsChange = (event) => {
+    setRoleActions(event.target.value);
+  }
+
+  const handleRoleBooleanChange = (event) => {
+    setRoleBoolean(event.target.value);
+  }
+
+  const handleDeleteNote =  async (event) => {
     event.preventDefault()
     if(window.confirm('are you sure you want to delete note?')) {
       console.log(event.target.id);
     }
-    notesService.deleteNote(event.target.id)
+    await notesService.deleteNote(event.target.id)
+    createNotification(`note deleted`, setSuccessMessage, 5000)
+    notesService
+      .getAll().then(initialNotes => {
+        setNotes(initialNotes)
+      })
+  }
+
+  const handleDeleteRole = async (event) => {
+    event.preventDefault()
+    if(window.confirm('are you sure you want to delete note?')) {
+      console.log(event.target.id);
+    }
+    await rolesService.deleteRole(event.target.id)
+    rolesService
+    .getAll().then(initialRoles => {
+      setRoles(initialRoles)
+    })
   }
 
   const newUserForm = () => {
@@ -329,20 +397,27 @@ const App = () => {
               note={note}
               />}/>
           <Route path='/total_notes' render={() => <TotalNotes notes={notes}/>}/>
-          <Route path='current_logged_users' render={() =>
-            <CurrentUserDisplay currentUsers={currentUsers}/>
+          <Route path='/current_logged_users' render={() =>
+            <CurrentUserDisplay numberPlayers={numberPlayers} currentUsers={currentUsers}/>
           }/>
+          <Route path='/create_role_form' render={() =>
+            <CreateRoleForm
+            handleDeleteRole={handleDeleteRole}
+            roles={roles}
+            roleAlignment={roleAlignment}
+            roleName={roleName}
+            roleDescription={roleDescription}
+            roleBoolean={roleBoolean}
+            roleActions={roleActions}
+            handleCreateRole={handleCreateRole}
+            handleRoleNameChange={handleRoleNameChange}
+            handleRoleAlignmentChange={handleRoleAlignmentChange}
+            handleRoleDescriptionChange={handleRoleDescriptionChange}
+            handleRoleActionsChange={handleRoleActionsChange}
+            handleRoleBooleanChange={handleRoleBooleanChange}
+          />}/>
         </Switch>
       </Router>
-
-      <CurrentUserDisplay
-        numberPlayers={numberPlayers}
-        currentUsers={currentUsers}
-        testSocket={testSocket}
-        testSocketLogin={testSocketLogin}
-        addCurrentUser={addCurrentUser}
-        disconnectSocket={disconnectSocket}
-      />
 
       <Footer />
 
