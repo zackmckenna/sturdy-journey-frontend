@@ -16,7 +16,9 @@ module.exports = {
       "sourceType": "module"
   },
   "plugins": [
-      "react", "jest"
+      "react",
+      "jest",
+      "react-hooks"
   ],
   "rules": {
       "indent": [
@@ -27,9 +29,10 @@ module.exports = {
           "error",
           "unix"
       ],
+      "react-hooks/rules-of-hooks": "error",
       "quotes": [
           "error",
-          "single"
+          {"single" : false, "backtick" : false, "double" : true}
       ],
       "semi": [
           "error",

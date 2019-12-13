@@ -1,24 +1,24 @@
-import React from 'react';
+import React from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const CreateRoleForm = ({
   roles,
   handleDeleteRole,
   handleCreateRole,
-  handleRoleNameChange,
   handleRoleAlignmentChange,
   handleRoleDescriptionChange,
   handleRoleActionsChange,
   roleActions,
   roleName,
   roleDescription,
-  roleAlignment}) => {
+  roleAlignment }) => {
+    // use the spread syntax to separate the values instead of assigning them all
   return (
     <>
       <Form onSubmit={handleCreateRole}>
         <FormGroup>
           <Label for="roleName">role name</Label>
-          <Input value={roleName} onChange={handleRoleNameChange} type="text" name="roleName" id="roleName" placeholder="roleName"/>
+          <Input {...roleName} name="roleName" id="roleName" placeholder="roleName"/>
         </FormGroup>
         <FormGroup>
           <Label for="roleAlignment">alignment</Label>
@@ -40,4 +40,4 @@ const CreateRoleForm = ({
   );
 }
 
-export default CreateRoleForm;
+export default CreateRoleForm

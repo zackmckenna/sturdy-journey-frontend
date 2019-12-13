@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useField } from './hooks'
 
 // api services
 import usersService from './services/users';
 import notesService from './services/notes';
 import accountService from './services/account';
 import loginService from './services/login';
-import rolesService from './services/roles';
-import gamesService from './services/games';
+import rolesService from './services/roles'
+import gamesService from './services/bitGame';
 import socketIoClient from 'socket.io-client'
 
 // component imports
@@ -27,6 +28,7 @@ import { Button, ButtonGroup } from 'reactstrap';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CreateRoleForm from './components/CreateRoleForm';
+import CreateGameLogic from './components/CreateGameLogic';
 
 // initialize socket.io socket
 const socket = socketIoClient('http://localhost:3001/')
@@ -53,11 +55,24 @@ const App = () => {
   const [roles, setRoles] = useState([])
   const [games, setGames] = useState([])
 
-  const [roleName, setRoleName] = useState('')
+  //to do: finish moving all of these to custom hooks
+  const roleName = useField('text')
   const [roleAlignment, setRoleAlignment] = useState('')
   const [roleDescription, setRoleDescription] = useState('')
   const [roleActions, setRoleActions] = useState('')
   const [roleBoolean, setRoleBoolean] = useState(null)
+
+  const createGameName = useField('text')
+  const createMinPlayers = useField('number')
+  const createMaxPlayers = useField('number')
+  const createGameType = useField('text')
+  const createNumberPlayers = useField('number')
+  const createNumberCaptian = useField('number')
+  const createNumberMate = useField('number')
+  const createNumberMutineer = useField('number')
+  const createNumberFirstmate = useField('number')
+  const createNumberGood = useField('number')
+  const createNumberEvil = useField('number')
 
   useEffect(() => {
     usersService
@@ -111,7 +126,7 @@ const App = () => {
     rolesService
       .getAll().then(initialRoles => {
         setRoles(initialRoles)
-        console.log(initialRoles);
+        console.log(initialRoles)
         console.log(roles)
       });
   }, [])
@@ -159,19 +174,20 @@ const App = () => {
     event.preventDefault()
     try {
       const newRoleObject = {
-        name: roleName,
+        name: roleName.value,
         alignment: roleAlignment,
         description: roleDescription,
         actions: roleActions,
       }
       await rolesService.create(newRoleObject)
-      createNotification(`${roleName} created!`, setSuccessMessage, 5000)
+      createNotification(`${roleName.value} created!`, setSuccessMessage, 5000)
       rolesService
-      .getAll().then(initialRoles => {
-        setRoles(initialRoles)
-      })
+        .getAll().then(initialRoles => {
+          setRoles(initialRoles)
+        })
       setRoleActions('')
-      setRoleName('')
+      roleName.reset()
+      // setRoleName('')
       setRoleAlignment('')
       setRoleDescription('')
       setRoleBoolean('')
@@ -236,46 +252,47 @@ const App = () => {
   }
   // event handlers
   const handleNoteChange = (event) => {
-    setNote(event.target.value);
+    setNote(event.target.value)
   }
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPassword(event.target.value)
   }
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    setName(event.target.value)
   }
 
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    setUsername(event.target.value)
   }
 
+  // all of these event handlers can be removed once custom hooks are refactored in
   //role event listeners
-  const handleRoleNameChange = (event) => {
-    setRoleName(event.target.value);
-  }
+  // const handleRoleNameChange = (event) => {
+  //   setRoleName(event.target.value);
+  // }
 
   const handleRoleAlignmentChange = (event) => {
-    setRoleAlignment(event.target.value);
+    setRoleAlignment(event.target.value)
   }
 
   const handleRoleDescriptionChange = (event) => {
-    setRoleDescription(event.target.value);
+    setRoleDescription(event.target.value)
   }
 
   const handleRoleActionsChange = (event) => {
-    setRoleActions(event.target.value);
+    setRoleActions(event.target.value)
   }
 
   const handleRoleBooleanChange = (event) => {
-    setRoleBoolean(event.target.value);
+    setRoleBoolean(event.target.value)
   }
 
   const handleDeleteNote =  async (event) => {
     event.preventDefault()
     if(window.confirm('are you sure you want to delete note?')) {
-      console.log(event.target.id);
+      console.log(event.target.id)
     }
     await notesService.deleteNote(event.target.id)
     createNotification(`note deleted`, setSuccessMessage, 5000)
@@ -292,9 +309,9 @@ const App = () => {
     }
     await rolesService.deleteRole(event.target.id)
     rolesService
-    .getAll().then(initialRoles => {
-      setRoles(initialRoles)
-    })
+      .getAll().then(initialRoles => {
+        setRoles(initialRoles)
+      })
   }
 
   const newUserForm = () => {
@@ -315,7 +332,7 @@ const App = () => {
 
   const testSocket = () => {
     if (socket) {
-      socket.emit('button');
+      socket.emit('button')
     }
   }
 
@@ -327,7 +344,7 @@ const App = () => {
 
   const testSocketLogin = () => {
     if (user) {
-      socket.emit('login', user.name);
+      socket.emit('login', user.name)
     } else {
       console.log('no user')
     }
@@ -335,7 +352,7 @@ const App = () => {
 
   const addCurrentUser = () => {
     if (user) {
-      socket.emit('add user', user.name);
+      socket.emit('add user', user.name)
     } else {
       console.log('no user')
     }
@@ -350,9 +367,9 @@ const App = () => {
     } else {
       return (
         <LoginForm
-        handleLogin={handleLogin}
-        handleUsernameChange={handleUsernameChange}
-        handlePasswordChange={handlePasswordChange}/>
+          handleLogin={handleLogin}
+          handleUsernameChange={handleUsernameChange}
+          handlePasswordChange={handlePasswordChange}/>
       )
     }
   }
@@ -364,24 +381,24 @@ const App = () => {
           user={user}
           handleLogout={handleLogout}
         />
-      <Notification
-        notificationColor={'danger'}
-        notificationText={errorMessage}/>
+        <Notification
+          notificationColor={'danger'}
+          notificationText={errorMessage}/>
 
-      <Notification
-        notificationColor={'success'}
-        notificationText={successMessage}/>
+        <Notification
+          notificationColor={'success'}
+          notificationText={successMessage}/>
 
-      {loginForm()}
-      {newUserForm()}
+        {loginForm()}
+        {newUserForm()}
 
         <Switch>
           <Route path='/socketTests' component={() =>
-          <SocketTests
-            testSocket={testSocket}
-            testSocketLogin={testSocketLogin}
-            disconnectSocket={disconnectSocket}
-            addCurrentUser={addCurrentUser}
+            <SocketTests
+              testSocket={testSocket}
+              testSocketLogin={testSocketLogin}
+              disconnectSocket={disconnectSocket}
+              addCurrentUser={addCurrentUser}
             /> } />
           <Route path='/home' component={Home} />
           <Route path='/total_users' render={() => <TotalUsers users={users}/>}/>
@@ -395,35 +412,36 @@ const App = () => {
               handleNoteSubmit={handleNoteSubmit}
               handleNoteChange={handleNoteChange}
               note={note}
-              />}/>
+            />}/>
           <Route path='/total_notes' render={() => <TotalNotes notes={notes}/>}/>
           <Route path='/current_logged_users' render={() =>
             <CurrentUserDisplay numberPlayers={numberPlayers} currentUsers={currentUsers}/>
           }/>
+
           <Route path='/create_role_form' render={() =>
             <CreateRoleForm
-            handleDeleteRole={handleDeleteRole}
-            roles={roles}
-            roleAlignment={roleAlignment}
-            roleName={roleName}
-            roleDescription={roleDescription}
-            roleBoolean={roleBoolean}
-            roleActions={roleActions}
-            handleCreateRole={handleCreateRole}
-            handleRoleNameChange={handleRoleNameChange}
-            handleRoleAlignmentChange={handleRoleAlignmentChange}
-            handleRoleDescriptionChange={handleRoleDescriptionChange}
-            handleRoleActionsChange={handleRoleActionsChange}
-            handleRoleBooleanChange={handleRoleBooleanChange}
-          />}/>
+              handleDeleteRole={handleDeleteRole}
+              roles={roles}
+              roleAlignment={roleAlignment}
+              roleName={roleName}
+              roleDescription={roleDescription}
+              roleBoolean={roleBoolean}
+              roleActions={roleActions}
+              handleCreateRole={handleCreateRole}
+              // handleRoleNameChange={handleRoleNameChange}
+              handleRoleAlignmentChange={handleRoleAlignmentChange}
+              handleRoleDescriptionChange={handleRoleDescriptionChange}
+              handleRoleActionsChange={handleRoleActionsChange}
+              handleRoleBooleanChange={handleRoleBooleanChange}
+            />}/>
         </Switch>
       </Router>
 
-      <Footer />
+      {/* <Footer /> */}
 
     </>
-  );
+  )
 }
 
 
-export default App;
+export default App

@@ -4,7 +4,7 @@ import { Jumbotron } from  'reactstrap';
 const Home = (props) => {
   return (
   <Jumbotron>
-    <h2>Hello world</h2>
+    <h2>skel v1</h2>
   </Jumbotron>
   )
 }

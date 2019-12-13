@@ -77,7 +77,7 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>Simple Text</NavbarText>
+          <NavbarText>more text</NavbarText>
         </Collapse>
       </Navbar>
     </div>

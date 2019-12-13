@@ -10,7 +10,7 @@ const CurrentUserDisplay = ({
   // disconnectSocket,
   // addCurrentUser
 } ) => {
-
+  console.log(currentUsers)
   const currentFilteredUsers = currentUsers.filter(user => user != null)
 
   if (currentFilteredUsers) {
