@@ -10,7 +10,7 @@ content-type: application/json
     "numberCaptian": "3",
     "numberMate": "4",
     "numberMutineer": "2",
-    "numberFirstMate": "1",
+    "numberFirstmate": "1",
     "numberGood": "2",
     "numberEvil": "2"
   }

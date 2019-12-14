@@ -50,6 +50,7 @@ const App = () => {
   const [currentUsers, setCurrentUsers] = useState([]);
   const [roles, setRoles] = useState([])
   const [games, setGames] = useState([])
+  const [currentGame, setCurrentGame] = useState(null);
 
   //to do: finish moving all of these to custom hooks
   const roleName = useField('text')
@@ -111,12 +112,14 @@ const App = () => {
 
   useEffect(() => {
     console.log('use effect ran, component mounted')
-    socket.on('visitors', users => {
-      const filteredUsers = users.filter(user => user !== null)
-      setCurrentUsers(filteredUsers);
-      numberPlayers !== filteredUsers.length ? setNumberPlayers(filteredUsers.length) : console.log('players up to date')
+    socket.on('visitors', async users => {
+      const filteredUsers = await users.filter(user => user !== null)
+      await setCurrentUsers(filteredUsers);
+      setNumberPlayers(filteredUsers.length)
     })
   }, []);
+
+
 
   useEffect(() => {
     notesService
@@ -361,6 +364,9 @@ const App = () => {
     }
   }
 
+  const handleStartGame = () => {
+
+  }
 
   const loginForm = () => {
     if (newUserButton || user) {
