@@ -205,9 +205,6 @@ const App = () => {
 
   const handleCreateAccount = async (event) => {
     event.preventDefault()
-    console.log(username)
-    console.log(name)
-    console.log(password)
     try {
       const newUserObject = {
         password: password,
