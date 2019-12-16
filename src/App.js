@@ -375,7 +375,6 @@ const App = () => {
   }
 
   const addRole = (name, numberOfRoles, array = []) => {
-    console.log(name, numberOfRoles)
     if (numberOfRoles > 1) {
       array = array.concat(name)
       return addRole(name, numberOfRoles - 1, array)
@@ -389,16 +388,32 @@ const App = () => {
     return array.sort(() => Math.random() - 0.5);
   }
 
+  const assignAlignment = (array) => {
+
+  }
+
   const distributeRoles = () => {
     if (numberPlayers >= 4) {
       const inRoomUsers = Object.values(currentUsers)
       const currentGameThing = games.filter(game => game.numberPlayer === numberPlayers)[0]
       let rolesArray = []
-      const captians = addRole('captian', currentGameThing.numberCaptian)
-      rolesArray = rolesArray.concat(addRole('captian', currentGameThing.numberCaptian))
+      let alignmentArray = []
+      let captainArray = []
+      // rolesArray = rolesArray.concat(addRole('captian', currentGameThing.numberCaptian))
+      captainArray = captainArray.concat(addRole('captain', currentGameThing.numberCaptian))
       rolesArray = rolesArray.concat(addRole('mate', currentGameThing.numberMate))
       rolesArray = rolesArray.concat(addRole('mutineer', currentGameThing.numberMutineer))
       rolesArray = rolesArray.concat(addRole('firstmate', 1))
+
+      alignmentArray = alignmentArray.concat(addRole('good', currentGameThing.numberGood))
+      alignmentArray = alignmentArray.concat(addRole('evil', currentGameThing.numberEvil))
+      console.log(alignmentArray)
+      alignmentArray = shuffle(alignmentArray)
+      captainArray = captainArray.map((captain, index) => {
+         return alignmentArray[index] === 'good' ? 'captain' : 'seawitch'
+      })
+      console.log(captainArray)
+      rolesArray = rolesArray.concat(captainArray)
       rolesArray = shuffle(rolesArray)
       const assignedUsersArray = currentUsers.map((user, index) => {
         user = {
