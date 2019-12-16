@@ -20,6 +20,7 @@ import Home from './components/Home'
 import SocketTests from './components/SocketTests'
 import NewUser from './components/NewUser'
 import TotalNotes from  './components/TotalNotes'
+import GameLobby from './components/GameLobby'
 // import Footer from './components/PageFooter'
 import CurrentUserDisplay from './components/CurrentUsersDisplay'
 
@@ -36,6 +37,7 @@ const App = () => {
   const [games, setGames] = useState([]);
   */
   const [user, setUser] = useState(null)
+  const [userRole, setUserRole] = useState('')
   const [users, setUsers] = useState([])
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
@@ -50,7 +52,8 @@ const App = () => {
   const [currentUsers, setCurrentUsers] = useState([]);
   const [roles, setRoles] = useState([])
   const [games, setGames] = useState([])
-  const [currentGame, setCurrentGame] = useState(null);
+  const [currentGame, setCurrentGame] = useState({});
+  const [assignedUsers, setAssignedUsers] = useState([]);
 
   //to do: finish moving all of these to custom hooks
   const roleName = useField('text')
@@ -119,7 +122,12 @@ const App = () => {
     })
   }, []);
 
-
+  useEffect(() => {
+    console.log('roles distributed')
+    socket.on('distribute roles', async roles => {
+      setAssignedUsers(roles)
+    })
+  }, []);
 
   useEffect(() => {
     notesService
@@ -362,11 +370,44 @@ const App = () => {
   }
 
   const handleStartGame = async () => {
-    if (numbePlayers >= 4)  {
-      currentGameObject = gamesService.getAll().filter(game => {
-        console.log(game)
+    const distributedRoles = distributeRoles();
+    socket.emit('start game', distributedRoles)
+  }
+
+  const addRole = (name, numberOfRoles, array = []) => {
+    console.log(name, numberOfRoles)
+    if (numberOfRoles > 1) {
+      array = array.concat(name)
+      return addRole(name, numberOfRoles - 1, array)
+    } else if (numberOfRoles === 1) {
+      array = array.concat(name)
+      return array
+    }
+  }
+
+  const shuffle = (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+  const distributeRoles = () => {
+    if (numberPlayers >= 4) {
+      const inRoomUsers = Object.values(currentUsers)
+      const currentGameThing = games.filter(game => game.numberPlayer === numberPlayers)[0]
+      let rolesArray = []
+      const captians = addRole('captian', currentGameThing.numberCaptian)
+      rolesArray = rolesArray.concat(addRole('captian', currentGameThing.numberCaptian))
+      rolesArray = rolesArray.concat(addRole('mate', currentGameThing.numberMate))
+      rolesArray = rolesArray.concat(addRole('mutineer', currentGameThing.numberMutineer))
+      rolesArray = rolesArray.concat(addRole('firstmate', 1))
+      rolesArray = shuffle(rolesArray)
+      const assignedUsersArray = currentUsers.map((user, index) => {
+        user = {
+          ...user,
+          role: rolesArray[index]
+        }
+        return user
       })
-      socket.emit('start game')
+      return assignedUsersArray
     }
   }
 
@@ -430,6 +471,16 @@ const App = () => {
               numberPlayers={numberPlayers}
               currentUsers={currentUsers}
               games={games}
+            />
+          }/>
+          <Route path='/game_lobby' render={() =>
+              <GameLobby
+              numberPlayers={numberPlayers}
+              currentUsers={currentUsers}
+              games={games}
+              handleStartGame={handleStartGame}
+              assignedUsers={assignedUsers}
+              user={user}
             />
           }/>
 
