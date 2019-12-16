@@ -361,8 +361,13 @@ const App = () => {
     }
   }
 
-  const handleStartGame = () => {
-
+  const handleStartGame = async () => {
+    if (numbePlayers >= 4)  {
+      currentGameObject = gamesService.getAll().filter(game => {
+        console.log(game)
+      })
+      socket.emit('start game')
+    }
   }
 
   const loginForm = () => {
