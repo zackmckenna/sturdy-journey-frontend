@@ -28,7 +28,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CreateRoleForm from './components/CreateRoleForm';
 
 // initialize socket.io socket
-const socket = socketIoClient('http://localhost:3001/')
+const socket = socketIoClient('/')
 
 const App = () => {
   /*
