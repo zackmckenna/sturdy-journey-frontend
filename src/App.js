@@ -388,10 +388,6 @@ const App = () => {
     return array.sort(() => Math.random() - 0.5);
   }
 
-  const assignAlignment = (array) => {
-
-  }
-
   const distributeRoles = () => {
     if (numberPlayers >= 4) {
       const inRoomUsers = Object.values(currentUsers)
