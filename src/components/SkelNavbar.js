@@ -43,7 +43,7 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
               <NavLink tag={Link} to='home'>Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to='game_lobby'>Game Lobby</NavLink>
+              <NavLink tag={Link} to='game_lobby'>The Game Lobby</NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to='user_notes'>User Notes</NavLink>
