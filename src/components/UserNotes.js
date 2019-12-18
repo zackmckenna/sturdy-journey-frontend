@@ -4,7 +4,7 @@ import NoteForm from './NoteForm';
 
 const UserNotes = ({
   user,
-  notes,
+  store,
   handleDeleteNote,
   toggleNoteForm,
   handleNoteSubmit,
@@ -12,6 +12,8 @@ const UserNotes = ({
   showNoteForm,
   note
    }) => {
+
+  const notes = store.getState().notes
 
   if (user) {
     if (showNoteForm) {

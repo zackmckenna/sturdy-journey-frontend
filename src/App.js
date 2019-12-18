@@ -7,6 +7,7 @@ import { initializeUsers } from './redux/reducers/userReducer'
 import { initializeGames } from './redux/reducers/gameReducer'
 import { initializeRoles } from './redux/reducers/roleReducer'
 import { initializeNotes } from './redux/reducers/noteReducer'
+import { setUser } from './redux/reducers/sessionReducer'
 // api services
 import usersService from './services/users';
 import notesService from './services/notes';
@@ -69,18 +70,46 @@ const App = (props) => {
   const [roleActions, setRoleActions] = useState('')
   const [roleBoolean, setRoleBoolean] = useState(null)
 
-  // const createGameName = useField('text')
-  // const createMinPlayers = useField('number')
-  // const createMaxPlayers = useField('number')
-  // const createGameType = useField('text')
-  // const createNumberPlayers = useField('number')
-  // const createNumberCaptian = useField('number')
-  // const createNumberMate = useField('number')
-  // const createNumberMutineer = useField('number')
-  // const createNumberFirstmate = useField('number')
-  // const createNumberGood = useField('number')
-  // const createNumberEvil = useField('number')
+  // OLD, TO BE MOVED TO REDUX
+  useEffect(() => {
+    notesService
+      .getAll().then(initialNotes => {
+        setNotes(initialNotes)
+      });
+  }, [])
 
+  useEffect(() => {
+    rolesService
+      .getAll().then(initialRoles => {
+        setRoles(initialRoles)
+      });
+  }, [])
+
+  useEffect(() => {
+    gamesService
+      .getAll().then(initialGames => {
+        setGames(initialGames)
+      });
+  }, [])
+
+  useEffect(() => {
+    usersService
+      .getAll().then(initialUsers => {
+        setUsers(initialUsers)
+      });
+  }, [])
+
+  useEffect(() => {
+    console.log('set user run')
+    const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
+    if (loggedAppUserJSON) {
+      const user = JSON.parse(loggedAppUserJSON)
+      setUser(user)
+      notesService.setToken(user.token)
+    }
+  }, [])
+
+  // get games, users, notes and roles
   useEffect(() => {
     async function getNotes() {
       await props.initializeNotes(notes)
@@ -92,7 +121,7 @@ const App = (props) => {
 
   useEffect(() => {
     async function getUsers() {
-      await props.initializeUsers(notes)
+      await props.initializeUsers(users)
       console.log(`redux users init`)
       console.log(store.getState().users)
     }
@@ -108,53 +137,16 @@ const App = (props) => {
     getGames()
   }, [])
 
+  useEffect(() => {
+    async function setUser() {
+      await props.setUser(notes)
+      console.log(`set user redux`)
+      console.log(store.getState().session)
+    }
+    setUser()
+  }, [])
 
-
-  // useEffect(async () => {
-  //   await props.initializeUsers(users)
-  //   console.log(`redux games init`)
-  //   console.log(store.getState().games)
-  //   }, [])
-
-  // useEffect(async () => {
-  //   await props.initializeGames(games)
-  //   console.log(`redux games init`)
-  //   console.log(store.getState().games)
-  // }, [])
-
-  // useEffect(() => {
-  //   usersService
-  //     .getAll().then(initialUsers => {
-  //       setUsers(initialUsers)
-  //     })
-  // }, [])
-
-  // useEffect(() => {
-  //   gamesService
-  //     .getAll().then(initialGames => {
-  //       setGames(initialGames)
-  //       console.log(`Initial games set`)
-  //       console.log(initialGames)
-  //     })
-  // }, [])
-
-  // useEffect(() => {
-  //   if (!socket) {
-  //     setSocket(socketIoClient('http://localhost:3001/'))
-  //   }
-  //   console.log('socket client connected');
-  // }, [socket, setSocket]);
-
-
-  // useEffect(() => {
-  //   console.log('visitor use effect run')
-  //   socket.on('visitors', users => {
-  //     console.log(users)
-  //     setEffectCounter(effectCounter+1)
-  //     console.log(effectCounter)
-  //   })
-  // }, [])
-
+  // handle socket.io connections
   useEffect(() => {
     console.log('use effect ran, component mounted')
     socket.on('visitors', async users => {
@@ -170,33 +162,6 @@ const App = (props) => {
       setAssignedUsers(roles)
     })
   }, []);
-
-  useEffect(() => {
-    notesService
-      .getAll().then(initialNotes => {
-        setNotes(initialNotes)
-      });
-  }, [])
-
-  useEffect(() => {
-    rolesService
-      .getAll().then(initialRoles => {
-        setRoles(initialRoles)
-        console.log(`Initial roles set:`)
-        console.log(initialRoles)
-
-      });
-  }, [])
-
-  useEffect(() => {
-    console.log('set user run')
-    const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
-    if (loggedAppUserJSON) {
-      const user = JSON.parse(loggedAppUserJSON)
-      setUser(user)
-      notesService.setToken(user.token)
-    }
-  }, [])
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -513,7 +478,7 @@ const App = (props) => {
               showNoteForm={showNoteForm}
               user={user}
               toggleNoteForm={toggleNoteForm}
-              notes={notes}
+              store={store}
               handleDeleteNote={handleDeleteNote}
               handleNoteSubmit={handleNoteSubmit}
               handleNoteChange={handleNoteChange}
@@ -569,7 +534,8 @@ export default connect(null,
   initializeNotes,
   initializeGames,
   initializeUsers,
-  initializeRoles
+  initializeRoles,
+  setUser
   }
 )(App)
 

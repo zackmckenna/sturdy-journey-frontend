@@ -6,11 +6,14 @@ import noteReducer from './reducers/noteReducer'
 import userReducer from './reducers/userReducer'
 import roleReducer from './reducers/roleReducer'
 import gameReducer from './reducers/gameReducer'
+import sessionReducer from './reducers/sessionReducer'
+
 const reducer = combineReducers({
   notes: noteReducer,
   users: userReducer,
   roles: roleReducer,
-  games: gameReducer
+  games: gameReducer,
+  session: sessionReducer
 })
 
 const store = createStore(
