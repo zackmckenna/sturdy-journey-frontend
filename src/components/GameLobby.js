@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 // import SocketTests from './SocketTests';
 
 const GameLobby = ({
-  currentUsers,
   games,
   handleStartGame,
   currentGameSession
@@ -57,7 +56,8 @@ const GameLobby = ({
 
 const mapStateToProps = function(state) {
   return {
-    currentGameSession: state.session
+    currentGameSession: state.session,
+    games: state.games
   }
 }
 

@@ -535,13 +535,7 @@ const App = (props) => {
           }/>
           <Route path='/game_lobby' render={() =>
               <GameLobby
-              store={store}
-              numberPlayers={numberPlayers}
-              currentUsers={currentUsers}
-              games={games}
               handleStartGame={handleStartGame}
-              assignedUsers={assignedUsers}
-              user={user}
             />
           }/>
 
