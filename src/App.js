@@ -85,13 +85,7 @@ const App = () => {
     gamesService
       .getAll().then(initialGames => {
         setGames(initialGames)
-      })
-  }, [])
-
-  useEffect(() => {
-    gamesService
-      .getAll().then(initialGames => {
-        setGames(initialGames)
+        console.log(`Initial games set`)
         console.log(initialGames)
       })
   }, [])
@@ -140,8 +134,9 @@ const App = () => {
     rolesService
       .getAll().then(initialRoles => {
         setRoles(initialRoles)
+        console.log(`Initial roles set:`)
         console.log(initialRoles)
-        console.log(roles)
+
       });
   }, [])
 
