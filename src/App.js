@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useField } from './hooks'
+import { connect } from 'react-redux'
 
+//redux reducers
+import { initializeUsers } from './redux/reducers/userReducer'
+import { initializeGames } from './redux/reducers/gameReducer'
+import { initializeRoles } from './redux/reducers/roleReducer'
+import { initializeNotes } from './redux/reducers/noteReducer'
 // api services
 import usersService from './services/users';
 import notesService from './services/notes';
@@ -30,7 +36,8 @@ import CreateRoleForm from './components/CreateRoleForm';
 // initialize socket.io socket
 const socket = socketIoClient('http://localhost:30725/')
 
-const App = () => {
+const App = (props) => {
+  const store = props.store
   /*
   const [roles, setRoles] = useState([]);
   const [users, setUsers] = useState([]);
@@ -75,20 +82,61 @@ const App = () => {
   // const createNumberEvil = useField('number')
 
   useEffect(() => {
-    usersService
-      .getAll().then(initialUsers => {
-        setUsers(initialUsers)
-      })
+    async function getNotes() {
+      await props.initializeNotes(notes)
+      console.log(`redux notes init`)
+      console.log(store.getState().notes)
+    }
+    getNotes()
   }, [])
 
   useEffect(() => {
-    gamesService
-      .getAll().then(initialGames => {
-        setGames(initialGames)
-        console.log(`Initial games set`)
-        console.log(initialGames)
-      })
+    async function getUsers() {
+      await props.initializeUsers(notes)
+      console.log(`redux users init`)
+      console.log(store.getState().users)
+    }
+    getUsers()
   }, [])
+
+  useEffect(() => {
+    async function getGames() {
+      await props.initializeGames(games)
+      console.log(`redux games init`)
+      console.log(store.getState().games)
+    }
+    getGames()
+  }, [])
+
+
+
+  // useEffect(async () => {
+  //   await props.initializeUsers(users)
+  //   console.log(`redux games init`)
+  //   console.log(store.getState().games)
+  //   }, [])
+
+  // useEffect(async () => {
+  //   await props.initializeGames(games)
+  //   console.log(`redux games init`)
+  //   console.log(store.getState().games)
+  // }, [])
+
+  // useEffect(() => {
+  //   usersService
+  //     .getAll().then(initialUsers => {
+  //       setUsers(initialUsers)
+  //     })
+  // }, [])
+
+  // useEffect(() => {
+  //   gamesService
+  //     .getAll().then(initialGames => {
+  //       setGames(initialGames)
+  //       console.log(`Initial games set`)
+  //       console.log(initialGames)
+  //     })
+  // }, [])
 
   // useEffect(() => {
   //   if (!socket) {
@@ -516,4 +564,12 @@ const App = () => {
 }
 
 
-export default App
+export default connect(null,
+  {
+  initializeNotes,
+  initializeGames,
+  initializeUsers,
+  initializeRoles
+  }
+)(App)
+
