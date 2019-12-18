@@ -6,23 +6,18 @@ import { connect } from 'react-redux'
 
 const GameLobby = ({
   currentUsers,
-  numberPlayers,
   games,
   handleStartGame,
-  assignedUsers,
-  user,
   currentGameSession
 } ) => {
   let playerRole
   let currentGame
-  const currentFilteredUsers = currentUsers.filter(user => user != null)
-  if (numberPlayers >= 4) {
+  if (currentGameSession.currentNumberPlayers >= 4) {
     currentGame = games.filter(game => game.numberPlayer === currentGameSession.currentNumberPlayers)[0]
   }
-  console.log(assignedUsers)
   console.log(currentGameSession)
-  if (currentGameSession.currentPlayerRoles) {
-    playerRole = currentGameSession.currentPlayerRoles.filter(assignedUser => assignedUser.userId === user.id)[0]
+  if (currentGameSession.currentPlayerRoles && currentGameSession.localUser) {
+    playerRole = currentGameSession.currentPlayerRoles.filter(playerRole => playerRole.userId === currentGameSession.localUser.id)[0]
     console.log(playerRole)
   }
 
@@ -40,15 +35,15 @@ const GameLobby = ({
       </>
     )
   }
-  if (currentFilteredUsers) {
+  if (currentGameSession.currentUsers) {
     return (
       <>
-        <h2>People in Room: {numberPlayers}{numberPlayers >= 4 ? <Button onClick={handleStartGame} color='success'>Start Game</Button>: null}</h2>
+        <h2>People in Room: {currentGameSession.currentNumberPlayers}{currentGameSession.currentNumberPlayers >= 4 ? <Button onClick={handleStartGame} color='success'>Start Game</Button>: null}</h2>
         <ul>
-          {currentFilteredUsers.map(user => <li key={user.id}>{user.username}</li>)}
+          {currentGameSession.currentUsers.map(user => <li key={user.id}>{user.username}</li>)}
         </ul>
-        {numberPlayers < 4 ? <h4>need at least 4 players to start.</h4> : null}
-        {numberPlayers >= 4 ? renderCurrentGame() : null}
+        {currentGameSession.currentNumberPlayers < 4 ? <h4>need at least 4 players to start.</h4> : null}
+        {currentGameSession.currentNumberPlayers >= 4 ? renderCurrentGame() : null}
         {playerRole ? <h4>You are the {playerRole.role}</h4> : null}
       </>
     )

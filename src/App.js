@@ -210,7 +210,6 @@ const App = (props) => {
       const user = await loginService.login({
         username, password
       })
-
       window.localStorage.setItem(
         'loggedAppUser', JSON.stringify(user)
       )
@@ -218,6 +217,7 @@ const App = (props) => {
       createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
       console.log(`Logging in with ${username}.`)
       notesService.setToken(user.token)
+      props.setUser(user)
       setUser(user)
       setUsername('')
       setPassword('')
