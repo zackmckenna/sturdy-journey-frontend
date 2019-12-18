@@ -204,6 +204,13 @@ const App = (props) => {
       console.log(store.getState().session)
     })
   }, [])
+
+  const handleLogout = async () => {
+    await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
+    window.localStorage.removeItem('loggedAppUser')
+    props.setUser(null);
+    setUser(null)
+  }
   // handle socket.io connections
 
   // useEffect(() => {
@@ -237,11 +244,11 @@ const App = (props) => {
   }
 
 
-  const handleLogout = async () => {
-    await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
-    window.localStorage.removeItem('loggedAppUser')
-    setUser(null);
-  }
+  // const handleLogout = async () => {
+  //   await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
+  //   window.localStorage.removeItem('loggedAppUser')
+  //   setUser(null);
+  // }
 
   const handleCreateRole = async (event) => {
     event.preventDefault()
@@ -336,12 +343,6 @@ const App = (props) => {
   const handleUsernameChange = (event) => {
     setUsername(event.target.value)
   }
-
-  // all of these event handlers can be removed once custom hooks are refactored in
-  //role event listeners
-  // const handleRoleNameChange = (event) => {
-  //   setRoleName(event.target.value);
-  // }
 
   const handleRoleAlignmentChange = (event) => {
     setRoleAlignment(event.target.value)
@@ -527,9 +528,7 @@ const App = (props) => {
           <Route path='/user_notes' render={() =>
             <UserNotes
               showNoteForm={showNoteForm}
-              user={user}
               toggleNoteForm={toggleNoteForm}
-              store={store}
               handleDeleteNote={handleDeleteNote}
               handleNoteSubmit={handleNoteSubmit}
               handleNoteChange={handleNoteChange}
@@ -566,7 +565,6 @@ const App = (props) => {
     </>
   )
 }
-
 
 export default connect(null,
   {

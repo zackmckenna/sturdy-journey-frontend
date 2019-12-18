@@ -1,21 +1,20 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import NoteForm from './NoteForm';
+import { connect } from 'react-redux'
 
 const UserNotes = ({
-  user,
-  store,
+  notes,
   handleDeleteNote,
   toggleNoteForm,
   handleNoteSubmit,
   handleNoteChange,
   showNoteForm,
+  currentGameSession,
   note
    }) => {
-
-  const notes = store.getState().notes
-
-  if (user) {
+  const user = currentGameSession.localUser
+  if (currentGameSession.localUser) {
     if (showNoteForm) {
       return (
         <>
@@ -53,4 +52,11 @@ const UserNotes = ({
   )
 }
 
-export default UserNotes;
+const mapStateToProps = function(state) {
+  return {
+    currentGameSession: state.session,
+    notes: state.notes
+  }
+}
+
+export default connect(mapStateToProps)(UserNotes)
