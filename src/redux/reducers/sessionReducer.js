@@ -4,23 +4,68 @@ import loginService from '../../services/login'
 const sessionReducer = (state =[], action) => {
   switch (action.type) {
     case 'SET_USER':
-      return state.concat(action.data)
+      return {...state, localUser: action.data}
+    case 'SET_CURRENT_USERS':
+      return  {...state, currentUsers: action.data}
+    case 'SET_CURRENT_NUMBER_PLAYERS':
+      return {...state, currentNumberPlayers: action.data}
+    case 'SET_CURRENT_PLAYER_ROLES':
+      return {...state, currentPlayerRoles: action.data}
   }
   return state
 }
 
 export const setUser = () => {
-  console.log('set user run')
-  const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
-  if (loggedAppUserJSON) {
-    const user = JSON.parse(loggedAppUserJSON)
-    notesService.setToken(user.token)
-    return({
-      type:'SET_USER',
-      data: user
-    })
+  return async dispatch => {
+    console.log('set user run')
+    const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
+    if (loggedAppUserJSON) {
+      const user = JSON.parse(loggedAppUserJSON)
+      notesService.setToken(user.token)
+      dispatch({
+        type:'SET_USER',
+        data: user
+      })
+    }
   }
 }
+
+export const setCurrentUsers = (currentUsers) => {
+  console.log('setting current users')
+  console.log(currentUsers)
+  return({
+    type:'SET_CURRENT_USERS',
+    data: currentUsers
+  })
+}
+
+export const setCurrentNumberPlayers = (currentNumberPlayers) => {
+  console.log('setting number players', currentNumberPlayers)
+  return ({
+    type: 'SET_CURRENT_NUMBER_PLAYERS',
+    data: currentNumberPlayers
+  })
+}
+
+export const setCurrentPlayerRoles = (currentPlayerRoles) => {
+  console.log('setting roles', currentPlayerRoles)
+  return({
+    type: 'SET_CURRENT_PLAYER_ROLES',
+    data: currentPlayerRoles
+  })
+}
+
+// export const setNumberPlayers = () => {
+
+// }
+
+// export const setCurrentUsers = async () => {
+//   console.log('set current users run')
+//   const filteredUsers = await users.filter(user => user !== null)
+
+//   await setCurrentUsers(filteredUsers);
+//   setNumberPlayers(filteredUsers.length)
+// }
 
 // export const loginUser = async () => {
 //   try {

@@ -1,6 +1,6 @@
 import usersService from '../../services/users'
 
-const userReducer = (state =[], action) => {
+const usersReducer = (state =[], action) => {
   switch (action.type) {
     case 'NEW_USER':
       return state.concat(action.data)
@@ -44,4 +44,4 @@ export const initializeUsers = () => {
 //   }
 // }
 
-export default userReducer
+export default usersReducer

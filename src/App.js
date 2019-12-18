@@ -3,11 +3,14 @@ import { useField } from './hooks'
 import { connect } from 'react-redux'
 
 //redux reducers
-import { initializeUsers } from './redux/reducers/userReducer'
+import { initializeUsers } from './redux/reducers/usersReducer'
 import { initializeGames } from './redux/reducers/gameReducer'
 import { initializeRoles } from './redux/reducers/roleReducer'
 import { initializeNotes } from './redux/reducers/noteReducer'
-import { setUser } from './redux/reducers/sessionReducer'
+import {  setUser,
+          setCurrentUsers,
+          setCurrentNumberPlayers,
+          setCurrentPlayerRoles } from './redux/reducers/sessionReducer'
 // api services
 import usersService from './services/users';
 import notesService from './services/notes';
@@ -46,7 +49,7 @@ const App = (props) => {
   */
   const [user, setUser] = useState(null)
   const [userRole, setUserRole] = useState('')
-  const [users, setUsers] = useState([])
+  const [allUsers, setAllUsers] = useState([])
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
   const [numberPlayers, setNumberPlayers] = useState(0);
@@ -70,7 +73,9 @@ const App = (props) => {
   const [roleActions, setRoleActions] = useState('')
   const [roleBoolean, setRoleBoolean] = useState(null)
 
-  // OLD, TO BE MOVED TO REDUX
+  // OLD, MOVED TO REDUX, MUST CHANGE DEPENDANT
+  // COMPONENTS TO USE REDUX STATE
+
   useEffect(() => {
     notesService
       .getAll().then(initialNotes => {
@@ -95,7 +100,7 @@ const App = (props) => {
   useEffect(() => {
     usersService
       .getAll().then(initialUsers => {
-        setUsers(initialUsers)
+        setAllUsers(initialUsers)
       });
   }, [])
 
@@ -109,7 +114,30 @@ const App = (props) => {
     }
   }, [])
 
-  // get games, users, notes and roles
+  useEffect(() => {
+    console.log('use effect ran, component mounted')
+    socket.on('visitors', async users => {
+      console.log(users)
+      const filteredUsers = await users.filter(user => user !== null)
+      setCurrentUsers(filteredUsers);
+      setNumberPlayers(filteredUsers.length)
+    })
+  }, []);
+
+  useEffect(() => {
+    console.log('use effect ran, component mounted')
+    socket.on('visitors', async users => {
+      const filteredUsers = await users.filter(user => user !== null)
+      await props.setCurrentUsers(filteredUsers);
+
+      await setCurrentUsers(filteredUsers);
+      setNumberPlayers(filteredUsers.length)
+    })
+  }, []);
+
+  // REDUX get games, users, notes and roles
+  // and store in REDUX STORE
+
   useEffect(() => {
     async function getNotes() {
       await props.initializeNotes(notes)
@@ -121,7 +149,7 @@ const App = (props) => {
 
   useEffect(() => {
     async function getUsers() {
-      await props.initializeUsers(users)
+      await props.initializeUsers()
       console.log(`redux users init`)
       console.log(store.getState().users)
     }
@@ -130,7 +158,7 @@ const App = (props) => {
 
   useEffect(() => {
     async function getGames() {
-      await props.initializeGames(games)
+      await props.initializeGames()
       console.log(`redux games init`)
       console.log(store.getState().games)
     }
@@ -138,30 +166,43 @@ const App = (props) => {
   }, [])
 
   useEffect(() => {
-    async function setUser() {
-      await props.setUser(notes)
+    async function setLocalUser() {
+      await props.setUser()
       console.log(`set user redux`)
       console.log(store.getState().session)
     }
-    setUser()
+    setLocalUser()
   }, [])
 
-  // handle socket.io connections
   useEffect(() => {
-    console.log('use effect ran, component mounted')
+    console.log('running visitors socket')
     socket.on('visitors', async users => {
-      const filteredUsers = await users.filter(user => user !== null)
-      await setCurrentUsers(filteredUsers);
-      setNumberPlayers(filteredUsers.length)
+
+      const filteredUsers = await users.filter(user => user != null)
+      console.log('filter use', filteredUsers)
+      await props.setCurrentUsers(filteredUsers);
+      await props.setCurrentNumberPlayers(filteredUsers.length)
+      console.log(store.getState().session)
+      // setNumberPlayers(filteredUsers.length)
     })
   }, []);
 
   useEffect(() => {
-    console.log('roles distributed')
+    console.log('distributing roles to redux')
     socket.on('distribute roles', async roles => {
-      setAssignedUsers(roles)
+      await props.setCurrentPlayerRoles(roles)
+      console.log(store.getState().session)
     })
-  }, []);
+  }, [])
+  // handle socket.io connections
+
+  // useEffect(() => {
+  //   console.log('roles distributed')
+  //   socket.on('distribute roles', async roles => {
+  //     setAssignedUsers(roles)
+  //   })
+  // }, []);
+
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -472,7 +513,7 @@ const App = (props) => {
               addCurrentUser={addCurrentUser}
             /> } />
           <Route path='/home' component={Home} />
-          <Route path='/total_users' render={() => <TotalUsers users={users}/>}/>
+          <Route path='/total_users' render={() => <TotalUsers users={allUsers}/>}/>
           <Route path='/user_notes' render={() =>
             <UserNotes
               showNoteForm={showNoteForm}
@@ -494,6 +535,7 @@ const App = (props) => {
           }/>
           <Route path='/game_lobby' render={() =>
               <GameLobby
+              store={store}
               numberPlayers={numberPlayers}
               currentUsers={currentUsers}
               games={games}
@@ -535,7 +577,10 @@ export default connect(null,
   initializeGames,
   initializeUsers,
   initializeRoles,
-  setUser
+  setUser,
+  setCurrentUsers,
+  setCurrentNumberPlayers,
+  setCurrentPlayerRoles
   }
 )(App)
 

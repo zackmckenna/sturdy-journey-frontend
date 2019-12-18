@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'reactstrap'
+import { connect } from 'react-redux'
 
 // import SocketTests from './SocketTests';
 
@@ -9,17 +10,19 @@ const GameLobby = ({
   games,
   handleStartGame,
   assignedUsers,
-  user
+  user,
+  currentGameSession
 } ) => {
   let playerRole
-  let currentGame;
+  let currentGame
   const currentFilteredUsers = currentUsers.filter(user => user != null)
   if (numberPlayers >= 4) {
-    currentGame = games.filter(game => game.numberPlayer === numberPlayers)[0]
+    currentGame = games.filter(game => game.numberPlayer === currentGameSession.currentNumberPlayers)[0]
   }
-
-  if (assignedUsers) {
-    playerRole = assignedUsers.filter(assignedUser => assignedUser.userId === user.id)[0]
+  console.log(assignedUsers)
+  console.log(currentGameSession)
+  if (currentGameSession.currentPlayerRoles) {
+    playerRole = currentGameSession.currentPlayerRoles.filter(assignedUser => assignedUser.userId === user.id)[0]
     console.log(playerRole)
   }
 
@@ -57,4 +60,10 @@ const GameLobby = ({
   }
 }
 
-export default GameLobby;
+const mapStateToProps = function(state) {
+  return {
+    currentGameSession: state.session
+  }
+}
+
+export default connect(mapStateToProps)(GameLobby);

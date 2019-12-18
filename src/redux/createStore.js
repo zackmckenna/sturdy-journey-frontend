@@ -3,14 +3,14 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import noteReducer from './reducers/noteReducer'
-import userReducer from './reducers/userReducer'
+import usersReducer from './reducers/usersReducer'
 import roleReducer from './reducers/roleReducer'
 import gameReducer from './reducers/gameReducer'
 import sessionReducer from './reducers/sessionReducer'
 
 const reducer = combineReducers({
   notes: noteReducer,
-  users: userReducer,
+  users: usersReducer,
   roles: roleReducer,
   games: gameReducer,
   session: sessionReducer
