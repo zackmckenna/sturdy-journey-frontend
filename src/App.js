@@ -31,6 +31,7 @@ import SocketTests from './components/SocketTests'
 import NewUser from './components/NewUser'
 import TotalNotes from  './components/TotalNotes'
 import GameLobby from './components/GameLobby'
+import RoleCard from './components/RoleCard'
 // import Footer from './components/PageFooter'
 import CurrentUserDisplay from './components/CurrentUsersDisplay'
 
@@ -163,6 +164,15 @@ const App = (props) => {
       console.log(store.getState().games)
     }
     getGames()
+  }, [])
+
+  useEffect(() => {
+    async function getRoles() {
+      await props.initializeRoles()
+      console.log(`redux roles init`)
+      console.log(store.getState().roles)
+    }
+    getRoles()
   }, [])
 
   useEffect(() => {
@@ -526,19 +536,12 @@ const App = (props) => {
               note={note}
             />}/>
           <Route path='/total_notes' render={() => <TotalNotes notes={notes}/>}/>
-          <Route path='/current_logged_users' render={() =>
-            <CurrentUserDisplay
-              numberPlayers={numberPlayers}
-              currentUsers={currentUsers}
-              games={games}
-            />
-          }/>
           <Route path='/game_lobby' render={() =>
               <GameLobby
               handleStartGame={handleStartGame}
             />
           }/>
-
+          <Route path='/role_card' component={RoleCard}/>
           <Route path='/create_role_form' render={() =>
             <CreateRoleForm
               handleDeleteRole={handleDeleteRole}

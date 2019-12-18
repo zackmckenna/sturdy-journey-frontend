@@ -58,7 +58,7 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
               <NavLink tag={Link} to='total_users'>Total Users</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to='current_logged_users'>Current Logged In Users</NavLink>
+              <NavLink tag={Link} to='role_card'>Role Card</NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to='create_role_form'>Create Role Form</NavLink>
