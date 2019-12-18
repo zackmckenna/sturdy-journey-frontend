@@ -4,8 +4,9 @@ const notificationReducer = (state =[], action) => {
       return action.data
     case 'DANGER_NOTIFICATION':
       return state.concat(action.data)
+    default:
+      return state
   }
-  return state
 }
 
 export const createSuccessNotification = (message) => {

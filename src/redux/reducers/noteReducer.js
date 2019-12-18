@@ -6,8 +6,9 @@ const noteReducer = (state =[], action) => {
       return state.concat(action.data)
     case 'INIT_NOTES':
       return state.concat(action.data)
+    default:
+      return state
   }
-  return state
 }
 
 export const initializeNotes = () => {

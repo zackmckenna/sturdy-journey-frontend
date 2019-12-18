@@ -6,8 +6,9 @@ const roleReducer = (state =[], action) => {
       return state.concat(action.data)
     case 'INIT_ROLES':
       return state.concat(action.data)
+    default:
+      return state
   }
-  return state
 }
 
 export const initializeRoles = () => {

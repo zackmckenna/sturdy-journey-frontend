@@ -6,8 +6,9 @@ const usersReducer = (state =[], action) => {
       return state.concat(action.data)
     case 'INIT_USERS':
       return state.concat(action.data)
+    default:
+      return state
   }
-  return state
 }
 
 export const initializeUsers = () => {

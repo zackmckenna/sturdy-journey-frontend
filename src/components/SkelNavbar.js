@@ -15,8 +15,12 @@ import {
   NavbarText,
   Button
 } from 'reactstrap';
+import { connect } from 'react-redux'
 
-const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
+const SkelNavbar = ({
+  toggleUserButton,
+  handleLogout,
+  session }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -33,9 +37,9 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">devbar</NavbarBrand>
-        {user ? <NavLink tag={Link} to='home'><Button onClick={handleLogout}>Log Out</Button></NavLink>
+        {session.localUser ? <NavLink tag={Link} to='home'><Button onClick={handleLogout}>Log Out</Button></NavLink>
  : <Button onClick={toggleUserButton} color='primary'>{buttonText()}</Button>}
-        {user ? <p>user: {user.name}</p> : null}
+        {session.localUser ? <p>user: {session.localUser.name}</p> : null}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -52,40 +56,22 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
               <NavLink tag={Link} to='socketTests'>Socket Tests</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to='total_notes'>Total Notes</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to='total_users'>Total Users</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink tag={Link} to='role_card'>Role Card</NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to='create_role_form'>Create Role Form</NavLink>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
           </Nav>
-          <NavbarText>more text</NavbarText>
         </Collapse>
       </Navbar>
     </div>
   );
 }
 
-export default NappzackNavbar;
+const mapStateToProps = function(state) {
+  return {
+    session: state.session
+  }
+}
+
+export default connect(mapStateToProps)(SkelNavbar);

@@ -10,7 +10,8 @@ import { initializeNotes } from './redux/reducers/noteReducer'
 import {  setUser,
           setCurrentUsers,
           setCurrentNumberPlayers,
-          setCurrentPlayerRoles } from './redux/reducers/sessionReducer'
+          setCurrentPlayerRoles,
+          removeUser } from './redux/reducers/sessionReducer'
 // api services
 import usersService from './services/users';
 import notesService from './services/notes';
@@ -23,7 +24,7 @@ import socketIoClient from 'socket.io-client'
 // component imports
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
-import NappzackNavbar from './components/SkelNavbar';
+import SkelNavbar from './components/SkelNavbar';
 import TotalUsers from './components/TotalUsers'
 import UserNotes from './components/UserNotes'
 import Home from './components/Home'
@@ -64,8 +65,6 @@ const App = (props) => {
   const [currentUsers, setCurrentUsers] = useState([]);
   const [roles, setRoles] = useState([])
   const [games, setGames] = useState([])
-  const [currentGame, setCurrentGame] = useState({});
-  const [assignedUsers, setAssignedUsers] = useState([]);
 
   //to do: finish moving all of these to custom hooks
   const roleName = useField('text')
@@ -208,7 +207,7 @@ const App = (props) => {
   const handleLogout = async () => {
     await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
     window.localStorage.removeItem('loggedAppUser')
-    props.setUser(null);
+    await props.removeUser();
     setUser(null)
   }
   // handle socket.io connections
@@ -499,7 +498,7 @@ const App = (props) => {
   return (
     <>
       <Router>
-        <NappzackNavbar
+        <SkelNavbar
           toggleUserButton={toggleUserButton}
           user={user}
           handleLogout={handleLogout}
@@ -524,7 +523,6 @@ const App = (props) => {
               addCurrentUser={addCurrentUser}
             /> } />
           <Route path='/home' component={Home} />
-          <Route path='/total_users' render={() => <TotalUsers users={allUsers}/>}/>
           <Route path='/user_notes' render={() =>
             <UserNotes
               showNoteForm={showNoteForm}
@@ -534,7 +532,6 @@ const App = (props) => {
               handleNoteChange={handleNoteChange}
               note={note}
             />}/>
-          <Route path='/total_notes' render={() => <TotalNotes notes={notes}/>}/>
           <Route path='/game_lobby' render={() =>
               <GameLobby
               handleStartGame={handleStartGame}
@@ -575,7 +572,8 @@ export default connect(null,
   setUser,
   setCurrentUsers,
   setCurrentNumberPlayers,
-  setCurrentPlayerRoles
+  setCurrentPlayerRoles,
+  removeUser
   }
 )(App)
 

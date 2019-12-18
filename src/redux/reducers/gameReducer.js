@@ -6,8 +6,9 @@ const gameReducer = (state =[], action) => {
       return state.concat(action.data)
     case 'INIT_GAMES':
       return state.concat(action.data)
+    default:
+      return state
   }
-  return state
 }
 
 export const initializeGames = () => {

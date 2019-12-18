@@ -1,18 +1,19 @@
 import notesService from '../../services/notes'
-import loginService from '../../services/login'
-
 const sessionReducer = (state =[], action) => {
   switch (action.type) {
     case 'SET_USER':
       return {...state, localUser: action.data}
+    case 'REMOVE_USER':
+      return {...state, localUser: null}
     case 'SET_CURRENT_USERS':
       return  {...state, currentUsers: action.data}
     case 'SET_CURRENT_NUMBER_PLAYERS':
       return {...state, currentNumberPlayers: action.data}
     case 'SET_CURRENT_PLAYER_ROLES':
       return {...state, currentPlayerRoles: action.data}
+    default:
+      return state
   }
-  return state
 }
 
 export const setUser = () => {
@@ -30,6 +31,12 @@ export const setUser = () => {
   }
 }
 
+export const removeUser = () => {
+  return({
+    type: 'REMOVE_USER',
+    data: null
+  })
+}
 export const setCurrentUsers = (currentUsers) => {
   console.log('setting current users')
   console.log(currentUsers)
