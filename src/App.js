@@ -368,38 +368,6 @@ const App = (props) => {
     }
   }
 
-  const testSocket = () => {
-    if (socket) {
-      socket.emit('button')
-    }
-  }
-
-  const disconnectSocket = () => {
-    if (socket) {
-      socket.emit('disconnect')
-    }
-  }
-
-  const testSocketLogin = () => {
-    if (props.user) {
-      socket.emit('login', props.user.name)
-    } else {
-      console.log('no user')
-    }
-  }
-
-  const submitMessage = (event) => {
-    event.preventDefault()
-    if (props.user) {
-      socket.emit('chat message', message)
-      setMessage('')
-    }
-  }
-
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value)
-  }
-
   const addCurrentUser = () => {
     if (props.user) {
       socket.emit('add user', props.user.name)
@@ -496,13 +464,6 @@ const App = (props) => {
         {newUserForm()}
 
         <Switch>
-          <Route path='/socketTests' component={() =>
-            <SocketTests
-              testSocket={testSocket}
-              testSocketLogin={testSocketLogin}
-              disconnectSocket={disconnectSocket}
-              addCurrentUser={addCurrentUser}
-            /> } />
           <Route path='/home' component={Home} />
           <Route path='/user_notes' render={() =>
             <UserNotes

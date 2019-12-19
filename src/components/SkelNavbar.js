@@ -48,9 +48,6 @@ const SkelNavbar = ({
               <NavLink tag={Link} to='user_notes'>User Notes</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to='socketTests'>Socket Tests</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink tag={Link} to='role_card'>Role Card</NavLink>
             </NavItem>
           </Nav>
