@@ -187,6 +187,7 @@ const App = (props) => {
 
   // socket.io connections
   useEffect(() => {
+
       console.log('opening visitors socket . . .')
       socket.on('visitors', async users => {
         console.log('socket.io visitors command received')
@@ -234,17 +235,6 @@ const App = (props) => {
     await props.removeUser();
     setUser(null)
   }
-
-
-
-  // handle socket.io connections
-
-  // useEffect(() => {
-  //   console.log('roles distributed')
-  //   socket.on('distribute roles', async roles => {
-  //     setAssignedUsers(roles)
-  //   })
-  // }, []);
 
   const handleLogin = async (event) => {
     event.preventDefault()
