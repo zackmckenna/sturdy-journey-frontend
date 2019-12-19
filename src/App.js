@@ -14,12 +14,12 @@ import {  setUser,
           removeUser,
           addChatMessage } from './redux/reducers/sessionReducer'
 // api services
-import usersService from './services/users';
+// import usersService from './services/users';
 import notesService from './services/notes';
 import accountService from './services/account';
 import loginService from './services/login';
 import rolesService from './services/roles'
-import gamesService from './services/bitGame';
+// import gamesService from './services/bitGame';
 import socketIoClient from 'socket.io-client'
 
 // component imports
@@ -32,28 +32,29 @@ import SocketTests from './components/SocketTests'
 import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
 import RoleCard from './components/RoleCard'
-import Chatroom from './components/Chatroom'
-import LoginFormRedux from './components/LoginFormRedux'
+import CreateRoleForm from './components/CreateRoleForm';
+// import Chatroom from './components/Chatroom'
+// import LoginFormRedux from './components/LoginFormRedux'
 // import Footer from './components/PageFooter'
-import CurrentUserDisplay from './components/CurrentUsersDisplay'
+// import CurrentUserDisplay from './components/CurrentUsersDisplay'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CreateRoleForm from './components/CreateRoleForm';
 
 // initialize socket.io socket
 const socket = socketIoClient('http://localhost:30725/')
 
 const App = (props) => {
   const store = props.store
-  /*
-  const [roles, setRoles] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [games, setGames] = useState([]);
-  */
+
+  // const [roles, setRoles] = useState([]);
+  // const [users, setUsers] = useState([]);
+  // const [games, setGames] = useState([]);
   // const [user, setUser] = useState(null)
+  // const [games, setGames] = useState([])
+  // const [notes, setNotes] = useState([]);
+  // const [currentUsers, setCurrentUsers] = useState([]);
+  // const [numberPlayers, setNumberPlayers] = useState(0);
   const [note, setNote] = useState('');
-  const [notes, setNotes] = useState([]);
-  const [numberPlayers, setNumberPlayers] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -61,9 +62,7 @@ const App = (props) => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(false);
   const [showNoteForm, setShowNoteForm] = useState(false)
-  const [currentUsers, setCurrentUsers] = useState([]);
   const [roles, setRoles] = useState([])
-  const [games, setGames] = useState([])
   const [message, setMessage] = useState('')
 
   //to do: finish moving all of these to custom hooks
@@ -104,25 +103,26 @@ const App = (props) => {
   //     });
   // }, [])
 
-  useEffect(() => {
-    console.log('set user run')
-    const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
-    if (loggedAppUserJSON) {
-      const user = JSON.parse(loggedAppUserJSON)
-      setUser(user)
-      notesService.setToken(user.token)
-    }
-  }, [])
+  // useEffect(() => {
+  //   console.log('set user run')
+  //   const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
+  //   if (loggedAppUserJSON) {
+  //     const user = JSON.parse(loggedAppUserJSON)
+  //     setUser(user)
+  //     notesService.setToken(user.token)
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    console.log('use effect ran, component mounted')
-    socket.on('visitors', async users => {
-      console.log(users)
-      const filteredUsers = await users.filter(user => user !== null)
-      setCurrentUsers(filteredUsers);
-      setNumberPlayers(filteredUsers.length)
-    })
-  }, []);
+  // useEffect(() => {
+  //   console.log('use effect ran, component mounted')
+  //   socket.on('visitors', async users => {
+  //     console.log(users)
+  //     const filteredUsers = await users.filter(user => user !== null)
+  //     setCurrentUsers(filteredUsers);
+  //     props.setCurrentNumberPlayers(props.currentUsers.length)
+  //     // setNumberPlayers(filteredUsers.length)
+  //   })
+  // }, []);
 
   useEffect(() => {
     console.log('use effect ran, component mounted')
@@ -131,7 +131,10 @@ const App = (props) => {
       await props.setCurrentUsers(filteredUsers);
 
       await setCurrentUsers(filteredUsers);
-      setNumberPlayers(filteredUsers.length)
+      if(props.currentNumberPlayers) {
+        props.setCurrentNumberPlayers(props.currentUsers.length)
+      }
+      // setNumberPlayers(filteredUsers.length)
     })
   }, []);
 
@@ -140,7 +143,7 @@ const App = (props) => {
 
   useEffect(() => {
     async function getNotes() {
-      await props.initializeNotes(notes)
+      await props.initializeNotes()
       console.log(`redux notes init`)
       console.log(store.getState().notes)
     }
@@ -229,7 +232,6 @@ const App = (props) => {
   //   })
   // }, []);
 
-  console.log(props.user)
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -321,9 +323,7 @@ const App = (props) => {
       await notesService.create(newNoteObject)
       createNotification('Note has been added', setSuccessMessage, 5000)
       toggleNoteForm()
-      await notesService.getAll().then(newNotes => {
-        setNotes(newNotes)
-      })
+      props.initialNotes()
     } catch(exception) {
       console.log(exception)
     }
@@ -376,10 +376,7 @@ const App = (props) => {
     }
     await notesService.deleteNote(event.target.id)
     createNotification(`note deleted`, setSuccessMessage, 5000)
-    notesService
-      .getAll().then(initialNotes => {
-        setNotes(initialNotes)
-      })
+    props.initializeNotes()
   }
 
   const handleDeleteRole = async (event) => {
@@ -468,11 +465,12 @@ const App = (props) => {
   const shuffle = (array) => {
     return array.sort(() => Math.random() - 0.5);
   }
-
+  console.log(props.games)
   const distributeRoles = () => {
-    if (numberPlayers >= 4) {
+    if (props.currentNumberPlayers >= 4) {
       // const inRoomUsers = Object.values(store.getState().session.currentUsers)
-      const currentGameThing = store.getState().games.filter(game => game.numberPlayer === numberPlayers)[0]
+      const currentGameThing = props.games.filter(game => game.numberPlayer === props.currentNumberPlayers)[0]
+      console.log(currentGameThing)
       let rolesArray = []
       let alignmentArray = []
       let captainArray = []
@@ -492,7 +490,7 @@ const App = (props) => {
       console.log(captainArray)
       rolesArray = rolesArray.concat(captainArray)
       rolesArray = shuffle(rolesArray)
-      const assignedUsersArray = currentUsers.map((user, index) => {
+      const assignedUsersArray = props.currentUsers.map((user, index) => {
         user = {
           ...user,
           role: rolesArray[index]
@@ -589,7 +587,10 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return{
-    user: state.session.localUser
+    user: state.session.localUser,
+    currentUsers: state.session.currentUsers,
+    currentNumberPlayers: state.session.currentNumberPlayers,
+    games: state.games
   }
 }
 
