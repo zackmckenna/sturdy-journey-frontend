@@ -5,9 +5,9 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './style/app.css'
-import store from './redux/createStore'
+import configureStore from './redux/configureStore'
 
-
+const store = configureStore();
 
 const rootElement = document.getElementById('root')
 

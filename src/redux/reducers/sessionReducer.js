@@ -1,5 +1,6 @@
 import notesService from '../../services/notes'
-// import loginService from '../../services/login'
+import loginService from '../../services/login'
+import thunk from 'redux-thunk'
 
 const sessionReducer = (state =[], action) => {
   switch (action.type) {
@@ -75,38 +76,5 @@ export const setCurrentPlayerRoles = (currentPlayerRoles) => {
     data: currentPlayerRoles
   })
 }
-
-// export const handleLogin = async (credentials) => {
-//   console.log('handling login...')
-//   try {
-//         const user = await loginService.login({
-//           username, password
-//         })
-//   return({
-//     type:'LOGIN_USER',
-//     data: credentials
-//   })
-// }
-// const handleLogin = async (event) => {
-//   event.preventDefault()
-//   try {
-//     const user = await loginService.login({
-//       username, password
-//     })
-
-//     window.localStorage.setItem(
-//       'loggedAppUser', JSON.stringify(user)
-//     )
-//     socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
-//     createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
-//     console.log(`Logging in with ${username}.`)
-//     notesService.setToken(user.token)
-//     setUser(user)
-//     setUsername('')
-//     setPassword('')
-//   } catch (exception) {
-//     createNotification('wrong credentials', setErrorMessage, 5000)
-//   }
-// }
 
 export default sessionReducer

@@ -12,7 +12,8 @@ import {  setUser,
           setCurrentNumberPlayers,
           setCurrentPlayerRoles,
           removeUser,
-          addChatMessage } from './redux/reducers/sessionReducer'
+          addChatMessage
+        } from './redux/reducers/sessionReducer'
 // api services
 // import usersService from './services/users';
 import notesService from './services/notes';
@@ -34,7 +35,7 @@ import GameLobby from './components/GameLobby'
 import RoleCard from './components/RoleCard'
 import CreateRoleForm from './components/CreateRoleForm';
 // import Chatroom from './components/Chatroom'
-// import LoginFormRedux from './components/LoginFormRedux'
+import LoginFormRedux from './components/LoginFormRedux'
 // import Footer from './components/PageFooter'
 // import CurrentUserDisplay from './components/CurrentUsersDisplay'
 
@@ -139,6 +140,10 @@ const App = (props) => {
   //     }
   //   })
   // }, []);
+
+  console.log(JSON.stringify(props.loginForm))
+  console.log((props.loginForm['object Object']))
+  console.log(props.loginForm.password)
 
   useEffect(() => {
     async function getNotes() {
@@ -482,7 +487,7 @@ const App = (props) => {
           <Route path='/role_card' component={RoleCard}/>
         </Switch>
       </Router>
-      {/* <LoginFormRedux /> */}
+      {/* <LoginFormRedux handleLogin={props.handleLogin}/> */}
       {/* <Chatroom message={message} handleMessageChange={handleMessageChange} submitMessage={submitMessage}/> */}
       {/* <Footer /> */}
 
@@ -496,7 +501,8 @@ const mapStateToProps = (state) => {
     user: state.session.localUser,
     currentUsers: state.session.currentUsers,
     currentNumberPlayers: state.session.currentNumberPlayers,
-    games: state.games
+    games: state.games,
+    loginForm: state.loginForm
   }
 }
 
@@ -511,7 +517,7 @@ export default connect((mapStateToProps),
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
   removeUser,
-  addChatMessage
+  addChatMessage,
   }
 )(App)
 

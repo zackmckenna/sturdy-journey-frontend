@@ -1,32 +1,36 @@
 import React from 'react';
-import { Button, Label, FormGroup} from 'reactstrap';
-import { Control, Form } from 'react-redux-form'
+import { Button, Label, FormGroup, Form } from 'reactstrap';
+import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 
 
-const LoginForm = ({
-  handleUsernameChange,
-  handlePasswordChange,
-  // handleLogin
-  }) => {
-
-  const handleLogin= (user) =>{
-    console.log(user)
-  }
+let LoginFormRedux = props => {
 
   return (
-
-    <Form model='user' inline onSubmit={(user) => handleLogin(user)}>
-      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-        <Label for="exampleUsername" className="mr-sm-2">Username</Label>
-        <Control.text model='user.username' id='user.username' />
-      </FormGroup>
-      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-        <Label for="password" className="mr-sm-2">Password</Label>
-        <Control.text model='user.password' id='user.password'/>
-      </FormGroup>
-      <Button type='submit' color='success'>Login</Button>
-    </Form>
+    <>
+      <form onSubmit={props.handleLogin}>
+        <FormGroup>
+            <Label htmlFor='username'>Username</Label>
+            <Field name='username' component='input' type='text'/>
+        </FormGroup>
+        <div>
+          <Label htmlFor='password'>Password</Label>
+          <Field name='password' component='input' type='text'/>
+        </div>
+        <Button type='submit'>Submit</Button>
+      </form>
+    </>
   );
 }
 
-export default LoginForm;
+LoginFormRedux = reduxForm({
+  form: 'login'
+})(LoginFormRedux)
+
+const mapStateToProps = function(state) {
+  return {
+    form: state.loginForm
+  }
+}
+
+export default connect(mapStateToProps)(LoginFormRedux);
