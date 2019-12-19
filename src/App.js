@@ -124,27 +124,26 @@ const App = (props) => {
   //   })
   // }, []);
 
-  useEffect(() => {
-    console.log('use effect ran, component mounted')
-    socket.on('visitors', async users => {
-      const filteredUsers = await users.filter(user => user !== null)
-      await props.setCurrentUsers(filteredUsers);
-
-      await setCurrentUsers(filteredUsers);
-      if(props.currentNumberPlayers) {
-        props.setCurrentNumberPlayers(props.currentUsers.length)
-      }
-      // setNumberPlayers(filteredUsers.length)
-    })
-  }, []);
-
   // REDUX get games, users, notes and roles
   // and store in REDUX STORE
+
+  // useEffect(() => {
+  //   console.log('use effect ran, component mounted')
+  //   socket.on('visitors', async users => {
+  //     const filteredUsers = await users.filter(user => user !== null)
+  //     await props.setCurrentUsers(filteredUsers);
+
+  //     await setCurrentUsers(filteredUsers);
+  //     if(props.currentNumberPlayers) {
+  //       props.setCurrentNumberPlayers(props.currentUsers.length)
+  //     }
+  //   })
+  // }, []);
 
   useEffect(() => {
     async function getNotes() {
       await props.initializeNotes()
-      console.log(`redux notes init`)
+      console.log(`set notes in redux from notes api:`)
       console.log(store.getState().notes)
     }
     getNotes()
@@ -153,7 +152,7 @@ const App = (props) => {
   useEffect(() => {
     async function getUsers() {
       await props.initializeUsers()
-      console.log(`redux users init`)
+      console.log(`set total users in redux from users api:`)
       console.log(store.getState().users)
     }
     getUsers()
@@ -162,7 +161,7 @@ const App = (props) => {
   useEffect(() => {
     async function getGames() {
       await props.initializeGames()
-      console.log(`redux games init`)
+      console.log(`set all games in redux from games api:`)
       console.log(store.getState().games)
     }
     getGames()
@@ -171,7 +170,7 @@ const App = (props) => {
   useEffect(() => {
     async function getRoles() {
       await props.initializeRoles()
-      console.log(`redux roles init`)
+      console.log(`redux roles init:`)
       console.log(store.getState().roles)
     }
     getRoles()
@@ -180,39 +179,54 @@ const App = (props) => {
   useEffect(() => {
     async function setLocalUser() {
       await props.setUser()
-      console.log(`set user redux`)
-      console.log(store.getState().session)
+      console.log(`set user in redux:`)
+      props.user ? console.log(props.user) : console.log('no current user')
     }
     setLocalUser()
   }, [])
 
+  // socket.io connections
   useEffect(() => {
-    console.log('running visitors socket')
-    socket.on('visitors', async users => {
+      console.log('opening visitors socket . . .')
+      socket.on('visitors', async users => {
+        console.log('socket.io visitors command received')
+        const filteredUsers = await users.filter(user => user != null)
+        await props.setCurrentUsers(filteredUsers);
+        await props.setCurrentNumberPlayers(filteredUsers.length)
+        console.log(store.getState().session)
 
-      const filteredUsers = await users.filter(user => user != null)
-      console.log('filter use', filteredUsers)
-      await props.setCurrentUsers(filteredUsers);
-      await props.setCurrentNumberPlayers(filteredUsers.length)
-      console.log(store.getState().session)
-      // setNumberPlayers(filteredUsers.length)
+      console.log('opening distribute roles socket . . .')
+      socket.on('distribute roles', async roles => {
+        await props.setCurrentPlayerRoles(roles)
+        console.log(store.getState().session)
+      })
+
+      socket.on('chat message', async message => {
+        console.log(message)
+        props.addChatMessage(message, window.localStorage.loggedAppUser)
+      })
+
     })
   }, []);
 
-  useEffect(() => {
-    console.log('distributing roles to redux')
-    socket.on('distribute roles', async roles => {
-      await props.setCurrentPlayerRoles(roles)
-      console.log(store.getState().session)
-    })
-  }, [])
+  // useEffect(() => {
+  //   console.log('opening distribute roles socket . . .')
+  //   socket.on('distribute roles', async roles => {
+  //     await props.setCurrentPlayerRoles(roles)
+  //     console.log(store.getState().session)
+  //   })
+  //   socket.on('chat message', async message => {
+  //     console.log(message)
+  //     props.addChatMessage(message, window.localStorage.loggedAppUser)
+  //   })
+  // }, [])
 
-  useEffect(() => {
-    socket.on('chat message', async message => {
-      console.log(message)
-      props.addChatMessage(message, window.localStorage.loggedAppUser)
-    })
-  }, [])
+  // useEffect(() => {
+  //   socket.on('chat message', async message => {
+  //     console.log(message)
+  //     props.addChatMessage(message, window.localStorage.loggedAppUser)
+  //   })
+  // }, [])
 
   const handleLogout = async () => {
     await socket.emit('remove_user', {username:props.user.username, name: props.user.name, id: props.user.id})
@@ -465,7 +479,7 @@ const App = (props) => {
   const shuffle = (array) => {
     return array.sort(() => Math.random() - 0.5);
   }
-  console.log(props.games)
+
   const distributeRoles = () => {
     if (props.currentNumberPlayers >= 4) {
       // const inRoomUsers = Object.values(store.getState().session.currentUsers)
