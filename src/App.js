@@ -11,7 +11,8 @@ import {  setUser,
           setCurrentUsers,
           setCurrentNumberPlayers,
           setCurrentPlayerRoles,
-          removeUser } from './redux/reducers/sessionReducer'
+          removeUser,
+          addChatMessage } from './redux/reducers/sessionReducer'
 // api services
 import usersService from './services/users';
 import notesService from './services/notes';
@@ -65,6 +66,7 @@ const App = (props) => {
   const [currentUsers, setCurrentUsers] = useState([]);
   const [roles, setRoles] = useState([])
   const [games, setGames] = useState([])
+  const [message, setMessage] = useState('')
 
   //to do: finish moving all of these to custom hooks
   const roleName = useField('text')
@@ -133,7 +135,6 @@ const App = (props) => {
       await setCurrentUsers(filteredUsers);
       setNumberPlayers(filteredUsers.length)
     })
-    socket.on('chat message')
   }, []);
 
   // REDUX get games, users, notes and roles
@@ -205,12 +206,22 @@ const App = (props) => {
     })
   }, [])
 
+  useEffect(() => {
+    socket.on('chat message', async message => {
+      console.log(message)
+      props.addChatMessage(message, window.localStorage.loggedAppUser)
+    })
+  }, [])
+
   const handleLogout = async () => {
     await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
     window.localStorage.removeItem('loggedAppUser')
     await props.removeUser();
     setUser(null)
   }
+
+
+
   // handle socket.io connections
 
   // useEffect(() => {
@@ -421,6 +432,18 @@ const App = (props) => {
     }
   }
 
+  const submitMessage = (event) => {
+    event.preventDefault()
+    if (user) {
+      socket.emit('chat message', message)
+      setMessage('')
+    }
+  }
+
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value)
+  }
+
   const addCurrentUser = () => {
     if (user) {
       socket.emit('add user', user.name)
@@ -558,8 +581,9 @@ const App = (props) => {
         </Switch>
       </Router>
       {/* <LoginFormRedux /> */}
-      <Chatroom />
+      <Chatroom message={message} handleMessageChange={handleMessageChange} submitMessage={submitMessage}/>
       {/* <Footer /> */}
+
 
     </>
   )
@@ -575,7 +599,8 @@ export default connect(null,
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
-  removeUser
+  removeUser,
+  addChatMessage
   }
 )(App)
 

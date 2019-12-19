@@ -13,6 +13,8 @@ const sessionReducer = (state =[], action) => {
       return {...state, currentNumberPlayers: action.data}
     case 'SET_CURRENT_PLAYER_ROLES':
       return {...state, currentPlayerRoles: action.data}
+    case 'ADD_CHAT_MESSAGE':
+      return {...state, messages: action.data}
     case 'LOGIN_USER':
       return state
     default:
@@ -33,6 +35,14 @@ export const setUser = () => {
       })
     }
   }
+}
+
+export const addChatMessage = (message, user) => {
+  return({
+    type: 'ADD_CHAT_MESSAGE',
+    data: {message: message,
+          user: user}
+  })
 }
 
 export const removeUser = () => {
