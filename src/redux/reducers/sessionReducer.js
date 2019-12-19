@@ -1,4 +1,6 @@
 import notesService from '../../services/notes'
+// import loginService from '../../services/login'
+
 const sessionReducer = (state =[], action) => {
   switch (action.type) {
     case 'SET_USER':
@@ -11,6 +13,8 @@ const sessionReducer = (state =[], action) => {
       return {...state, currentNumberPlayers: action.data}
     case 'SET_CURRENT_PLAYER_ROLES':
       return {...state, currentPlayerRoles: action.data}
+    case 'LOGIN_USER':
+      return state
     default:
       return state
   }
@@ -62,24 +66,17 @@ export const setCurrentPlayerRoles = (currentPlayerRoles) => {
   })
 }
 
-// export const setNumberPlayers = () => {
-
-// }
-
-// export const setCurrentUsers = async () => {
-//   console.log('set current users run')
-//   const filteredUsers = await users.filter(user => user !== null)
-
-//   await setCurrentUsers(filteredUsers);
-//   setNumberPlayers(filteredUsers.length)
-// }
-
-// export const loginUser = async () => {
+// export const handleLogin = async (credentials) => {
+//   console.log('handling login...')
 //   try {
-
-//   }
+//         const user = await loginService.login({
+//           username, password
+//         })
+//   return({
+//     type:'LOGIN_USER',
+//     data: credentials
+//   })
 // }
-
 // const handleLogin = async (event) => {
 //   event.preventDefault()
 //   try {

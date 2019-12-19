@@ -25,14 +25,14 @@ import socketIoClient from 'socket.io-client'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import SkelNavbar from './components/SkelNavbar';
-import TotalUsers from './components/TotalUsers'
 import UserNotes from './components/UserNotes'
 import Home from './components/Home'
 import SocketTests from './components/SocketTests'
 import NewUser from './components/NewUser'
-import TotalNotes from  './components/TotalNotes'
 import GameLobby from './components/GameLobby'
 import RoleCard from './components/RoleCard'
+import Chatroom from './components/Chatroom'
+import LoginFormRedux from './components/LoginFormRedux'
 // import Footer from './components/PageFooter'
 import CurrentUserDisplay from './components/CurrentUsersDisplay'
 
@@ -133,6 +133,7 @@ const App = (props) => {
       await setCurrentUsers(filteredUsers);
       setNumberPlayers(filteredUsers.length)
     })
+    socket.on('chat message')
   }, []);
 
   // REDUX get games, users, notes and roles
@@ -556,7 +557,8 @@ const App = (props) => {
             />}/>
         </Switch>
       </Router>
-
+      {/* <LoginFormRedux /> */}
+      <Chatroom />
       {/* <Footer /> */}
 
     </>

@@ -14,10 +14,8 @@ const GameLobby = ({
   if (currentGameSession.currentNumberPlayers >= 4) {
     currentGame = games.filter(game => game.numberPlayer === currentGameSession.currentNumberPlayers)[0]
   }
-  console.log(currentGameSession)
   if (currentGameSession.currentPlayerRoles && currentGameSession.localUser) {
     playerRole = currentGameSession.currentPlayerRoles.filter(playerRole => playerRole.userId === currentGameSession.localUser.id)[0]
-    console.log(playerRole)
   }
 
   const renderCurrentGame = () => {
@@ -47,7 +45,6 @@ const GameLobby = ({
       </>
     )
   } else {
-    console.log('no users')
     return (
       <h3>no current users detected.</h3>
     )
