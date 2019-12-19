@@ -3,9 +3,9 @@ import usersService from '../../services/users'
 const usersReducer = (state =[], action) => {
   switch (action.type) {
     case 'NEW_USER':
-      return state.concat(action.data)
+      return [...state, action.data]
     case 'INIT_USERS':
-      return state.concat(action.data)
+      return [...state, action.data]
     default:
       return state
   }

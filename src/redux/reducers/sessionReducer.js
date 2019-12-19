@@ -46,6 +46,7 @@ export const addChatMessage = (message, user) => {
 }
 
 export const removeUser = () => {
+  window.localStorage.removeItem('loggedAppUser')
   return({
     type: 'REMOVE_USER',
     data: null

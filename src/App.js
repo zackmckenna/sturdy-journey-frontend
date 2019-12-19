@@ -29,15 +29,9 @@ import Notification from './components/Notification'
 import SkelNavbar from './components/SkelNavbar';
 import UserNotes from './components/UserNotes'
 import Home from './components/Home'
-import SocketTests from './components/SocketTests'
 import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
 import RoleCard from './components/RoleCard'
-import CreateRoleForm from './components/CreateRoleForm';
-// import Chatroom from './components/Chatroom'
-import LoginFormRedux from './components/LoginFormRedux'
-// import Footer from './components/PageFooter'
-// import CurrentUserDisplay from './components/CurrentUsersDisplay'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -47,16 +41,6 @@ const socket = socketIoClient('http://localhost:30725/')
 const App = (props) => {
   const store = props.store
 
-  // const [roles, setRoles] = useState([]);
-  // const [users, setUsers] = useState([]);
-  // const [games, setGames] = useState([]);
-  // const [user, setUser] = useState(null)
-  // const [games, setGames] = useState([])
-  // const [notes, setNotes] = useState([]);
-  // const [currentUsers, setCurrentUsers] = useState([]);
-  // const [numberPlayers, setNumberPlayers] = useState(0);
-  // const [roles, setRoles] = useState([])
-  // const [message, setMessage] = useState('')
   const [note, setNote] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -65,78 +49,6 @@ const App = (props) => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(false);
   const [showNoteForm, setShowNoteForm] = useState(false)
-
-  // OLD, MOVED TO REDUX, MUST CHANGE DEPENDANT
-  // COMPONENTS TO USE REDUX STATE
-
-  // useEffect(() => {
-  //   notesService
-  //     .getAll().then(initialNotes => {
-  //       setNotes(initialNotes)
-  //     });
-  // }, [])
-
-  // useEffect(() => {
-  //   rolesService
-  //     .getAll().then(initialRoles => {
-  //       setRoles(initialRoles)
-  //     });
-  // }, [])
-
-  // useEffect(() => {
-  //   gamesService
-  //     .getAll().then(initialGames => {
-  //       setGames(initialGames)
-  //     });
-  // }, [])
-
-  // useEffect(() => {
-  //   usersService
-  //     .getAll().then(initialUsers => {
-  //       setAllUsers(initialUsers)
-  //     });
-  // }, [])
-
-  // useEffect(() => {
-  //   console.log('set user run')
-  //   const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
-  //   if (loggedAppUserJSON) {
-  //     const user = JSON.parse(loggedAppUserJSON)
-  //     setUser(user)
-  //     notesService.setToken(user.token)
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   console.log('use effect ran, component mounted')
-  //   socket.on('visitors', async users => {
-  //     console.log(users)
-  //     const filteredUsers = await users.filter(user => user !== null)
-  //     setCurrentUsers(filteredUsers);
-  //     props.setCurrentNumberPlayers(props.currentUsers.length)
-  //     // setNumberPlayers(filteredUsers.length)
-  //   })
-  // }, []);
-
-  // REDUX get games, users, notes and roles
-  // and store in REDUX STORE
-
-  // useEffect(() => {
-  //   console.log('use effect ran, component mounted')
-  //   socket.on('visitors', async users => {
-  //     const filteredUsers = await users.filter(user => user !== null)
-  //     await props.setCurrentUsers(filteredUsers);
-
-  //     await setCurrentUsers(filteredUsers);
-  //     if(props.currentNumberPlayers) {
-  //       props.setCurrentNumberPlayers(props.currentUsers.length)
-  //     }
-  //   })
-  // }, []);
-
-  console.log(JSON.stringify(props.loginForm))
-  console.log((props.loginForm['object Object']))
-  console.log(props.loginForm.password)
 
   useEffect(() => {
     async function getNotes() {
@@ -208,30 +120,9 @@ const App = (props) => {
     })
   }, []);
 
-  // useEffect(() => {
-  //   console.log('opening distribute roles socket . . .')
-  //   socket.on('distribute roles', async roles => {
-  //     await props.setCurrentPlayerRoles(roles)
-  //     console.log(store.getState().session)
-  //   })
-  //   socket.on('chat message', async message => {
-  //     console.log(message)
-  //     props.addChatMessage(message, window.localStorage.loggedAppUser)
-  //   })
-  // }, [])
-
-  // useEffect(() => {
-  //   socket.on('chat message', async message => {
-  //     console.log(message)
-  //     props.addChatMessage(message, window.localStorage.loggedAppUser)
-  //   })
-  // }, [])
-
   const handleLogout = async () => {
     await socket.emit('remove_user', {username:props.user.username, name: props.user.name, id: props.user.id})
-    window.localStorage.removeItem('loggedAppUser')
-    await props.removeUser();
-    setUser(null)
+    props.removeUser();
   }
 
   const handleLogin = async (event) => {
@@ -246,7 +137,7 @@ const App = (props) => {
       socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
       createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
       console.log(`Logging in with ${username}.`)
-      notesService.setToken(user.token)
+      // notesService.setToken(user.token)
       props.setUser(user)
       setUser(user)
       setUsername('')
@@ -255,13 +146,6 @@ const App = (props) => {
       createNotification('wrong credentials', setErrorMessage, 5000)
     }
   }
-
-
-  // const handleLogout = async () => {
-  //   await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
-  //   window.localStorage.removeItem('loggedAppUser')
-  //   setUser(null);
-  // }
 
   const handleCreateAccount = async (event) => {
     event.preventDefault()
