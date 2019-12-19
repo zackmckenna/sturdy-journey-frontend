@@ -1,6 +1,5 @@
 import notesService from '../../services/notes'
 import loginService from '../../services/login'
-import thunk from 'redux-thunk'
 
 const sessionReducer = (state =[], action) => {
   switch (action.type) {

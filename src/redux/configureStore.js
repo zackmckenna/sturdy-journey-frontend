@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware  } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { reducer as formReducer } from 'redux-form'
-import { combineForms } from 'react-redux-form'
 
 import noteReducer from './reducers/noteReducer'
 import usersReducer from './reducers/usersReducer'

@@ -55,6 +55,8 @@ const App = (props) => {
   // const [notes, setNotes] = useState([]);
   // const [currentUsers, setCurrentUsers] = useState([]);
   // const [numberPlayers, setNumberPlayers] = useState(0);
+  // const [roles, setRoles] = useState([])
+  // const [message, setMessage] = useState('')
   const [note, setNote] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -63,15 +65,6 @@ const App = (props) => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(false);
   const [showNoteForm, setShowNoteForm] = useState(false)
-  const [roles, setRoles] = useState([])
-  const [message, setMessage] = useState('')
-
-  //to do: finish moving all of these to custom hooks
-  const roleName = useField('text')
-  const [roleAlignment, setRoleAlignment] = useState('')
-  const [roleDescription, setRoleDescription] = useState('')
-  const [roleActions, setRoleActions] = useState('')
-  const [roleBoolean, setRoleBoolean] = useState(null)
 
   // OLD, MOVED TO REDUX, MUST CHANGE DEPENDANT
   // COMPONENTS TO USE REDUX STATE
@@ -345,18 +338,6 @@ const App = (props) => {
     props.initializeNotes()
   }
 
-  const handleDeleteRole = async (event) => {
-    event.preventDefault()
-    if(window.confirm('are you sure you want to delete note?')) {
-      console.log(event.target.id);
-    }
-    await rolesService.deleteRole(event.target.id)
-    rolesService
-      .getAll().then(initialRoles => {
-        setRoles(initialRoles)
-      })
-  }
-
   const newUserForm = () => {
     if (newUserButton) {
       return(
@@ -517,7 +498,7 @@ export default connect((mapStateToProps),
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
   removeUser,
-  addChatMessage,
+  addChatMessage
   }
 )(App)
 
