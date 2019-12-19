@@ -50,9 +50,7 @@ const App = (props) => {
   const [users, setUsers] = useState([]);
   const [games, setGames] = useState([]);
   */
-  const [user, setUser] = useState(null)
-  const [userRole, setUserRole] = useState('')
-  const [allUsers, setAllUsers] = useState([])
+  // const [user, setUser] = useState(null)
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
   const [numberPlayers, setNumberPlayers] = useState(0);
@@ -78,33 +76,33 @@ const App = (props) => {
   // OLD, MOVED TO REDUX, MUST CHANGE DEPENDANT
   // COMPONENTS TO USE REDUX STATE
 
-  useEffect(() => {
-    notesService
-      .getAll().then(initialNotes => {
-        setNotes(initialNotes)
-      });
-  }, [])
+  // useEffect(() => {
+  //   notesService
+  //     .getAll().then(initialNotes => {
+  //       setNotes(initialNotes)
+  //     });
+  // }, [])
 
-  useEffect(() => {
-    rolesService
-      .getAll().then(initialRoles => {
-        setRoles(initialRoles)
-      });
-  }, [])
+  // useEffect(() => {
+  //   rolesService
+  //     .getAll().then(initialRoles => {
+  //       setRoles(initialRoles)
+  //     });
+  // }, [])
 
-  useEffect(() => {
-    gamesService
-      .getAll().then(initialGames => {
-        setGames(initialGames)
-      });
-  }, [])
+  // useEffect(() => {
+  //   gamesService
+  //     .getAll().then(initialGames => {
+  //       setGames(initialGames)
+  //     });
+  // }, [])
 
-  useEffect(() => {
-    usersService
-      .getAll().then(initialUsers => {
-        setAllUsers(initialUsers)
-      });
-  }, [])
+  // useEffect(() => {
+  //   usersService
+  //     .getAll().then(initialUsers => {
+  //       setAllUsers(initialUsers)
+  //     });
+  // }, [])
 
   useEffect(() => {
     console.log('set user run')
@@ -214,7 +212,7 @@ const App = (props) => {
   }, [])
 
   const handleLogout = async () => {
-    await socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
+    await socket.emit('remove_user', {username:props.user.username, name: props.user.name, id: props.user.id})
     window.localStorage.removeItem('loggedAppUser')
     await props.removeUser();
     setUser(null)
@@ -231,7 +229,7 @@ const App = (props) => {
   //   })
   // }, []);
 
-
+  console.log(props.user)
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -318,7 +316,7 @@ const App = (props) => {
     try{
       const newNoteObject = {
         content: note,
-        user: user
+        user: props.user
       }
       await notesService.create(newNoteObject)
       createNotification('Note has been added', setSuccessMessage, 5000)
@@ -425,8 +423,8 @@ const App = (props) => {
   }
 
   const testSocketLogin = () => {
-    if (user) {
-      socket.emit('login', user.name)
+    if (props.user) {
+      socket.emit('login', props.user.name)
     } else {
       console.log('no user')
     }
@@ -434,7 +432,7 @@ const App = (props) => {
 
   const submitMessage = (event) => {
     event.preventDefault()
-    if (user) {
+    if (props.user) {
       socket.emit('chat message', message)
       setMessage('')
     }
@@ -445,8 +443,8 @@ const App = (props) => {
   }
 
   const addCurrentUser = () => {
-    if (user) {
-      socket.emit('add user', user.name)
+    if (props.user) {
+      socket.emit('add user', props.user.name)
     } else {
       console.log('no user')
     }
@@ -473,8 +471,8 @@ const App = (props) => {
 
   const distributeRoles = () => {
     if (numberPlayers >= 4) {
-      const inRoomUsers = Object.values(currentUsers)
-      const currentGameThing = games.filter(game => game.numberPlayer === numberPlayers)[0]
+      // const inRoomUsers = Object.values(store.getState().session.currentUsers)
+      const currentGameThing = store.getState().games.filter(game => game.numberPlayer === numberPlayers)[0]
       let rolesArray = []
       let alignmentArray = []
       let captainArray = []
@@ -506,7 +504,7 @@ const App = (props) => {
   }
 
   const loginForm = () => {
-    if (newUserButton || user) {
+    if (newUserButton || props.user) {
       return (
         null
       )
@@ -524,7 +522,7 @@ const App = (props) => {
       <Router>
         <SkelNavbar
           toggleUserButton={toggleUserButton}
-          user={user}
+          user={props.user}
           handleLogout={handleLogout}
         />
         <Notification
@@ -581,7 +579,7 @@ const App = (props) => {
         </Switch>
       </Router>
       {/* <LoginFormRedux /> */}
-      <Chatroom message={message} handleMessageChange={handleMessageChange} submitMessage={submitMessage}/>
+      {/* <Chatroom message={message} handleMessageChange={handleMessageChange} submitMessage={submitMessage}/> */}
       {/* <Footer /> */}
 
 
@@ -589,7 +587,13 @@ const App = (props) => {
   )
 }
 
-export default connect(null,
+const mapStateToProps = (state) => {
+  return{
+    user: state.session.localUser
+  }
+}
+
+export default connect((mapStateToProps),
   {
   initializeNotes,
   initializeGames,
