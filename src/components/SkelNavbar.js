@@ -53,9 +53,6 @@ const SkelNavbar = ({
             <NavItem>
               <NavLink tag={Link} to='role_card'>Role Card</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to='create_role_form'>Create Role Form</NavLink>
-            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>

@@ -265,33 +265,6 @@ const App = (props) => {
   //   setUser(null);
   // }
 
-  const handleCreateRole = async (event) => {
-    event.preventDefault()
-    try {
-      const newRoleObject = {
-        name: roleName.value,
-        alignment: roleAlignment,
-        description: roleDescription,
-        actions: roleActions,
-      }
-      await rolesService.create(newRoleObject)
-      createNotification(`${roleName.value} created!`, setSuccessMessage, 5000)
-      rolesService
-        .getAll().then(initialRoles => {
-          setRoles(initialRoles)
-        })
-      setRoleActions('')
-      roleName.reset()
-      // setRoleName('')
-      setRoleAlignment('')
-      setRoleDescription('')
-      setRoleBoolean('')
-    } catch (error) {
-      createNotification('could not create role', setErrorMessage, 5000);
-      console.log(error)
-    }
-  }
-
   const handleCreateAccount = async (event) => {
     event.preventDefault()
     try {
@@ -355,22 +328,6 @@ const App = (props) => {
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value)
-  }
-
-  const handleRoleAlignmentChange = (event) => {
-    setRoleAlignment(event.target.value)
-  }
-
-  const handleRoleDescriptionChange = (event) => {
-    setRoleDescription(event.target.value)
-  }
-
-  const handleRoleActionsChange = (event) => {
-    setRoleActions(event.target.value)
-  }
-
-  const handleRoleBooleanChange = (event) => {
-    setRoleBoolean(event.target.value)
   }
 
   const handleDeleteNote =  async (event) => {
@@ -562,22 +519,6 @@ const App = (props) => {
             />
           }/>
           <Route path='/role_card' component={RoleCard}/>
-          <Route path='/create_role_form' render={() =>
-            <CreateRoleForm
-              handleDeleteRole={handleDeleteRole}
-              roles={roles}
-              roleAlignment={roleAlignment}
-              roleName={roleName}
-              roleDescription={roleDescription}
-              roleBoolean={roleBoolean}
-              roleActions={roleActions}
-              handleCreateRole={handleCreateRole}
-              // handleRoleNameChange={handleRoleNameChange}
-              handleRoleAlignmentChange={handleRoleAlignmentChange}
-              handleRoleDescriptionChange={handleRoleDescriptionChange}
-              handleRoleActionsChange={handleRoleActionsChange}
-              handleRoleBooleanChange={handleRoleBooleanChange}
-            />}/>
         </Switch>
       </Router>
       {/* <LoginFormRedux /> */}
