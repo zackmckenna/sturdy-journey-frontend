@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 //redux reducers
 import { setUser,
-          removeUser,
+          removeUserFromSession,
           setCurrentUsers,
           setCurrentNumberPlayers,
           setCurrentPlayerRoles,
@@ -116,10 +116,10 @@ const App = (props) => {
     })
   }, []);
 
-  const handleLogout = async () => {
-    await socket.emit('remove_user', {username:props.user.username, name: props.user.name, id: props.user.id})
-    props.removeUser();
-  }
+  // const handleLogout = async () => {
+  //   await socket.emit('remove_user', {username:props.user.username, name: props.user.name, id: props.user.id})
+  //   props.removeUser();
+  // }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -297,7 +297,7 @@ const App = (props) => {
   }
 
   const loginForm = () => {
-    if (newUserButton || props.user) {
+    if (props.user) {
       return (
         null
       )
@@ -316,7 +316,7 @@ const App = (props) => {
         <SkelNavbar
           toggleUserButton={toggleUserButton}
           user={props.user}
-          handleLogout={handleLogout}
+          // handleLogout={handleLogout}
         />
         <Notification
           notificationColor={'danger'}
@@ -377,7 +377,7 @@ export default connect((mapStateToProps),
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
-  removeUser
+  removeUserFromSession
   }
 )(App)
 

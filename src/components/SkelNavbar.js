@@ -11,6 +11,7 @@ import {
   Button
 } from 'reactstrap';
 import { connect } from 'react-redux'
+import { removeUserFromSession } from '../redux/actionCreators'
 
 const SkelNavbar = ({
   toggleUserButton,
@@ -32,7 +33,7 @@ const SkelNavbar = ({
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">devbar</NavbarBrand>
-        {session.localUser ? <NavLink tag={Link} to='home'><Button onClick={handleLogout}>Log Out</Button></NavLink>
+        {session.localUser ? <NavLink tag={Link} to='home'><Button onClick={() => handleLogout(session.localUser)}>Log Out</Button></NavLink>
  : <Button onClick={toggleUserButton} color='primary'>{buttonText()}</Button>}
         {session.localUser ? <p>user: {session.localUser.name}</p> : null}
         <NavbarToggler onClick={toggle} />
@@ -63,4 +64,8 @@ const mapStateToProps = function(state) {
   }
 }
 
-export default connect(mapStateToProps)(SkelNavbar);
+const mapDispatchToProps = {
+  handleLogout: (user) => (removeUserFromSession(user))
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SkelNavbar);

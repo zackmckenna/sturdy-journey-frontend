@@ -21,13 +21,34 @@ export const setUser = () => {
   }
 }
 
-export const removeUser = () => {
-  // await socket.emit('remove_user', {username:props.user.username, name: props.user.name, id: props.user.id})
-  window.localStorage.removeItem('loggedAppUser')
-  return({
+function removeUserFromRedux() {
+  return{
     type: actionTypes.REMOVE_USER,
     data: null
-  })
+  }
+}
+
+function userIsNotLoggedIn() {
+  return{
+    type: 'USER_IS_NOT_LOGGED_IN',
+    data: false
+  }
+}
+
+function userIsLoggedIn() {
+  return{
+    type: 'USER_IS_LOGGED_IN',
+    data: true
+  }
+}
+
+export const removeUserFromSession = (user) => {
+  console.log(user)
+  return (dispatch) => {
+    socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
+    window.localStorage.removeItem('loggedAppUser')
+    dispatch(removeUserFromRedux())
+  }
 }
 
 export const setCurrentUsers = (currentUsers) => {
@@ -102,3 +123,36 @@ export const initializeUsers = () => {
     })
   }
 }
+
+const loginUser = (username, password) => {
+  return async dispatch => {
+    const user = await loginService.login({
+      username, password
+    })
+    window.localStorage.setItem('loggedAppUser', JSON.stringify(user))
+    socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
+    dispatch(userIsLoggedIn())
+    dispatch(setUser(user))
+  }
+}
+// event.preventDefault()
+//     try {
+//       const user = await loginService.login({
+//         username, password
+//       })
+//       window.localStorage.setItem(
+//         'loggedAppUser', JSON.stringify(user)
+//       )
+//       socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
+//       createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
+//       console.log(`Logging in with ${username}.`)
+//       // notesService.setToken(user.token)
+//       props.setUser(user)
+//       setUser(user)
+//       setUsername('')
+//       setPassword('')
+//     } catch (exception) {
+//       createNotification('wrong credentials', setErrorMessage, 5000)
+//     }
+// addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
+
