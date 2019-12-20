@@ -9189,6 +9189,11 @@ socket.io-client@2.3.0:
     socket.io-parser "~3.3.0"
     to-array "0.1.4"
 
+socket.io-emitter-middleware@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/socket.io-emitter-middleware/-/socket.io-emitter-middleware-1.0.0.tgz#582a9b7aae3f90e3fb1cba9c29b1133a62b128b5"
+  integrity sha512-TVNV4wbtj/y5p/PbanQ2AEmwYFfsNTysWYQ/UhkJnKxata3CHZMQJFnkwUiIy8/zdoCa4atgm/LBC2xKAlDRqA==
+
 socket.io-parser@~3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-3.3.0.tgz#2b52a96a509fdf31440ba40fed6094c7d4f1262f"
@@ -9206,6 +9211,11 @@ socket.io-parser@~3.4.0:
     component-emitter "1.2.1"
     debug "~4.1.0"
     isarray "2.0.1"
+
+socket.io-subscriber-middleware@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/socket.io-subscriber-middleware/-/socket.io-subscriber-middleware-1.0.2.tgz#a16bd2bf23c5e2b2b37bc121533a2228576a5c1b"
+  integrity sha512-YzrI1zrbB2n50XX2TCf7u3IBaY565jV1h9Kybgg3Xr+W9RVeCXHB5jRK9vo6tokDbHLn2hJsAWbhUc5pdiqtXA==
 
 socket.io@^2.3.0:
   version "2.3.0"
