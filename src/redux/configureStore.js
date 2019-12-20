@@ -1,13 +1,15 @@
 import { createStore, combineReducers, applyMiddleware  } from 'redux'
+
+// middleware imports
 import thunk from 'redux-thunk'
+import logger from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { reducer as formReducer } from 'redux-form'
 import io from 'socket.io-client'
-
-
 import socketIOEmitterMiddleware from 'socket.io-emitter-middleware'
 import socketIOSubscriberMiddleware from 'socket.io-subscriber-middleware';
 
+// reducers
 import noteReducer from './reducers/noteReducer'
 import usersReducer from './reducers/usersReducer'
 import roleReducer from './reducers/roleReducer'
@@ -34,6 +36,7 @@ function configureStore(initialState){
     composeWithDevTools(
       applyMiddleware(
         thunk,
+        logger,
         socketIOEmitterMiddleware(socket),
         socketIOSubscriberMiddleware(socket))
     )
