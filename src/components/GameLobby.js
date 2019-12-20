@@ -9,6 +9,7 @@ const GameLobby = ({
   handleStartGame,
   currentGameSession
 } ) => {
+  console.log(currentGameSession.currentNumberPlayers)
   let playerRole
   let currentGame
   if (currentGameSession.currentNumberPlayers >= 4) {

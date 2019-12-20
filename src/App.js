@@ -3,17 +3,15 @@ import { useField } from './hooks'
 import { connect } from 'react-redux'
 
 //redux reducers
-import { initializeUsers } from './redux/reducers/usersReducer'
-import { initializeGames } from './redux/reducers/gameReducer'
-import { initializeRoles } from './redux/reducers/roleReducer'
-import { initializeNotes } from './redux/reducers/noteReducer'
-import {  setUser,
+import { setUser,
+          removeUser,
           setCurrentUsers,
           setCurrentNumberPlayers,
           setCurrentPlayerRoles,
-          removeUser,
-          addChatMessage
-        } from './redux/reducers/sessionReducer'
+          initializeRoles,
+          initializeNotes,
+          initializeGames,
+          initializeUsers } from './redux/actionCreators'
 // api services
 // import usersService from './services/users';
 import notesService from './services/notes';
@@ -21,7 +19,6 @@ import accountService from './services/account';
 import loginService from './services/login';
 import rolesService from './services/roles'
 // import gamesService from './services/bitGame';
-import socketIoClient from 'socket.io-client'
 
 // component imports
 import LoginForm from './components/LoginForm'
@@ -35,8 +32,7 @@ import RoleCard from './components/RoleCard'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-// initialize socket.io socket
-const socket = socketIoClient('http://localhost:30725/')
+import socket from './socket/socket'
 
 const App = (props) => {
   const store = props.store
@@ -381,8 +377,7 @@ export default connect((mapStateToProps),
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
-  removeUser,
-  addChatMessage
+  removeUser
   }
 )(App)
 

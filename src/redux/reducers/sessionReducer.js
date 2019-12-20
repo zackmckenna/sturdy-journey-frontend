@@ -22,59 +22,52 @@ const sessionReducer = (state =[], action) => {
   }
 }
 
-export const setUser = () => {
-  return async dispatch => {
-    console.log('set user run')
-    const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
-    if (loggedAppUserJSON) {
-      const user = JSON.parse(loggedAppUserJSON)
-      notesService.setToken(user.token)
-      dispatch({
-        type:'SET_USER',
-        data: user
-      })
-    }
-  }
-}
+// export const setUser = () => {
+//   return async dispatch => {
+//     console.log('set user run')
+//     const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
+//     if (loggedAppUserJSON) {
+//       const user = JSON.parse(loggedAppUserJSON)
+//       notesService.setToken(user.token)
+//       dispatch({
+//         type:'SET_USER',
+//         data: user
+//       })
+//     }
+//   }
+// }
 
-export const addChatMessage = (message, user) => {
-  return({
-    type: 'ADD_CHAT_MESSAGE',
-    data: {message: message,
-          user: user}
-  })
-}
+// export const setCurrentUsers = (currentUsers) => {
+//   console.log('setting current users')
+//   console.log(currentUsers)
+//   return({
+//     type:'SET_CURRENT_USERS',
+//     data: currentUsers
+//   })
+// }
 
-export const removeUser = () => {
-  window.localStorage.removeItem('loggedAppUser')
-  return({
-    type: 'REMOVE_USER',
-    data: null
-  })
-}
-export const setCurrentUsers = (currentUsers) => {
-  console.log('setting current users')
-  console.log(currentUsers)
-  return({
-    type:'SET_CURRENT_USERS',
-    data: currentUsers
-  })
-}
+// export const addChatMessage = (message, user) => {
+//   return({
+//     type: 'ADD_CHAT_MESSAGE',
+//     data: {message: message,
+//           user: user}
+//   })
+// }
 
-export const setCurrentNumberPlayers = (currentNumberPlayers) => {
-  console.log('setting number players', currentNumberPlayers)
-  return ({
-    type: 'SET_CURRENT_NUMBER_PLAYERS',
-    data: currentNumberPlayers
-  })
-}
+// export const setCurrentNumberPlayers = (currentNumberPlayers) => {
+//   console.log('setting number players', currentNumberPlayers)
+//   return ({
+//     type: 'SET_CURRENT_NUMBER_PLAYERS',
+//     data: currentNumberPlayers
+//   })
+// }
 
-export const setCurrentPlayerRoles = (currentPlayerRoles) => {
-  console.log('setting roles', currentPlayerRoles)
-  return({
-    type: 'SET_CURRENT_PLAYER_ROLES',
-    data: currentPlayerRoles
-  })
-}
+// export const setCurrentPlayerRoles = (currentPlayerRoles) => {
+//   console.log('setting roles', currentPlayerRoles)
+//   return({
+//     type: 'SET_CURRENT_PLAYER_ROLES',
+//     data: currentPlayerRoles
+//   })
+// }
 
 export default sessionReducer

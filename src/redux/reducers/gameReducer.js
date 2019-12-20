@@ -11,14 +11,14 @@ const gameReducer = (state =[], action) => {
   }
 }
 
-export const initializeGames = () => {
-  return async dispatch => {
-    const games = await gamesService.getAll()
-    dispatch({
-      type: 'INIT_GAMES',
-      data: games,
-    })
-  }
-}
+// export const initializeGames = () => {
+//   return async dispatch => {
+//     const games = await gamesService.getAll()
+//     dispatch({
+//       type: 'INIT_GAMES',
+//       data: games,
+//     })
+//   }
+// }
 
 export default gameReducer

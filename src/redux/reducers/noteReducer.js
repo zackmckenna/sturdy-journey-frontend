@@ -10,16 +10,6 @@ const noteReducer = (state =[], action) => {
       return state
   }
 }
-
-export const initializeNotes = () => {
-  return async dispatch => {
-    const notes = await notesService.getAll()
-    dispatch({
-      type: 'INIT_NOTES',
-      data: notes,
-    })
-  }
-}
 // const createAccount = async (event) => {
 //   event.preventDefault()
 //   return {

@@ -11,15 +11,15 @@ const usersReducer = (state =[], action) => {
   }
 }
 
-export const initializeUsers = () => {
-  return async dispatch => {
-    const users = await usersService.getAll()
-    dispatch({
-      type: 'INIT_USERS',
-      data: users,
-    })
-  }
-}
+// export const initializeUsers = () => {
+//   return async dispatch => {
+//     const users = await usersService.getAll()
+//     dispatch({
+//       type: 'INIT_USERS',
+//       data: users,
+//     })
+//   }
+// }
 
 // const createAccount = async (event) => {
 //   event.preventDefault()
