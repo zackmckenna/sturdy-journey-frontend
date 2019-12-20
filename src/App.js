@@ -121,27 +121,27 @@ const App = (props) => {
   //   props.removeUser();
   // }
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    try {
-      const user = await loginService.login({
-        username, password
-      })
-      window.localStorage.setItem(
-        'loggedAppUser', JSON.stringify(user)
-      )
-      socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
-      createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
-      console.log(`Logging in with ${username}.`)
-      // notesService.setToken(user.token)
-      props.setUser(user)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      createNotification('wrong credentials', setErrorMessage, 5000)
-    }
-  }
+  // const handleLogin = async (event) => {
+  //   event.preventDefault()
+  //   try {
+  //     const user = await loginService.login({
+  //       username, password
+  //     })
+  //     window.localStorage.setItem(
+  //       'loggedAppUser', JSON.stringify(user)
+  //     )
+  //     socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
+  //     createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
+  //     console.log(`Logging in with ${username}.`)
+  //     // notesService.setToken(user.token)
+  //     props.setUser(user)
+  //     setUser(user)
+  //     setUsername('')
+  //     setPassword('')
+  //   } catch (exception) {
+  //     createNotification('wrong credentials', setErrorMessage, 5000)
+  //   }
+  // }
 
   const handleCreateAccount = async (event) => {
     event.preventDefault()
@@ -303,10 +303,7 @@ const App = (props) => {
       )
     } else {
       return (
-        <LoginForm
-          handleLogin={handleLogin}
-          handleUsernameChange={handleUsernameChange}
-          handlePasswordChange={handlePasswordChange}/>
+        <LoginForm />
       )
     }
   }

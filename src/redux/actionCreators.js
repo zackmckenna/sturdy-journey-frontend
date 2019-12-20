@@ -124,7 +124,7 @@ export const initializeUsers = () => {
   }
 }
 
-const loginUser = (username, password) => {
+export const loginUser = (username, password) => {
   return async dispatch => {
     const user = await loginService.login({
       username, password
