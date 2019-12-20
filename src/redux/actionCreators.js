@@ -4,7 +4,9 @@ import loginService from '../services/login'
 import rolesService from '../services/roles'
 import gamesService from '../services/bitGame'
 import usersService from '../services/users'
+import accountService from '../services/account'
 import socket from '../socket/socket'
+
 
 export const setUser = () => {
   return async dispatch => {
@@ -135,6 +137,20 @@ export const loginUser = (username, password) => {
     dispatch(setUser(user))
   }
 }
+
+export const createAccount = (username, name, password) => {
+  return async dispatch => {
+    const newUserObject = {
+      password: password,
+      name: name,
+      username: username
+    }
+    await accountService.createAccount(newUserObject)
+    // toggleUserButton()
+    // createNotification(`Welcome ${newUserObject.name}, your account has been created.`, setSuccessMessage, 5000);
+  }
+}
+
 // event.preventDefault()
 //     try {
 //       const user = await loginService.login({

@@ -1,28 +1,62 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Row } from 'reactstrap';
+import { createAccount } from '../redux/actionCreators'
+import { LocalForm, Control, Errors } from 'react-redux-form';
+import { connect } from 'react-redux'
 
 const NewUser = ({
-  handleUsernameChange,
-  handlePasswordChange,
-  handleNameChange,
-  handleCreateAccount}) => {
+  createAccount
+  }) => {
+
+  const handleSubmit = (values) => {
+    createAccount(values.username, values.name, values.password)
+  }
+
   return (
-    <Form onSubmit={handleCreateAccount}>
+    <Form >
       <FormGroup>
-        <Label for="username">Username</Label>
-        <Input onChange={handleUsernameChange} type="text" name="username" id="username" placeholder="username"/>
+        <LocalForm onSubmit={values => handleSubmit(values)}>
+            <Row className='form-group'>
+                <Label htmlFor='username'>Username</Label>
+                <Control.text
+                    className='form-control'
+                    model='.username'
+                    name='username'
+                    id='username'
+                    >
+                </Control.text>
+                <Errors
+                    className='text-danger'
+                    model='.username'
+                    show='touched'
+                    component='div'
+                    />
+                <Label htmlFor='name'>Name</Label>
+                <Control.text
+                    className='form-control'
+                    model='.name'
+                    rows='6'
+                    id='name'>
+                </Control.text>
+                <Label htmlFor='password'>Password</Label>
+                <Control.text
+                    className='form-control'
+                    model='.password'
+                    rows='6'
+                    id='password'>
+                </Control.text>
+            </Row>
+            <Button color='success'>Submit</Button>
+          </LocalForm>
       </FormGroup>
-      <FormGroup>
-        <Label for="name">Name</Label>
-        <Input onChange={handleNameChange} type="text" name="name" id="name" placeholder="name"/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="examplePassword">Password</Label>
-        <Input onChange={handlePasswordChange} type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-      </FormGroup>
-      <Button>Create Account</Button>
     </Form>
   );
 }
 
-export default NewUser;
+const mapDispatchToProps = {
+  createAccount: (username, name, password) => createAccount(username, name, password)
+}
+
+export default connect(null, mapDispatchToProps)(NewUser)
+
+

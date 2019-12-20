@@ -15,10 +15,6 @@ import { setUser,
 // api services
 // import usersService from './services/users';
 import notesService from './services/notes';
-import accountService from './services/account';
-import loginService from './services/login';
-import rolesService from './services/roles'
-// import gamesService from './services/bitGame';
 
 // component imports
 import LoginForm from './components/LoginForm'
@@ -38,9 +34,6 @@ const App = (props) => {
   const store = props.store
 
   const [note, setNote] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [newUserButton, setNewUserButton] = useState(false);
@@ -143,22 +136,22 @@ const App = (props) => {
   //   }
   // }
 
-  const handleCreateAccount = async (event) => {
-    event.preventDefault()
-    try {
-      const newUserObject = {
-        password: password,
-        name: name,
-        username: username
-      }
-      await accountService.createAccount(newUserObject)
-      toggleUserButton()
-      createNotification(`Welcome ${newUserObject.name}, your account has been created.`, setSuccessMessage, 5000);
-    } catch (error) {
-      createNotification('username already taken', setErrorMessage, 5000);
-      console.log(error)
-    }
-  }
+  // const handleCreateAccount = async (event) => {
+  //   event.preventDefault()
+  //   try {
+  //     const newUserObject = {
+  //       password: password,
+  //       name: name,
+  //       username: username
+  //     }
+  //     await accountService.createAccount(newUserObject)
+  //     toggleUserButton()
+  //     createNotification(`Welcome ${newUserObject.name}, your account has been created.`, setSuccessMessage, 5000);
+  //   } catch (error) {
+  //     createNotification('username already taken', setErrorMessage, 5000);
+  //     console.log(error)
+  //   }
+  // }
 
   const createNotification = (message, setNotification, time) => {
     setNotification(message)
@@ -196,17 +189,17 @@ const App = (props) => {
     setNote(event.target.value)
   }
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-  }
+  // const handlePasswordChange = (event) => {
+  //   setPassword(event.target.value)
+  // }
 
-  const handleNameChange = (event) => {
-    setName(event.target.value)
-  }
+  // const handleNameChange = (event) => {
+  //   setName(event.target.value)
+  // }
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value)
-  }
+  // const handleUsernameChange = (event) => {
+  //   setUsername(event.target.value)
+  // }
 
   const handleDeleteNote =  async (event) => {
     event.preventDefault()
@@ -219,13 +212,9 @@ const App = (props) => {
   }
 
   const newUserForm = () => {
-    if (newUserButton) {
+    if (newUserButton && !props.user) {
       return(
-        <NewUser
-          handleNameChange={handleNameChange}
-          handleCreateAccount={handleCreateAccount}
-          handleUsernameChange={handleUsernameChange}
-          handlePasswordChange={handlePasswordChange}/>
+        <NewUser />
       )
     } else {
       return (
@@ -234,13 +223,13 @@ const App = (props) => {
     }
   }
 
-  const addCurrentUser = () => {
-    if (props.user) {
-      socket.emit('add user', props.user.name)
-    } else {
-      console.log('no user')
-    }
-  }
+  // const addCurrentUser = () => {
+  //   if (props.user) {
+  //     socket.emit('add user', props.user.name)
+  //   } else {
+  //     console.log('no user')
+  //   }
+  // }
 
   const handleStartGame = async () => {
     const distributedRoles = distributeRoles();
@@ -345,11 +334,6 @@ const App = (props) => {
           <Route path='/role_card' component={RoleCard}/>
         </Switch>
       </Router>
-      {/* <LoginFormRedux handleLogin={props.handleLogin}/> */}
-      {/* <Chatroom message={message} handleMessageChange={handleMessageChange} submitMessage={submitMessage}/> */}
-      {/* <Footer /> */}
-
-
     </>
   )
 }

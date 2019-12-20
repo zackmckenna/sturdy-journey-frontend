@@ -15,8 +15,6 @@ const sessionReducer = (state =[], action) => {
       return {...state, currentPlayerRoles: action.data}
     case 'ADD_CHAT_MESSAGE':
       return {...state, messages: action.data}
-    case 'LOGIN_USER':
-      return state
     default:
       return state
   }
