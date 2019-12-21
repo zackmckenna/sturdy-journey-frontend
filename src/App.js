@@ -12,6 +12,7 @@ import { setUser,
           initializeNotes,
           initializeGames,
           initializeUsers } from './redux/actionCreators'
+          
 // api services
 // import usersService from './services/users';
 import notesService from './services/notes';
@@ -201,15 +202,15 @@ const App = (props) => {
   //   setUsername(event.target.value)
   // }
 
-  const handleDeleteNote =  async (event) => {
-    event.preventDefault()
-    if(window.confirm('are you sure you want to delete note?')) {
-      console.log(event.target.id)
-    }
-    await notesService.deleteNote(event.target.id)
-    createNotification(`note deleted`, setSuccessMessage, 5000)
-    props.initializeNotes()
-  }
+  // const handleDeleteNote =  async (event) => {
+  //   event.preventDefault()
+  //   if(window.confirm('are you sure you want to delete note?')) {
+  //     console.log(event.target.id)
+  //   }
+  //   await notesService.deleteNote(event.target.id)
+  //   createNotification(`note deleted`, setSuccessMessage, 5000)
+  //   props.initializeNotes()
+  // }
 
   const newUserForm = () => {
     if (newUserButton && !props.user) {
@@ -321,7 +322,7 @@ const App = (props) => {
             <UserNotes
               showNoteForm={showNoteForm}
               toggleNoteForm={toggleNoteForm}
-              handleDeleteNote={handleDeleteNote}
+              // handleDeleteNote={handleDeleteNote}
               handleNoteSubmit={handleNoteSubmit}
               handleNoteChange={handleNoteChange}
               note={note}

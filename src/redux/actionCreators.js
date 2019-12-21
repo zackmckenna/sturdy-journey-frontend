@@ -151,6 +151,18 @@ export const createAccount = (username, name, password) => {
   }
 }
 
+export const deleteNote = (event) => {
+  event.preventDefault()
+  return async dispatch => {
+    if(window.confirm('are you sure you want to delete note?')) {
+      console.log(event.target.id)
+    }
+    await notesService.deleteNote(event.target.id)
+    // createNotification(`note deleted`, setSuccessMessage, 5000)
+    dispatch(initializeNotes())
+  }
+}
+
 // event.preventDefault()
 //     try {
 //       const user = await loginService.login({
