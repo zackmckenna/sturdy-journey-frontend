@@ -12,20 +12,24 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux'
 import { removeUserFromSession } from '../redux/actionCreators'
+import { toggleCreateUserForm } from '../redux/actionCreators'
 
 const SkelNavbar = ({
-  toggleUserButton,
+  toggles,
+  toggleCreateUserForm,
   handleLogout,
   session }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
+  console.log(toggles)
+
   const buttonText = () => {
-    if (toggleUserButton) {
-      return 'Create New'
-    } else {
+    if (toggles.showCreateUserForm) {
       return 'cancel'
+    } else {
+      return 'new user'
     }
   }
 
@@ -34,7 +38,7 @@ const SkelNavbar = ({
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">devbar</NavbarBrand>
         {session.localUser ? <NavLink tag={Link} to='home'><Button onClick={() => handleLogout(session.localUser)}>Log Out</Button></NavLink>
- : <Button onClick={toggleUserButton} color='primary'>{buttonText()}</Button>}
+ : <Button onClick={() => toggleCreateUserForm()} color='primary'>{buttonText()}</Button>}
         {session.localUser ? <p>user: {session.localUser.name}</p> : null}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -60,12 +64,14 @@ const SkelNavbar = ({
 
 const mapStateToProps = function(state) {
   return {
-    session: state.session
+    session: state.session,
+    toggles: state.toggles
   }
 }
 
 const mapDispatchToProps = {
-  handleLogout: (user) => (removeUserFromSession(user))
+  handleLogout: (user) => (removeUserFromSession(user)),
+  toggleCreateUserForm: (data) => (toggleCreateUserForm(data))
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkelNavbar);

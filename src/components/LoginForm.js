@@ -4,12 +4,21 @@ import { connect } from 'react-redux'
 import { loginUser } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form';
 
-const LoginForm = ({loginUser}) => {
+const LoginForm = ({
+  session,
+  loginUser,
+  toggles}) => {
 
   const handleSubmit = (values) => {
       loginUser(values.username, values.password)
     }
 
+  if(toggles.showLoginForm || toggles.showCreateUserForm || session.localUser) {
+    return (
+      <>
+      </>
+    )
+  } else {
   return (
     <Container>
       <FormGroup>
@@ -38,10 +47,14 @@ const LoginForm = ({loginUser}) => {
                   id='password'>
               </Control.text>
           </Row>
-          <Button color='success'>Submit</Button>
+          <Button color='success'>Login</Button>
         </LocalForm>
       </FormGroup>
     </Container>
+
+  )}
+}
+
     // <Form inline onSubmit={handleLogin}>
     //   <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
     //     <Label for="exampleUsername" className="mr-sm-2">Username</Label>
@@ -53,11 +66,15 @@ const LoginForm = ({loginUser}) => {
     //   </FormGroup>
     //   <Button color='success'>Login</Button>
     // </Form>
-  );
+const mapStateToProps = (state) => {
+  return {
+    toggles: state.toggles,
+    session: state.session
+  }
 }
 
 const mapDispatchToProps = {
   loginUser: (username, password) => loginUser(username, password)
 }
 
-export default connect(null, mapDispatchToProps)(LoginForm)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

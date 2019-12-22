@@ -14,6 +14,7 @@ import noteReducer from './reducers/noteReducer'
 import usersReducer from './reducers/usersReducer'
 import roleReducer from './reducers/roleReducer'
 import gameReducer from './reducers/gameReducer'
+import toggleReducer from './reducers/toggleReducer'
 import sessionReducer from './reducers/sessionReducer'
 
 function configureStore(initialState){
@@ -25,6 +26,7 @@ function configureStore(initialState){
     roles: roleReducer,
     games: gameReducer,
     // loginForm: loginFormReducer,
+    toggles: toggleReducer,
     session: sessionReducer,
     form: formReducer,
     loginForm: formReducer

@@ -11,8 +11,10 @@ import { setUser,
           initializeRoles,
           initializeNotes,
           initializeGames,
-          initializeUsers } from './redux/actionCreators'
-          
+          initializeUsers,
+          toggleCreateUserForm,
+          toggleLoginForm } from './redux/actionCreators'
+
 // api services
 // import usersService from './services/users';
 import notesService from './services/notes';
@@ -110,78 +112,6 @@ const App = (props) => {
     })
   }, []);
 
-  // const handleLogout = async () => {
-  //   await socket.emit('remove_user', {username:props.user.username, name: props.user.name, id: props.user.id})
-  //   props.removeUser();
-  // }
-
-  // const handleLogin = async (event) => {
-  //   event.preventDefault()
-  //   try {
-  //     const user = await loginService.login({
-  //       username, password
-  //     })
-  //     window.localStorage.setItem(
-  //       'loggedAppUser', JSON.stringify(user)
-  //     )
-  //     socket.emit('add_user', {username: user.username, name: user.name, userId: user.id});
-  //     createNotification(`${user.name} has logged in`, setSuccessMessage, 5000)
-  //     console.log(`Logging in with ${username}.`)
-  //     // notesService.setToken(user.token)
-  //     props.setUser(user)
-  //     setUser(user)
-  //     setUsername('')
-  //     setPassword('')
-  //   } catch (exception) {
-  //     createNotification('wrong credentials', setErrorMessage, 5000)
-  //   }
-  // }
-
-  // const handleCreateAccount = async (event) => {
-  //   event.preventDefault()
-  //   try {
-  //     const newUserObject = {
-  //       password: password,
-  //       name: name,
-  //       username: username
-  //     }
-  //     await accountService.createAccount(newUserObject)
-  //     toggleUserButton()
-  //     createNotification(`Welcome ${newUserObject.name}, your account has been created.`, setSuccessMessage, 5000);
-  //   } catch (error) {
-  //     createNotification('username already taken', setErrorMessage, 5000);
-  //     console.log(error)
-  //   }
-  // }
-
-  const createNotification = (message, setNotification, time) => {
-    setNotification(message)
-    setTimeout(() => {
-      setNotification(null)
-    }, time)
-  }
-
-  const handleNoteSubmit = async (event) => {
-    event.preventDefault()
-    console.log(note)
-    try{
-      const newNoteObject = {
-        content: note,
-        user: props.user
-      }
-      await notesService.create(newNoteObject)
-      createNotification('Note has been added', setSuccessMessage, 5000)
-      toggleNoteForm()
-      props.initialNotes()
-    } catch(exception) {
-      console.log(exception)
-    }
-  }
-
-  const toggleUserButton = () => {
-    setNewUserButton(!newUserButton)
-  }
-
   const toggleNoteForm = () => {
     setShowNoteForm(!showNoteForm)
   }
@@ -189,48 +119,6 @@ const App = (props) => {
   const handleNoteChange = (event) => {
     setNote(event.target.value)
   }
-
-  // const handlePasswordChange = (event) => {
-  //   setPassword(event.target.value)
-  // }
-
-  // const handleNameChange = (event) => {
-  //   setName(event.target.value)
-  // }
-
-  // const handleUsernameChange = (event) => {
-  //   setUsername(event.target.value)
-  // }
-
-  // const handleDeleteNote =  async (event) => {
-  //   event.preventDefault()
-  //   if(window.confirm('are you sure you want to delete note?')) {
-  //     console.log(event.target.id)
-  //   }
-  //   await notesService.deleteNote(event.target.id)
-  //   createNotification(`note deleted`, setSuccessMessage, 5000)
-  //   props.initializeNotes()
-  // }
-
-  const newUserForm = () => {
-    if (newUserButton && !props.user) {
-      return(
-        <NewUser />
-      )
-    } else {
-      return (
-        <> </>
-      )
-    }
-  }
-
-  // const addCurrentUser = () => {
-  //   if (props.user) {
-  //     socket.emit('add user', props.user.name)
-  //   } else {
-  //     console.log('no user')
-  //   }
-  // }
 
   const handleStartGame = async () => {
     const distributedRoles = distributeRoles();
@@ -286,25 +174,10 @@ const App = (props) => {
     }
   }
 
-  const loginForm = () => {
-    if (props.user) {
-      return (
-        null
-      )
-    } else {
-      return (
-        <LoginForm />
-      )
-    }
-  }
   return (
     <>
       <Router>
-        <SkelNavbar
-          toggleUserButton={toggleUserButton}
-          user={props.user}
-          // handleLogout={handleLogout}
-        />
+        <SkelNavbar />
         <Notification
           notificationColor={'danger'}
           notificationText={errorMessage}/>
@@ -313,8 +186,9 @@ const App = (props) => {
           notificationColor={'success'}
           notificationText={successMessage}/>
 
-        {loginForm()}
-        {newUserForm()}
+        <LoginForm />
+
+        <NewUser />
 
         <Switch>
           <Route path='/home' component={Home} />
@@ -323,8 +197,8 @@ const App = (props) => {
               showNoteForm={showNoteForm}
               toggleNoteForm={toggleNoteForm}
               // handleDeleteNote={handleDeleteNote}
-              handleNoteSubmit={handleNoteSubmit}
-              handleNoteChange={handleNoteChange}
+              // handleNoteSubmit={handleNoteSubmit}
+              // handleNoteChange={handleNoteChange}
               note={note}
             />}/>
           <Route path='/game_lobby' render={() =>
@@ -345,7 +219,8 @@ const mapStateToProps = (state) => {
     currentUsers: state.session.currentUsers,
     currentNumberPlayers: state.session.currentNumberPlayers,
     games: state.games,
-    loginForm: state.loginForm
+    loginForm: state.loginForm,
+    toggles: state.toggles
   }
 }
 
@@ -359,7 +234,8 @@ export default connect((mapStateToProps),
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
-  removeUserFromSession
+  removeUserFromSession,
+  toggleCreateUserForm
   }
 )(App)
 

@@ -5,13 +5,21 @@ import { LocalForm, Control, Errors } from 'react-redux-form';
 import { connect } from 'react-redux'
 
 const NewUser = ({
-  createAccount
+  createAccount,
+  session,
+  toggles
   }) => {
 
   const handleSubmit = (values) => {
     createAccount(values.username, values.name, values.password)
   }
 
+  if (session.localUser || !toggles.showCreateUserForm) {
+    return (
+      <>
+      </>
+    )
+  }
   return (
     <Container>
       <Row>
@@ -58,11 +66,16 @@ const NewUser = ({
     </Container>
   );
 }
-
+const mapStateToProps = (state) => {
+  return {
+    toggles: state.toggles,
+    session: state.session
+  }
+}
 const mapDispatchToProps = {
   createAccount: (username, name, password) => createAccount(username, name, password)
 }
 
-export default connect(null, mapDispatchToProps)(NewUser)
+export default connect(mapStateToProps, mapDispatchToProps)(NewUser)
 
 

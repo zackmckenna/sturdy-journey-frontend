@@ -23,6 +23,14 @@ export const setUser = () => {
   }
 }
 
+export const toggleCreateUserForm = () => {
+  console.log('user form toggled')
+  return {
+    type: actionTypes.TOGGLE_CREATE_USER_FORM,
+  }
+}
+
+
 function removeUserFromRedux() {
   return{
     type: actionTypes.REMOVE_USER,
@@ -50,6 +58,7 @@ export const removeUserFromSession = (user) => {
     socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
     window.localStorage.removeItem('loggedAppUser')
     dispatch(removeUserFromRedux())
+    dispatch(toggleLoginForm())
   }
 }
 
@@ -76,6 +85,13 @@ export const setCurrentNumberPlayers = (currentNumberPlayers) => {
     type: actionTypes.SET_CURRENT_NUMBER_PLAYERS,
     data: currentNumberPlayers
   })
+}
+
+export const toggleLoginForm = () => {
+  console.log('login toggled')
+  return {
+    type: actionTypes.TOGGLE_LOGIN_FORM,
+  }
 }
 
 export const setCurrentPlayerRoles = (currentPlayerRoles) => {
@@ -135,6 +151,7 @@ export const loginUser = (username, password) => {
     socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
     dispatch(userIsLoggedIn())
     dispatch(setUser(user))
+    dispatch(toggleLoginForm())
   }
 }
 
@@ -160,6 +177,23 @@ export const deleteNote = (event) => {
     await notesService.deleteNote(event.target.id)
     // createNotification(`note deleted`, setSuccessMessage, 5000)
     dispatch(initializeNotes())
+  }
+}
+
+export const submitNote = (note, user) => {
+  return async dispatch => {
+    console.log(note, user)
+    try{
+      const newNoteObject = {
+        content: note,
+        user: user
+      }
+      await notesService.create(newNoteObject)
+      // createNotification('Note has been added', setSuccessMessage, 5000)
+      dispatch(initializeNotes())
+    } catch(exception) {
+      console.log(exception)
+    }
   }
 }
 
