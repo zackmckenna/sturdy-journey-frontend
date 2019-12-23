@@ -2,5 +2,25 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  
+
+}
+
+.background {
+  background-color: #322931
+}
+
+.container {
+  background-color: #322931
+}
+
+html, body, #root, #root>div {
+  background-color: #322931
+}
+
+mt-0 {
+  margin-top: 0 !important;
+}
+
+.loginButton{
+  width: 100%
 }

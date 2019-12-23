@@ -1,26 +1,24 @@
 import React from 'react';
-import { Button } from 'reactstrap'
+import { Button, Row, Col } from 'reactstrap'
+import { connect } from 'react-redux'
+import Alert from './AppAlert'
+import UsersInRoom from './UsersInRoom'
 
 // import SocketTests from './SocketTests';
 
 const GameLobby = ({
-  currentUsers,
-  numberPlayers,
   games,
   handleStartGame,
-  assignedUsers,
-  user
+  currentGameSession
 } ) => {
+  console.log(currentGameSession.currentNumberPlayers)
   let playerRole
-  let currentGame;
-  const currentFilteredUsers = currentUsers.filter(user => user != null)
-  if (numberPlayers >= 4) {
-    currentGame = games.filter(game => game.numberPlayer === numberPlayers)[0]
+  let currentGame
+  if (currentGameSession.currentNumberPlayers >= 4) {
+    currentGame = games.filter(game => game.numberPlayer === currentGameSession.currentNumberPlayers)[0]
   }
-
-  if (assignedUsers) {
-    playerRole = assignedUsers.filter(assignedUser => assignedUser.userId === user.id)[0]
-    console.log(playerRole)
+  if (currentGameSession.currentPlayerRoles && currentGameSession.localUser) {
+    playerRole = currentGameSession.currentPlayerRoles.filter(playerRole => playerRole.userId === currentGameSession.localUser.id)[0]
   }
 
   const renderCurrentGame = () => {
@@ -37,24 +35,36 @@ const GameLobby = ({
       </>
     )
   }
-  if (currentFilteredUsers) {
+  if (currentGameSession.currentUsers) {
     return (
       <>
-        <h2>People in Room: {numberPlayers}{numberPlayers >= 4 ? <Button onClick={handleStartGame} color='success'>Start Game</Button>: null}</h2>
-        <ul>
-          {currentFilteredUsers.map(user => <li key={user.id}>{user.username}</li>)}
-        </ul>
-        {numberPlayers < 4 ? <h4>need at least 4 players to start.</h4> : null}
-        {numberPlayers >= 4 ? renderCurrentGame() : null}
+        <h2>{currentGameSession.currentNumberPlayers >= 4 ? <Button onClick={handleStartGame} color='success'>Start Game</Button>: null}</h2>
+        <UsersInRoom />
+        {/* <h2>People in Room: {currentGameSession.currentNumberPlayers} */}
+        {/* <ul>
+          {currentGameSession.currentUsers.map(user => <li key={user.id}>{user.username}</li>)}
+        </ul> */}
+        {currentGameSession.currentNumberPlayers < 4 ? <h4>need at least 4 players to start.</h4> : null}
+        {currentGameSession.currentNumberPlayers >= 4 ? renderCurrentGame() : null}
         {playerRole ? <h4>You are the {playerRole.role}</h4> : null}
       </>
     )
   } else {
-    console.log('no users')
     return (
-      <h3>no current users detected.</h3>
+      <Row>
+        <Col className='mt-3'>
+          <Alert alertType={'danger'} alertText={'no current users detected'}/>
+        </Col>
+      </Row>
     )
   }
 }
 
-export default GameLobby;
+const mapStateToProps = function(state) {
+  return {
+    currentGameSession: state.session,
+    games: state.games
+  }
+}
+
+export default connect(mapStateToProps)(GameLobby);
