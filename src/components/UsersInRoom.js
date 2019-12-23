@@ -1,10 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Container, Button } from 'reactstrap'
+import { Row, Col, Container, Card, Button } from 'reactstrap'
 import SvgFirstMate from './SvgFirstMate'
 
 
 const UsersInRoom = ({ session }) => {
+  let usersToDistribute = session.currentUsers
+  let emptyComponents = 10 - usersToDistribute.length
+
+  console.log(usersToDistribute)
+  console.log(emptyComponents)
   return (
     <>
       <Row>
@@ -23,12 +28,13 @@ const UsersInRoom = ({ session }) => {
         {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
         <Container>
           <Row>
-          {session.currentUsers.map(user => {
+          {session.currentUsers.map((user, index) => {
             return (
-                <Col className='text-light text-center' key={user.id}>
+
+                <Card className='text-light text-center' key={user.id}>
                   <SvgFirstMate />
-                  <h8>{user.username}</h8>
-                </Col>
+                  {/* <h8>{user.username}</h8> */}
+                </Card>
             )
           })}
           </Row>

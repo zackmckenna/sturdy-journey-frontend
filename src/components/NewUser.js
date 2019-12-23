@@ -76,7 +76,7 @@ const NewUser = ({
                   <Row>
                     <Col className='text-center mt-2'>
                       <Button className='mr-2' color='success'>submit</Button>
-                      <Button onClick={(data) => toggleCreateUserForm(data)} color='primary'>cancel</Button>
+                      <Button onClick={(data) => toggleCreateUserForm(data)} color='secondary'>cancel</Button>
                     </Col>
                   </Row>
                 </LocalForm>

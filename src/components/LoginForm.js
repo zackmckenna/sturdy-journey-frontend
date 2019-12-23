@@ -63,7 +63,7 @@ const LoginForm = ({
               </Row>
               <Row>
                 <Col sm={{ size: 'auto'}} className='text-center mt-3 text-align-center'>
-                  <Button className='btn-block' color='success'>Login</Button>
+                  <Button className='btn-block' color='success'>sign in</Button>
                 </Col>
               </Row>
             </LocalForm>
