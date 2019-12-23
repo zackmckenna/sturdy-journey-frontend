@@ -1,5 +1,3 @@
-import gamesService from '../../services/bitGame'
-
 const gameReducer = (state =[], action) => {
   switch (action.type) {
     case 'NEW_GAME':

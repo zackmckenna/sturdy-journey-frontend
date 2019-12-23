@@ -30,7 +30,19 @@ export const toggleCreateUserForm = () => {
   }
 }
 
+export const toggleLoginForm = () => {
+  console.log('login toggled')
+  return {
+    type: actionTypes.TOGGLE_LOGIN_FORM
+  }
+}
 
+export const toggleNewNoteForm = () => {
+  console.log('new note form')
+  return {
+    type: actionTypes.TOGGLE_NEW_NOTE_FORM
+  }
+}
 function removeUserFromRedux() {
   return{
     type: actionTypes.REMOVE_USER,
@@ -87,12 +99,6 @@ export const setCurrentNumberPlayers = (currentNumberPlayers) => {
   })
 }
 
-export const toggleLoginForm = () => {
-  console.log('login toggled')
-  return {
-    type: actionTypes.TOGGLE_LOGIN_FORM,
-  }
-}
 
 export const setCurrentPlayerRoles = (currentPlayerRoles) => {
   console.log('setting roles', currentPlayerRoles)

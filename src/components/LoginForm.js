@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Row, Form, FormGroup, Label, Input, Container } from 'reactstrap';
+import { Button, Row, Col, FormGroup, Label, Input, Container } from 'reactstrap';
 import { connect } from 'react-redux'
 import { loginUser } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form';
+import NewAccountButton from './NewAccountButton'
 
 const LoginForm = ({
   session,
@@ -21,35 +22,40 @@ const LoginForm = ({
   } else {
   return (
     <Container>
-      <FormGroup>
-        <LocalForm onSubmit={values => handleSubmit(values)}>
-          <Row className='form-group'>
-              <Label htmlFor='username'>Username</Label>
-              <Control.text
-                  className='form-control'
-                  model='.username'
-                  name='username'
-                  id='username'
-                  >
-              </Control.text>
-              <Errors
-                  className='text-danger'
-                  model='.author'
-                  show='touched'
-                  component='div'
-                  messages={{maxLength: 'Must be 15 characters or less.'
-                  }}/>
-              <Label htmlFor='password'>Password</Label>
-              <Control.text
-                  className='form-control'
-                  model='.password'
-                  rows='6'
-                  id='password'>
-              </Control.text>
-          </Row>
-          <Button color='success'>Login</Button>
-        </LocalForm>
-      </FormGroup>
+          <FormGroup>
+            <LocalForm onSubmit={values => handleSubmit(values)}>
+              <Row className='form-group'>
+                <Col sm={{ size: 'auto', offset: 1}}>
+                  <Control.text
+                      className='form-control'
+                      model='.username'
+                      name='username'
+                      id='username'
+                      placeholder='username'
+                      >
+                  </Control.text>
+                  <Errors
+                      className='text-danger'
+                      model='.author'
+                      show='touched'
+                      component='div'
+                      messages={{maxLength: 'Must be 15 characters or less.'
+                    }}/>
+                </Col>
+                <Col sm={{ size: 'auto'}}>
+                  <Control.text
+                      className='form-control'
+                      model='.password'
+                      rows='6'
+                      id='password'
+                      placeholder='password'>
+                  </Control.text>
+                </Col>
+              </Row>
+              <Button sm='4' xs='6' color='success'>Login</Button>
+            </LocalForm>
+          </FormGroup>
+          <NewAccountButton />
     </Container>
 
   )}

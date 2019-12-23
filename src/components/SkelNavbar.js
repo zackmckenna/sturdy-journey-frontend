@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import styles from '../style/navbar.css'
+
 import {
   Collapse,
   Navbar,
@@ -35,7 +37,7 @@ const SkelNavbar = ({
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar dark expand="md">
         <NavbarBrand href="/">devbar</NavbarBrand>
         {session.localUser ? <NavLink tag={Link} to='home'><Button onClick={() => handleLogout(session.localUser)}>Log Out</Button></NavLink>
  : <Button onClick={() => toggleCreateUserForm()} color='primary'>{buttonText()}</Button>}

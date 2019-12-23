@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'reactstrap';
 import NoteForm from './NoteForm';
 import { connect } from 'react-redux'
-import { deleteNote } from '../redux/actionCreators'
+import { deleteNote, toggleNewNoteForm } from '../redux/actionCreators'
 
 const UserNotes = ({
   notes,
@@ -13,16 +13,22 @@ const UserNotes = ({
   handleNoteChange,
   showNoteForm,
   currentGameSession,
-  note
+  note,
+  toggles
    }) => {
 
   const handleClickDelete = (event) => {
     deleteNote(event)
   }
 
+  const handleAddNoteClick = () => {
+    toggleNewNoteForm()
+    console.log(toggles)
+  }
+
   const user = currentGameSession.localUser
   if (currentGameSession.localUser) {
-    if (showNoteForm) {
+    if (toggles.showCreateNoteForm) {
       return (
         <>
         <Button onClick={toggleNoteForm}>Add Note</Button>
@@ -42,7 +48,7 @@ const UserNotes = ({
     }
     return (
       <>
-      {<Button onClick={toggleNoteForm}>Add Note</Button>}
+      {<Button onClick={() => handleAddNoteClick()}>Add Note</Button>}
       <h2>{user.name}'s Notes</h2>
         <ul>
           {notes.filter(note => note.user != null ? note.user.id === user.id : null)
@@ -62,12 +68,14 @@ const UserNotes = ({
 const mapStateToProps = function(state) {
   return {
     currentGameSession: state.session,
-    notes: state.notes
+    notes: state.notes,
+    toggles: state.toggles
   }
 }
 
 const mapDispatchToProps = {
-  deleteNote: (event) => deleteNote(event)
+  deleteNote: (event) => deleteNote(event),
+  toggleNewNoteForm: () => toggleNewNoteForm()
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserNotes)

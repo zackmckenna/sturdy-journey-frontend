@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useField } from './hooks'
 import { connect } from 'react-redux'
+import style from './style/app.css'
 
 //redux reducers
 import { setUser,
@@ -28,7 +29,9 @@ import Home from './components/Home'
 import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
 import RoleCard from './components/RoleCard'
+import SeawitchedLogoColor from './components/SeaWitchedLogoColor'
 
+import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import socket from './socket/socket'
@@ -112,13 +115,13 @@ const App = (props) => {
     })
   }, []);
 
-  const toggleNoteForm = () => {
-    setShowNoteForm(!showNoteForm)
-  }
+  // const toggleNoteForm = () => {
+  //   setShowNoteForm(!showNoteForm)
+  // }
   // event handlers
-  const handleNoteChange = (event) => {
-    setNote(event.target.value)
-  }
+  // const handleNoteChange = (event) => {
+  //   setNote(event.target.value)
+  // }
 
   const handleStartGame = async () => {
     const distributedRoles = distributeRoles();
@@ -176,39 +179,35 @@ const App = (props) => {
 
   return (
     <>
-      <Router>
-        <SkelNavbar />
-        <Notification
-          notificationColor={'danger'}
-          notificationText={errorMessage}/>
+        <Router>
+          <SkelNavbar />
+          <Container style={style.container}>
+          <SeawitchedLogoColor />
+          <Notification
+            notificationColor={'danger'}
+            notificationText={errorMessage}/>
 
-        <Notification
-          notificationColor={'success'}
-          notificationText={successMessage}/>
+          <Notification
+            notificationColor={'success'}
+            notificationText={successMessage}/>
 
-        <LoginForm />
+          <LoginForm />
 
-        <NewUser />
+          <NewUser />
 
-        <Switch>
-          <Route path='/home' component={Home} />
-          <Route path='/user_notes' render={() =>
-            <UserNotes
-              showNoteForm={showNoteForm}
-              toggleNoteForm={toggleNoteForm}
-              // handleDeleteNote={handleDeleteNote}
-              // handleNoteSubmit={handleNoteSubmit}
-              // handleNoteChange={handleNoteChange}
-              note={note}
-            />}/>
-          <Route path='/game_lobby' render={() =>
-              <GameLobby
-              handleStartGame={handleStartGame}
-            />
-          }/>
-          <Route path='/role_card' component={RoleCard}/>
-        </Switch>
-      </Router>
+          <Switch>
+            <Route path='/home' component={Home} />
+            <Route path='/user_notes' render={() =>
+              <UserNotes />}/>
+            <Route path='/game_lobby' render={() =>
+                <GameLobby
+                handleStartGame={handleStartGame}
+              />
+            }/>
+            <Route path='/role_card' component={RoleCard}/>
+          </Switch>
+          </Container>
+        </Router>
     </>
   )
 }

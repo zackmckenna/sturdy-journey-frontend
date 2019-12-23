@@ -8,7 +8,7 @@ const toggleReducer = (state = [{
   switch(action.data) {
     case actionTypes.TOGGLE_CREATE_USER_FORM:
       return {...state, showCreateUserForm: !state.showCreateUserForm}
-    case actionTypes.TOGGLE_CREATE_NOTE_FORM:
+    case actionTypes.TOGGLE_NEW_NOTE_FORM:
       return {...state, showCreateNoteForm: !state.showCreateNoteForm}
     case actionTypes.TOGGLE_LOGIN_FORM:
       console.log('reducer toggled')
