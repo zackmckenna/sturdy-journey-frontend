@@ -1,18 +1,46 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Container, FormGroup, Label, Row } from 'reactstrap';
+import { connect } from 'react-redux'
+import { submitNote } from '../redux/actionCreators'
+import { LocalForm, Control } from 'react-redux-form';
 
-const NoteForm = ({ handleNoteSubmit, handleNoteChange, toggleNoteForm, note }) => {
+const NoteForm = ({ user, submitNote }) => {
+
+  const handleSubmit = (values) => {
+    console.log('handle Submit started')
+    console.log(values.note, user)
+    submitNote(values.note, user)
+  }
+
   return (
-    <Form onSubmit={handleNoteSubmit}>
+    <Container>
       <FormGroup>
-        <Label for="exampleText">Text Area</Label>
-        <Input onChange={handleNoteChange} value={note} type="textarea" name="text" id="exampleText" />
+        <LocalForm onSubmit={values => handleSubmit(values)}>
+          <Row className='form-group'>
+              <Label htmlFor='note'>Note</Label>
+              <Control.textarea
+                  className='form-control'
+                  model='.note'
+                  name='note'
+                  id='note'
+                  >
+              </Control.textarea>
+          </Row>
+          <Button color='success'>Add Note</Button>
+        </LocalForm>
       </FormGroup>
-      <Button color='success'>Add note</Button>
-      {' '}
-      <Button color='warning' onClick={toggleNoteForm}>Cancel</Button>
-    </Form>
+    </Container>
   );
 }
 
-export default NoteForm;
+const mapDispatchToProps = {
+    submitNote: (note, user) => submitNote(note, user)
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.session.localUser
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteForm)

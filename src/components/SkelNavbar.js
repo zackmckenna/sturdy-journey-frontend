@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import styles from '../style/navbar.css'
+
 import {
   Collapse,
   Navbar,
@@ -8,33 +10,28 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText,
   Button
 } from 'reactstrap';
+import { connect } from 'react-redux'
+import { removeUserFromSession } from '../redux/actionCreators'
 
-const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
+const SkelNavbar = ({
+  toggles,
+  handleLogout,
+  session }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const buttonText = () => {
-    if (toggleUserButton) {
-      return 'Create New'
-    } else {
-      return 'cancel'
-    }
-  }
+  console.log(toggles)
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">devbar</NavbarBrand>
-        {user ? <Button onClick={handleLogout}>Log Out</Button> : <Button onClick={toggleUserButton} color='primary'>{buttonText()}</Button>}
-        {user ? <p>user: {user.name}</p> : null}
+      <Navbar dark expand="md">
+        <NavbarBrand href="/">nappzack</NavbarBrand>
+        {session.localUser ? <NavLink tag={Link} to='home'><Button onClick={() => handleLogout(session.localUser)}>Log Out</Button></NavLink>
+ : null}
+        {session.localUser ? <p>user: {session.localUser.name}</p> : null}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -42,49 +39,30 @@ const NappzackNavbar = ({ toggleUserButton, user, handleLogout }) => {
               <NavLink tag={Link} to='home'>Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to='game_lobby'>Game Lobby</NavLink>
+              <NavLink tag={Link} to='game_lobby'>The Game Lobby</NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to='user_notes'>User Notes</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to='socketTests'>Socket Tests</NavLink>
+              <NavLink tag={Link} to='role_card'>Role Card</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to='total_notes'>Total Notes</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to='total_users'>Total Users</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to='current_logged_users'>Current Logged In Users</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to='create_role_form'>Create Role Form</NavLink>
-            </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
           </Nav>
-          <NavbarText>more text</NavbarText>
         </Collapse>
       </Navbar>
     </div>
   );
 }
 
-export default NappzackNavbar;
+const mapStateToProps = function(state) {
+  return {
+    session: state.session,
+    toggles: state.toggles
+  }
+}
+
+const mapDispatchToProps = {
+  handleLogout: (user) => (removeUserFromSession(user)),
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SkelNavbar);
