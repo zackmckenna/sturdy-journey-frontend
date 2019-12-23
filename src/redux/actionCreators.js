@@ -37,6 +37,12 @@ export const toggleLoginForm = () => {
   }
 }
 
+export const toggleLogo = () => {
+  return {
+    type: 'TOGGLE_LOGO'
+  }
+}
+
 export const toggleNewNoteForm = () => {
   console.log('new note form')
   return {
@@ -158,6 +164,7 @@ export const loginUser = (username, password) => {
     dispatch(userIsLoggedIn())
     dispatch(setUser(user))
     dispatch(toggleLoginForm())
+    dispatch(toggleLogo())
   }
 }
 

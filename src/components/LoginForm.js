@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import { loginUser } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import NewAccountButton from './NewAccountButton'
+import { Link } from 'react-router-dom'
 import style from '../style/login.css'
+
 const LoginForm = ({
   session,
   loginUser,

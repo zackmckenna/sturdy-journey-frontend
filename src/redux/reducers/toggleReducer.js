@@ -2,8 +2,9 @@ import { actionTypes } from "react-redux-form"
 
 const toggleReducer = (state = [{
   showCreateNoteForm : false,
-  showCreateUserForm: true,
-  showLoginForm: false
+  showCreateUserForm: false,
+  showLoginForm: false,
+  showLogo: true
 }], action) => {
   switch(action.data) {
     case actionTypes.TOGGLE_CREATE_USER_FORM:
@@ -14,10 +15,11 @@ const toggleReducer = (state = [{
       console.log('reducer toggled')
       console.log(state.showLoginForm)
       return {...state, showLoginForm: !state.showLoginForm}
+    case 'TOGGLE_LOGO':
+      return {...state, showLogo: !state.showLogo}
     default:
       return state
   }
-
 }
 
 export default toggleReducer

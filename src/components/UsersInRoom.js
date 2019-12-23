@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Button } from 'reactstrap'
+import { Row, Col, Container, Button } from 'reactstrap'
+import SvgFirstMate from './SvgFirstMate'
 
 
 const UsersInRoom = ({ session }) => {
@@ -19,12 +20,19 @@ const UsersInRoom = ({ session }) => {
 
       <h2>People in Room: {session.currentNumberPlayers}</h2>
       <ul>
-        {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)}
-        <Row>
+        {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
+        <Container>
+          <Row>
           {session.currentUsers.map(user => {
-            
+            return (
+                <Col className='text-light text-center' key={user.id}>
+                  <SvgFirstMate />
+                  <h8>{user.username}</h8>
+                </Col>
+            )
           })}
-        </Row>
+          </Row>
+        </Container>
       </ul>
     </>
   )

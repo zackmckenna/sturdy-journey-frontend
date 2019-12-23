@@ -15,11 +15,6 @@ import { setUser,
           initializeUsers,
           toggleCreateUserForm,
           toggleLoginForm } from './redux/actionCreators'
-
-// api services
-// import usersService from './services/users';
-import notesService from './services/notes';
-
 // component imports
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
@@ -42,8 +37,7 @@ const App = (props) => {
   const [note, setNote] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [newUserButton, setNewUserButton] = useState(false);
-  const [showNoteForm, setShowNoteForm] = useState(false)
+
 
   useEffect(() => {
     async function getNotes() {
@@ -182,7 +176,7 @@ const App = (props) => {
         <Router>
           <SkelNavbar />
           <Container style={style.container}>
-          <SeawitchedLogoColor />
+          {!props.toggles.showLogo ? <SeawitchedLogoColor /> : null}
           <Notification
             notificationColor={'danger'}
             notificationText={errorMessage}/>
@@ -196,6 +190,7 @@ const App = (props) => {
           <NewUser />
 
           <Switch>
+
             <Route path='/home' component={Home} />
             <Route path='/user_notes' render={() =>
               <UserNotes />}/>

@@ -22,9 +22,13 @@ const NewAccountButton = ({
 
   console.log(toggles)
 
+  const handleClick = () => {
+    toggleCreateUserForm()
+  }
+
   return (
     <div className='text-center'>
-         <Button onClick={() => toggleCreateUserForm()} color='link'>click here to create an account</Button>
+         <Button onClick={() => handleClick()} color='link'>click here to create an account</Button>
     </div>
   );
 }
@@ -37,7 +41,7 @@ const mapStateToProps = function(state) {
 }
 
 const mapDispatchToProps = {
-  toggleCreateUserForm: (data) => (toggleCreateUserForm(data))
+  toggleCreateUserForm: () => (toggleCreateUserForm())
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAccountButton);
