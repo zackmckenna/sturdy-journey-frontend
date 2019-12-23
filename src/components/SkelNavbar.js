@@ -38,9 +38,9 @@ const SkelNavbar = ({
   return (
     <div>
       <Navbar dark expand="md">
-        <NavbarBrand href="/">devbar</NavbarBrand>
+        <NavbarBrand href="/">nappzack</NavbarBrand>
         {session.localUser ? <NavLink tag={Link} to='home'><Button onClick={() => handleLogout(session.localUser)}>Log Out</Button></NavLink>
- : <Button onClick={() => toggleCreateUserForm()} color='primary'>{buttonText()}</Button>}
+ : null}
         {session.localUser ? <p>user: {session.localUser.name}</p> : null}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

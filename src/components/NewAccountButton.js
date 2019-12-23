@@ -23,7 +23,7 @@ const NewAccountButton = ({
   console.log(toggles)
 
   return (
-    <div>
+    <div className='text-center'>
          <Button onClick={() => toggleCreateUserForm()} color='link'>click here to create an account</Button>
     </div>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
-import { Button } from 'reactstrap'
+import { Button, Row, Col } from 'reactstrap'
 import { connect } from 'react-redux'
+import Alert from './AppAlert'
+import UsersInRoom from './UsersInRoom'
 
 // import SocketTests from './SocketTests';
 
@@ -36,10 +38,12 @@ const GameLobby = ({
   if (currentGameSession.currentUsers) {
     return (
       <>
-        <h2>People in Room: {currentGameSession.currentNumberPlayers}{currentGameSession.currentNumberPlayers >= 4 ? <Button onClick={handleStartGame} color='success'>Start Game</Button>: null}</h2>
-        <ul>
+        <h2>{currentGameSession.currentNumberPlayers >= 4 ? <Button onClick={handleStartGame} color='success'>Start Game</Button>: null}</h2>
+        <UsersInRoom />
+        {/* <h2>People in Room: {currentGameSession.currentNumberPlayers} */}
+        {/* <ul>
           {currentGameSession.currentUsers.map(user => <li key={user.id}>{user.username}</li>)}
-        </ul>
+        </ul> */}
         {currentGameSession.currentNumberPlayers < 4 ? <h4>need at least 4 players to start.</h4> : null}
         {currentGameSession.currentNumberPlayers >= 4 ? renderCurrentGame() : null}
         {playerRole ? <h4>You are the {playerRole.role}</h4> : null}
@@ -47,7 +51,11 @@ const GameLobby = ({
     )
   } else {
     return (
-      <h3>no current users detected.</h3>
+      <Row>
+        <Col className='mt-3'>
+          <Alert alertType={'danger'} alertText={'no current users detected'}/>
+        </Col>
+      </Row>
     )
   }
 }

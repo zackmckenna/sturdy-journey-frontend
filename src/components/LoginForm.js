@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Row, Col, FormGroup, Label, Input, Container } from 'reactstrap';
+import { Button, Row, Col, FormGroup, Label, Input, Container, Text } from 'reactstrap';
 import { connect } from 'react-redux'
 import { loginUser } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import NewAccountButton from './NewAccountButton'
-
+import style from '../style/login.css'
 const LoginForm = ({
   session,
   loginUser,
@@ -22,10 +22,15 @@ const LoginForm = ({
   } else {
   return (
     <Container>
+          <Row>
+            <Col className='text-light mt-3 text-center'>
+              <p>Welcome aboard all ye who dare take part in this dreadful journey. Ye must sign in or create an account to continue.</p>
+            </Col>
+          </Row>
           <FormGroup>
             <LocalForm onSubmit={values => handleSubmit(values)}>
               <Row className='form-group'>
-                <Col sm={{ size: 'auto', offset: 1}}>
+                <Col className='mt-2' sm={{size: 'auto'}}>
                   <Control.text
                       className='form-control'
                       model='.username'
@@ -42,6 +47,8 @@ const LoginForm = ({
                       messages={{maxLength: 'Must be 15 characters or less.'
                     }}/>
                 </Col>
+              </Row>
+              <Row>
                 <Col sm={{ size: 'auto'}}>
                   <Control.text
                       className='form-control'
@@ -52,7 +59,11 @@ const LoginForm = ({
                   </Control.text>
                 </Col>
               </Row>
-              <Button sm='4' xs='6' color='success'>Login</Button>
+              <Row>
+                <Col sm={{ size: 'auto'}} className='text-center mt-3 text-align-center'>
+                  <Button className='btn-block' color='success'>Login</Button>
+                </Col>
+              </Row>
             </LocalForm>
           </FormGroup>
           <NewAccountButton />
