@@ -1,7 +1,7 @@
 import React from "react";
 
 const SvgFirstMate = props => (
-  <svg width="3em" height="3em" viewBox="0 0 63 63" {...props}>
+  <svg width="4em" height="4em" viewBox="0 0 63 63" {...props}>
     <g fill="none" fillRule="evenodd">
       <path
         d="M61.988 30.744c0 16.98-13.764 30.744-30.745 30.744C14.265 61.488.5 47.724.5 30.744S14.265-.001 31.243-.001c16.98 0 30.745 13.766 30.745 30.745"

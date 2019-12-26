@@ -176,7 +176,6 @@ const App = (props) => {
         <Router>
           <SkelNavbar />
           <Container style={style.container}>
-          {!props.toggles.showLogo ? <SeawitchedLogoColor /> : null}
           <Notification
             notificationColor={'danger'}
             notificationText={errorMessage}/>
@@ -184,7 +183,7 @@ const App = (props) => {
           <Notification
             notificationColor={'success'}
             notificationText={successMessage}/>
-
+          <SeawitchedLogoColor />
           <LoginForm />
 
           <NewUser />
