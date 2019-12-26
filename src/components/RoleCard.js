@@ -1,52 +1,29 @@
 import React from 'react';
 import {
-  Card, CardText, CardBody,
+  Container, Card, CardText, CardBody,
   CardTitle, CardSubtitle, Button, Col, Row
 } from 'reactstrap';
 import Rules from './Rules'
-import { SwipeableDrawer } from '@material-ui/core';
-
+import DeckDrawer from './DeckDrawer'
 import { connect } from 'react-redux'
+import style from '../style/roleCard.css'
 
-
-const RoleCard = ({
-  currentGameSession,
-  roles}) => {
-  console.log(currentGameSession.currentPlayerRoles)
-
-  const displayCard = () => {
-    if (currentGameSession.currentPlayerRoles)  {
-      const userRole = currentGameSession.currentPlayerRoles.filter(user => user.userId === currentGameSession.localUser.id)[0]
-      console.log(userRole)
-      console.log(userRole.role)
-      console.log(roles)
-      return (
-        <div>
-          <Rules />
-          <Card>
-            <CardBody>
-              <CardTitle>{userRole.role}</CardTitle>
-              <CardSubtitle>{userRole.role}</CardSubtitle>
-              <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-              <Button>Button</Button>
-            </CardBody>
-          </Card>
-        </div>
-      )
-    } else {
-      return (
-        <Row>
-          <Col>
-            <Rules />
-            <h2>You must start a game to get a role card.</h2>
-          </Col>
-        </Row>
-      )
-    }
-  }
+const RoleCard = (props) => {
   return (
     <>
-      {displayCard()}
+    <Container className='mt-2 border roleContainer'>
+      <Container className='ruleContainer'>
+        <Rules />
+      </Container>
+      <Row>
+        <Col className='text-light text-center'>
+          <h5>You must start a game to get a role card.</h5>
+        </Col>
+      </Row>
+      <Container className='fixed-bottom border deckContainer'>
+        <DeckDrawer />
+      </Container>
+    </Container>
     </>
   );
 };

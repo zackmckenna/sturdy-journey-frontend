@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { loginUser } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import NewAccountButton from './NewAccountButton'
+import SeaWitchedLogoColor from './SeaWitchedLogoColor'
+
 import { Link } from 'react-router-dom'
 import style from '../style/login.css'
 
@@ -24,6 +26,7 @@ const LoginForm = ({
   } else {
   return (
     <Container>
+          <SeaWitchedLogoColor />
           <Row>
             <Col className='text-light mt-3 text-center'>
               <p>Welcome aboard all ye who dare take part in this dreadful journey. Ye must sign in or create an account to continue.</p>

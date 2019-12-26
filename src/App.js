@@ -183,7 +183,6 @@ const App = (props) => {
           <Notification
             notificationColor={'success'}
             notificationText={successMessage}/>
-          <SeawitchedLogoColor />
           <LoginForm />
 
           <NewUser />

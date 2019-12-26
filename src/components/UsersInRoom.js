@@ -32,7 +32,7 @@ const UsersInRoom = ({ session }) => {
             {session.currentUsers.map((user, index) => {
               return (
 
-                  <Card key={user.userId} style={style.blueCard} className='blueCard text-light text-center' key={user.id}>
+                  <Card key={user.userId} style={style.cardBlue} className='cardBlue text-light text-center' key={user.id}>
                     <SvgFirstMate />
                     <h8>{user.username}</h8>
                   </Card>
