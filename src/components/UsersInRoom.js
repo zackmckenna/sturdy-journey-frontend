@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Container, Card, Button } from 'reactstrap'
 import SvgFirstMate from './SvgFirstMate'
-
+import style from '../style/usersInRoom.css'
 
 const UsersInRoom = ({ session }) => {
   let usersToDistribute = session.currentUsers
@@ -31,9 +31,9 @@ const UsersInRoom = ({ session }) => {
           {session.currentUsers.map((user, index) => {
             return (
 
-                <Card key={user.userId} className='text-light text-center' key={user.id}>
+                <Card key={user.userId} style={style.blueCard} className='blueCard text-light text-center' key={user.id}>
                   <SvgFirstMate />
-                  {/* <h8>{user.username}</h8> */}
+                  <h8>{user.username}</h8>
                 </Card>
             )
           })}
