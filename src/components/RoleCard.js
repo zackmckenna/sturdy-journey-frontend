@@ -1,9 +1,13 @@
 import React from 'react';
 import {
   Card, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
+  CardTitle, CardSubtitle, Button, Col, Row
 } from 'reactstrap';
+import Rules from './Rules'
+import { SwipeableDrawer } from '@material-ui/core';
+
 import { connect } from 'react-redux'
+
 
 const RoleCard = ({
   currentGameSession,
@@ -18,6 +22,7 @@ const RoleCard = ({
       console.log(roles)
       return (
         <div>
+          <Rules />
           <Card>
             <CardBody>
               <CardTitle>{userRole.role}</CardTitle>
@@ -30,7 +35,12 @@ const RoleCard = ({
       )
     } else {
       return (
-        <h2>You must start a game to get a role card.</h2>
+        <Row>
+          <Col>
+            <Rules />
+            <h2>You must start a game to get a role card.</h2>
+          </Col>
+        </Row>
       )
     }
   }

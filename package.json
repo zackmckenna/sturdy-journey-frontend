@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.8.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "axios": "^0.19.0",
@@ -10,6 +11,7 @@
     "deep-freeze": "^0.0.1",
     "eslint-plugin-jest": "^23.1.1",
     "expect": "^24.9.0",
+    "material-ui": "^0.20.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

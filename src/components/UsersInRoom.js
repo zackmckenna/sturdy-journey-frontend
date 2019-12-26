@@ -22,24 +22,27 @@ const UsersInRoom = ({ session }) => {
           <h5>Waiting for up to 10 bucanneers to join.</h5>
         </Col>
       </Row>
+      <Row>
+        <Col className='text-light text-center'>
+        <h2>People in Room: {session.currentNumberPlayers}</h2>
+        <ul>
+          {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
+          <Container>
+            <Row>
+            {session.currentUsers.map((user, index) => {
+              return (
 
-      <h2>People in Room: {session.currentNumberPlayers}</h2>
-      <ul>
-        {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
-        <Container>
-          <Row>
-          {session.currentUsers.map((user, index) => {
-            return (
-
-                <Card key={user.userId} style={style.blueCard} className='blueCard text-light text-center' key={user.id}>
-                  <SvgFirstMate />
-                  <h8>{user.username}</h8>
-                </Card>
-            )
-          })}
-          </Row>
-        </Container>
-      </ul>
+                  <Card key={user.userId} style={style.blueCard} className='blueCard text-light text-center' key={user.id}>
+                    <SvgFirstMate />
+                    <h8>{user.username}</h8>
+                  </Card>
+              )
+            })}
+            </Row>
+          </Container>
+        </ul>
+        </Col>
+      </Row>
     </>
   )
 }

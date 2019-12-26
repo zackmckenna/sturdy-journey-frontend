@@ -38,6 +38,8 @@ const GameLobby = ({
   if (currentGameSession.currentUsers) {
     return (
       <>
+    <Row>
+      <Col className='text-light text-center'>
         <h2>{currentGameSession.currentNumberPlayers >= 4 ? <Button onClick={handleStartGame} color='success'>Start Game</Button>: null}</h2>
         <UsersInRoom />
         {/* <h2>People in Room: {currentGameSession.currentNumberPlayers} */}
@@ -47,6 +49,8 @@ const GameLobby = ({
         {currentGameSession.currentNumberPlayers < 4 ? <h4>need at least 4 players to start.</h4> : null}
         {currentGameSession.currentNumberPlayers >= 4 ? renderCurrentGame() : null}
         {playerRole ? <h4>You are the {playerRole.role}</h4> : null}
+      </Col>
+    </Row>
       </>
     )
   } else {

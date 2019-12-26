@@ -201,6 +201,7 @@ const App = (props) => {
             <Route path='/role_card' component={RoleCard}/>
           </Switch>
           </Container>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         </Router>
     </>
   )
