@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  Container, Card, CardText, CardBody,
-  CardTitle, CardSubtitle, Button, Col, Row
+  Container, Col, Row
 } from 'reactstrap';
 import Rules from './Rules'
 import DeckDrawer from './DeckDrawer'
@@ -11,16 +10,18 @@ import style from '../style/roleCard.css'
 const RoleCard = (props) => {
   return (
     <>
-    <Container className='mt-2 border roleContainer'>
+    <Container className='mt-3 roleContainer'>
       <Container className='ruleContainer'>
         <Rules />
       </Container>
-      <Row>
-        <Col className='text-light text-center'>
-          <h5>You must start a game to get a role card.</h5>
-        </Col>
-      </Row>
-      <Container className='fixed-bottom border deckContainer'>
+      <Container className='mt-3'>
+        <Row>
+          <Col className='text-light text-center'>
+            <h5>You must start a game to get a role card.</h5>
+          </Col>
+        </Row>
+      </Container>
+      <Container className='fixed-bottom deckContainer'>
         <DeckDrawer />
       </Container>
     </Container>

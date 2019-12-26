@@ -23,7 +23,7 @@ import UserNotes from './components/UserNotes'
 import Home from './components/Home'
 import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
-import RoleCard from './components/RoleCard'
+import RoleCard from './components/UserGameView'
 import SeawitchedLogoColor from './components/SeaWitchedLogoColor'
 
 import { Container } from 'reactstrap'
