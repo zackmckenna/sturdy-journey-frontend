@@ -23,7 +23,7 @@ const NewAccountButton = ({
   console.log(toggles)
 
   const handleClick = () => {
-    toggleCreateUserForm()
+    toggleCreateUserForm(true)
   }
 
   return (
@@ -41,7 +41,7 @@ const mapStateToProps = function(state) {
 }
 
 const mapDispatchToProps = {
-  toggleCreateUserForm: () => (toggleCreateUserForm())
+  toggleCreateUserForm: (data) => (toggleCreateUserForm(data))
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAccountButton);

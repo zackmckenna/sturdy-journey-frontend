@@ -23,30 +23,35 @@ export const setUser = () => {
   }
 }
 
-export const toggleCreateUserForm = () => {
-  console.log('user form toggled')
+export const toggleCreateUserForm = (data) => {
+  console.log('user form toggled to', data)
   return {
     type: actionTypes.TOGGLE_CREATE_USER_FORM,
+    data: data
   }
 }
 
-export const toggleLoginForm = () => {
-  console.log('login toggled')
+export const toggleLoginForm = (data) => {
+  console.log('login toggled to', data)
   return {
-    type: actionTypes.TOGGLE_LOGIN_FORM
+    type: actionTypes.TOGGLE_LOGIN_FORM,
+    data: data
   }
 }
 
-export const toggleLogo = () => {
+export const toggleLogo = (data) => {
+  console.log('logo toggled to', data)
   return {
-    type: 'TOGGLE_LOGO'
+    type: 'TOGGLE_LOGO',
+    data: data
   }
 }
 
-export const toggleNewNoteForm = () => {
+export const toggleNewNoteForm = (data) => {
   console.log('new note form')
   return {
-    type: actionTypes.TOGGLE_NEW_NOTE_FORM
+    type: actionTypes.TOGGLE_NEW_NOTE_FORM,
+    data: data
   }
 }
 function removeUserFromRedux() {

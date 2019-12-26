@@ -1,22 +1,22 @@
-import { actionTypes } from "react-redux-form"
+import * as actionTypes from "../actionTypes"
 
-const toggleReducer = (state = [{
+const toggleReducer = (state = {
   showCreateNoteForm : false,
   showCreateUserForm: false,
   showLoginForm: false,
   showLogo: true
-}], action) => {
-  switch(action.data) {
+}, action) => {
+  switch(action.type) {
     case actionTypes.TOGGLE_CREATE_USER_FORM:
-      return {...state, showCreateUserForm: !state.showCreateUserForm}
+      console.log(action.data)
+      return {...state, showCreateUserForm: action.data}
     case actionTypes.TOGGLE_NEW_NOTE_FORM:
-      return {...state, showCreateNoteForm: !state.showCreateNoteForm}
+      console.log(action.data)
+      return {...state, showCreateNoteForm: action.data}
     case actionTypes.TOGGLE_LOGIN_FORM:
-      console.log('reducer toggled')
-      console.log(state.showLoginForm)
-      return {...state, showLoginForm: !state.showLoginForm}
+      return {...state, showLoginForm: action.data}
     case 'TOGGLE_LOGO':
-      return {...state, showLogo: !state.showLogo}
+      return {...state, showLogo: action.data}
     default:
       return state
   }

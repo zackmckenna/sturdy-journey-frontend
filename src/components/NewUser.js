@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Row, Container, Col } from 'reactstrap';
-import { createAccount,toggleCreateUserForm } from '../redux/actionCreators'
+import { createAccount,toggleCreateUserForm, toggleNewNoteForm } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import { connect } from 'react-redux'
 
@@ -13,6 +13,10 @@ const NewUser = ({
 
   const handleSubmit = (values) => {
     createAccount(values.username, values.name, values.password)
+  }
+
+  const handleCancelUserForm = () => {
+    toggleCreateUserForm(false)
   }
 
   if (session.localUser || !toggles.showCreateUserForm) {
@@ -76,7 +80,7 @@ const NewUser = ({
                   <Row>
                     <Col className='text-center mt-2'>
                       <Button className='mr-2' color='success'>submit</Button>
-                      <Button onClick={(data) => toggleCreateUserForm(data)} color='secondary'>cancel</Button>
+                      <Button onClick={() => handleCancelUserForm()} color='secondary'>cancel</Button>
                     </Col>
                   </Row>
                 </LocalForm>

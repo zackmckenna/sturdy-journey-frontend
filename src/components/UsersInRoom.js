@@ -19,7 +19,7 @@ const UsersInRoom = ({ session }) => {
       </Row>
       <Row>
         <Col className='text-center text-light'>
-          <h7>Waiting for up to 10 bucanneers to join.</h7>
+          <h5>Waiting for up to 10 bucanneers to join.</h5>
         </Col>
       </Row>
 
@@ -31,7 +31,7 @@ const UsersInRoom = ({ session }) => {
           {session.currentUsers.map((user, index) => {
             return (
 
-                <Card className='text-light text-center' key={user.id}>
+                <Card key={user.userId} className='text-light text-center' key={user.id}>
                   <SvgFirstMate />
                   {/* <h8>{user.username}</h8> */}
                 </Card>
