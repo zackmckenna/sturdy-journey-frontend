@@ -21,7 +21,7 @@ const RoleCard = (props) => {
           </Col>
         </Row>
       </Container>
-      <Container className='fixed-bottom deckContainer'>
+      <Container className='fixed-bottom border deckContainer'>
         <DeckDrawer />
       </Container>
     </Container>

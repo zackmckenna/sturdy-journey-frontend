@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Card, Col, Row, Container, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
 import Draggable, {DraggableCore} from 'react-draggable'; // Both at the same time
 import ReactSwipe from 'react-swipe'
+import deck from '../style/deck.css'
 
 const DraggableCard = (props) => {
   let reactSwipeEl;
@@ -19,25 +20,74 @@ const DraggableCard = (props) => {
       // handle='.handle'
       bounds={{top:0}}
       >
-      <Card>
-        <CardBody >
+      <Container>
+        <button onClick={() => reactSwipeEl.next()}>Next</button>
+        <button onClick={() => reactSwipeEl.prev()}>Previous</button>
+        <ReactSwipe
+        className="carousel"
+        swipeOptions={{ continuous: false }}
+        ref={el => (reactSwipeEl = el)}
+      >
+        <div>
+        <Card>
+            <CardBody >
+              <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+              <CardTitle ><h2>The Deck</h2></CardTitle>
+              <CardTitle><h4>swipe left to reveal your role</h4></CardTitle>
+              <CardSubtitle>you can move this card up and down to keep your role hidden from prying eyes</CardSubtitle>
+            </CardBody>
+          </Card>
+        </div>
+        <div>
+          <Card>
+            <CardBody >
+              <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+              <CardTitle><h2>Role Card</h2></CardTitle>
+              <CardTitle><h4>you are the {userRole.role}</h4></CardTitle>
+              <CardSubtitle>This is some text about the role</CardSubtitle>
+              <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
+              <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+              <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+              <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+              <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+            </CardBody>
+          </Card>
+      </div>
+        <div><Card>
+            <CardBody >
+              <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+              <CardTitle><h2>I'm another role card</h2></CardTitle>
+              <CardTitle><h4>here is another role card</h4></CardTitle>
+              <CardSubtitle>This is some text about the role</CardSubtitle>
+              <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
+              <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+              <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+            </CardBody>
+          </Card></div>
+        <div></div>
+      </ReactSwipe>
+
+        {/* <Card>
+          <CardBody >
           <CardTitle className='text-center handle'>DRAG ME</CardTitle>
           <CardTitle><h2>Role Card</h2></CardTitle>
-          <CardTitle><h4>you are the {userRole.role}</h4></CardTitle>
+          <CardTitle><h4>you are the DEMO</h4></CardTitle>
           <CardSubtitle>This is some text about the role</CardSubtitle>
           <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
           <CardText>Description: example text ipsum whatever lorem whatever</CardText>
         </CardBody>
-      </Card>
+      </Card> */}
+        </Container>
       </Draggable>
     )
     } else {
       return (
-        <Draggable
+      <Draggable
       axis='y'
       // defaultPosition={{x:0, y:350}}
       // handle='.handle'
-      bounds={{top:0}}
+
+      bounds={{top:0, bottom: 275}}
       >
         <Container>
         <button onClick={() => reactSwipeEl.next()}>Next</button>
@@ -47,6 +97,16 @@ const DraggableCard = (props) => {
         swipeOptions={{ continuous: false }}
         ref={el => (reactSwipeEl = el)}
       >
+        <div>
+        <Card>
+            <CardBody >
+              <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+              <CardTitle ><h2>The Deck</h2></CardTitle>
+              <CardTitle><h4>swipe left to reveal your role</h4></CardTitle>
+              <CardSubtitle>you can move this card up and down to keep your role hidden from prying eyes</CardSubtitle>
+            </CardBody>
+          </Card>
+        </div>
         <div>
           <Card>
             <CardBody >
