@@ -146,9 +146,9 @@ const App = (props) => {
       let captainArray = []
       // rolesArray = rolesArray.concat(addRole('captian', currentGameThing.numberCaptian))
       captainArray = captainArray.concat(addRole('captain', currentGameThing.numberCaptian))
-      rolesArray = rolesArray.concat(addRole('mate', currentGameThing.numberMate))
+      rolesArray = rolesArray.concat(addRole('first-mate', currentGameThing.numberMate))
       rolesArray = rolesArray.concat(addRole('mutineer', currentGameThing.numberMutineer))
-      rolesArray = rolesArray.concat(addRole('firstmate', 1))
+      rolesArray = rolesArray.concat(addRole('lookout', 1))
 
       alignmentArray = alignmentArray.concat(addRole('good', currentGameThing.numberGood))
       alignmentArray = alignmentArray.concat(addRole('evil', currentGameThing.numberEvil))
