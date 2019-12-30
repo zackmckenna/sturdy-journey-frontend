@@ -21,8 +21,8 @@ const DraggableCard = (props) => {
       bounds={{top:0}}
       >
       <Container>
-        <button onClick={() => reactSwipeEl.next()}>Next</button>
-        <button onClick={() => reactSwipeEl.prev()}>Previous</button>
+        {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
+        <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
         <ReactSwipe
         className="carousel"
         swipeOptions={{ continuous: false }}
@@ -90,8 +90,8 @@ const DraggableCard = (props) => {
       bounds={{top:0, bottom: 275}}
       >
         <Container>
-        <button onClick={() => reactSwipeEl.next()}>Next</button>
-      <button onClick={() => reactSwipeEl.prev()}>Previous</button>
+        {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
+      <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
         <ReactSwipe
         className="carousel"
         swipeOptions={{ continuous: false }}

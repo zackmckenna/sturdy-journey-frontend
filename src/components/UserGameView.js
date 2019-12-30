@@ -17,11 +17,10 @@ const RoleCard = (props) => {
       <Container className='mt-3'>
         <Row>
           <Col className='text-light text-center'>
-            <h5>You must start a game to get a role card.</h5>
           </Col>
         </Row>
       </Container>
-      <Container className='fixed-bottom border deckContainer'>
+      <Container className='fixed-bottom deckContainer'>
         <DeckDrawer />
       </Container>
     </Container>
