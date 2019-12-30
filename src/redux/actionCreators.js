@@ -7,7 +7,6 @@ import usersService from '../services/users'
 import accountService from '../services/account'
 import socket from '../socket/socket'
 
-
 export const setUser = () => {
   return async dispatch => {
     console.log('set user run')
