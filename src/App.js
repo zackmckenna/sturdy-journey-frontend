@@ -5,7 +5,6 @@ import style from './style/app.css'
 
 //redux reducers
 import {
-          removeUserFromSession,
           setCurrentUsers,
           setCurrentNumberPlayers,
           setCurrentPlayerRoles,
@@ -225,7 +224,6 @@ export default connect((mapStateToProps),
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
-  removeUserFromSession,
   toggleCreateUserForm
   }
 )(App)

@@ -1,7 +1,7 @@
 import notesService from '../services/notes'
 import loginService from '../services/login'
 import socket from '../socket/socket'
-import { setLocalUserState, logout } from '../redux/actionCreators'
+import { setLocalUserState, toggleLogo, toggleLoginForm, userIsLoggedIn } from '../redux/actionCreators'
 
 import connect from 'react-redux'
 
@@ -15,29 +15,27 @@ import connect from 'react-redux'
 //       setUserState(user)
 //     }
 //   }
-
-export const loginUser = async (username, password) => {
-  console.log('logging in . . .')
-  console.log(username)
-  console.log(password)
-    const user = await loginService.login({
-      username, password
-    })
-    window.localStorage.setItem('loggedAppUser', JSON.stringify(user))
-    // const loggedAppUserJSON = await window.localStorage.getItem('loggedAppUser')
-    if (user) {
-      // const user = JSON.parse(loggedAppUserJSON)
-      notesService.setToken(user.token)
-      await setLocalUserState(user)
-    }
-    socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
-}
-
-export const removeUserFromSession = (user) => {
-    socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
-    window.localStorage.removeItem('loggedAppUser')
-    logout()
+const UserContainer = () => {
+  
+  export const loginUser = async (username, password) => {
+    console.log('logging in . . .')
+    console.log(username)
+    console.log(password)
+      const user = await loginService.login({
+        username, password
+      })
+      window.localStorage.setItem('loggedAppUser', JSON.stringify(user))
+      // const loggedAppUserJSON = await window.localStorage.getItem('loggedAppUser')
+      if (user) {
+        // const user = JSON.parse(loggedAppUserJSON)
+        notesService.setToken(user.token)
+        await setLocalUserState(user)
+      }
+      socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
+      toggleLoginForm()
+      toggleLogo()
   }
+}
 
 
 // export const loginUser = (username, password) => {

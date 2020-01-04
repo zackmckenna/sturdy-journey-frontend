@@ -22,8 +22,13 @@ import socket from '../socket/socket'
 //   }
 // }
 
-export const setLocalUserState = ( user ) => {
-  console.log('setting user state:', user)
+export const logout = () => (dispatch) => {
+  console.log('logging out...')
+  dispatch(removeUserFromRedux())
+  dispatch(toggleLoginForm())
+}
+
+export const setLocalUserState = (user) => {
   return {
     type: actionTypes.SET_LOCAL_USER_STATE,
     data: user
@@ -65,15 +70,6 @@ function removeUserFromRedux() {
   return{
     type: actionTypes.REMOVE_USER,
     data: null
-  }
-}
-
-export const removeUserFromSession = (user) => {
-  return (dispatch) => {
-    socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
-    window.localStorage.removeItem('loggedAppUser')
-    dispatch(removeUserFromRedux())
-    dispatch(toggleLoginForm())
   }
 }
 
