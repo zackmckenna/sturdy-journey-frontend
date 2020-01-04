@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useField } from './hooks'
 import { connect } from 'react-redux'
 import style from './style/app.css'
 
@@ -12,8 +11,9 @@ import {
           initializeNotes,
           initializeGames,
           initializeUsers,
-          toggleCreateUserForm,
-          toggleLoginForm } from './redux/actionCreators'
+          toggleCreateUserForm
+           } from './redux/actionCreators'
+
 // component imports
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
@@ -23,8 +23,6 @@ import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
 import RoleCard from './components/UserGameView'
 import HowToPlay from './components/HowToPlay'
-
-import { loginUser } from './user/user'
 
 import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -41,8 +39,6 @@ const App = (props) => {
   useEffect(() => {
     async function getNotes() {
       await props.initializeNotes()
-      console.log(`set notes in redux from notes api:`)
-      console.log(store.getState().notes)
     }
     getNotes()
   }, [])
@@ -50,8 +46,6 @@ const App = (props) => {
   useEffect(() => {
     async function getUsers() {
       await props.initializeUsers()
-      console.log(`set total users in redux from users api:`)
-      console.log(store.getState().users)
     }
     getUsers()
   }, [])
@@ -59,8 +53,6 @@ const App = (props) => {
   useEffect(() => {
     async function getGames() {
       await props.initializeGames()
-      console.log(`set all games in redux from games api:`)
-      console.log(store.getState().games)
     }
     getGames()
   }, [])
@@ -68,8 +60,6 @@ const App = (props) => {
   useEffect(() => {
     async function getRoles() {
       await props.initializeRoles()
-      console.log(`redux roles init:`)
-      console.log(store.getState().roles)
     }
     getRoles()
   }, [])
@@ -106,14 +96,6 @@ const App = (props) => {
 
     })
   }, []);
-
-  // const toggleNoteForm = () => {
-  //   setShowNoteForm(!showNoteForm)
-  // }
-  // event handlers
-  // const handleNoteChange = (event) => {
-  //   setNote(event.target.value)
-  // }
 
   const handleStartGame = async () => {
     const distributedRoles = distributeRoles();

@@ -1,26 +1,9 @@
 import * as actionTypes from './actionTypes'
 import notesService from '../services/notes'
-import loginService from '../services/login'
 import rolesService from '../services/roles'
 import gamesService from '../services/bitGame'
 import usersService from '../services/users'
 import accountService from '../services/account'
-import socket from '../socket/socket'
-
-// export const setUser = () => {
-//   return async dispatch => {
-//     console.log('set user run')
-//     const loggedAppUserJSON = window.localStorage.getItem('loggedAppUser')
-//     if (loggedAppUserJSON) {
-//       const user = JSON.parse(loggedAppUserJSON)
-//       notesService.setToken(user.token)
-//       dispatch({
-//         type: actionTypes.SET_USER,
-//         data: user
-//       })
-//     }
-//   }
-// }
 
 export const logout = () => (dispatch) => {
   console.log('logging out...')
@@ -75,7 +58,6 @@ function removeUserFromRedux() {
 
 export const setCurrentUsers = (currentUsers) => {
   console.log('setting current users')
-  console.log(currentUsers)
   return({
     type:actionTypes.SET_CURRENT_USERS,
     data: currentUsers
@@ -147,20 +129,6 @@ export const initializeUsers = () => {
   }
 }
 
-// export const loginUser = (username, password) => {
-//   return async dispatch => {
-//     const user = await loginService.login({
-//       username, password
-//     })
-//     window.localStorage.setItem('loggedAppUser', JSON.stringify(user))
-//     socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
-//     dispatch(userIsLoggedIn())
-//     dispatch(setUser(user))
-//     dispatch(toggleLoginForm())
-//     dispatch(toggleLogo())
-//   }
-// }
-
 export const createAccount = (username, name, password) => {
   return async dispatch => {
     const newUserObject = {
@@ -169,8 +137,6 @@ export const createAccount = (username, name, password) => {
       username: username
     }
     await accountService.createAccount(newUserObject)
-    // toggleUserButton()
-    // createNotification(`Welcome ${newUserObject.name}, your account has been created.`, setSuccessMessage, 5000);
   }
 }
 
