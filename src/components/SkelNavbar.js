@@ -41,9 +41,9 @@ const SkelNavbar = ({
             <NavItem>
               <NavLink tag={Link} to='game_lobby'>The Game Lobby</NavLink>
             </NavItem>
-            {/* <NavItem>
-              <NavLink tag={Link} to='user_notes'>User Notes</NavLink>
-            </NavItem> */}
+            <NavItem>
+              <NavLink tag={Link} to='how_to_play'>How To Play</NavLink>
+            </NavItem>
             <NavItem>
               <NavLink tag={Link} to='role_card'>Role Card</NavLink>
             </NavItem>

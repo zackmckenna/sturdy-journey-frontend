@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import style from './style/app.css'
 
 //redux reducers
-import { setUser,
+import {
           removeUserFromSession,
           setCurrentUsers,
           setCurrentNumberPlayers,
@@ -19,12 +19,13 @@ import { setUser,
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import SkelNavbar from './components/SkelNavbar';
-import UserNotes from './components/UserNotes'
 import Home from './components/Home'
 import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
 import RoleCard from './components/UserGameView'
-import SeawitchedLogoColor from './components/SeaWitchedLogoColor'
+import HowToPlay from './components/HowToPlay'
+
+import { loginUser } from './user/user'
 
 import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -34,7 +35,6 @@ import socket from './socket/socket'
 const App = (props) => {
   const store = props.store
 
-  const [note, setNote] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
@@ -77,7 +77,6 @@ const App = (props) => {
 
   useEffect(() => {
     async function setLocalUser() {
-      await props.setUser()
       console.log(`set user in redux:`)
       props.user ? console.log(props.user) : console.log('no current user')
     }
@@ -188,10 +187,10 @@ const App = (props) => {
           <NewUser />
 
           <Switch>
-
             <Route path='/home' component={Home} />
-            <Route path='/user_notes' render={() =>
-              <UserNotes />}/>
+            {/* <Route path='/user_notes' render={() =>
+              <UserNotes />}/> */}
+            <Route path='/how_to_play' component={HowToPlay}/>
             <Route path='/game_lobby' render={() =>
                 <GameLobby
                 handleStartGame={handleStartGame}
@@ -223,7 +222,6 @@ export default connect((mapStateToProps),
   initializeGames,
   initializeUsers,
   initializeRoles,
-  setUser,
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,

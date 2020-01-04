@@ -1,9 +1,9 @@
-import notesService from '../../services/notes'
-import loginService from '../../services/login'
-
 const sessionReducer = (state =[], action) => {
+  console.log(action.type)
+  console.log(action.data)
   switch (action.type) {
-    case 'SET_USER':
+    case 'SET_LOCAL_USER_STATE':
+      console.log('setting local user')
       return {...state, localUser: action.data}
     case 'REMOVE_USER':
       return {...state, localUser: null}
