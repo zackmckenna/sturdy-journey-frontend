@@ -17,8 +17,13 @@ import gameReducer from './reducers/gameReducer'
 import toggleReducer from './reducers/toggleReducer'
 import sessionReducer from './reducers/sessionReducer'
 
-function configureStore(initialState){
+import { loadState, saveState } from './localState'
+import throttle from 'lodash/throttle'
 
+
+const configureStore = () => {
+
+  const persistedState = loadState()
   const socket = io.connect('http://localhost:30725/')
   const reducers = combineReducers({
     notes: noteReducer,
@@ -32,9 +37,9 @@ function configureStore(initialState){
     loginForm: formReducer
   })
 
-  return createStore(
+  const store = createStore(
     reducers,
-    initialState,
+    persistedState,
     composeWithDevTools(
       applyMiddleware(
         thunk,
@@ -42,6 +47,15 @@ function configureStore(initialState){
         socketIOEmitterMiddleware(socket),
         socketIOSubscriberMiddleware(socket))
     )
-)}
+  )
+  store.subscribe(throttle(() => {
+    saveState({
+      localUser: store.getState().session.localUser
+    })
+  }, 1000))
+
+  return store
+}
+
 
 export default configureStore

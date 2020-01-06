@@ -1,7 +1,7 @@
-import React from 'react';
-import { Alert } from 'reactstrap';
+import React from 'react'
+import { Alert } from 'reactstrap'
 
-const Notification = ({notificationText, notificationColor}) => {
+const Notification = ({ notificationText, notificationColor }) => {
 
   if (notificationText) {
     return (
@@ -10,10 +10,10 @@ const Notification = ({notificationText, notificationColor}) => {
           {notificationText}
         </Alert>
       </div>
-    );
+    )
   } else {
     return <> </>
   }
-};
+}
 
-export default Notification;
+export default Notification

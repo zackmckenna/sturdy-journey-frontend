@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Label, FormGroup, Form } from 'reactstrap';
+import React from 'react'
+import { Button, Label, FormGroup } from 'reactstrap'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
@@ -10,8 +10,8 @@ let LoginFormRedux = props => {
     <>
       <form onSubmit={props.handleLogin}>
         <FormGroup>
-            <Label htmlFor='username'>Username</Label>
-            <Field name='username' component='input' type='text'/>
+          <Label htmlFor='username'>Username</Label>
+          <Field name='username' component='input' type='text'/>
         </FormGroup>
         <div>
           <Label htmlFor='password'>Password</Label>
@@ -20,7 +20,7 @@ let LoginFormRedux = props => {
         <Button type='submit'>Submit</Button>
       </form>
     </>
-  );
+  )
 }
 
 LoginFormRedux = reduxForm({
@@ -33,4 +33,4 @@ const mapStateToProps = function(state) {
   }
 }
 
-export default connect(mapStateToProps)(LoginFormRedux);
+export default connect(mapStateToProps)(LoginFormRedux)

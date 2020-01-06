@@ -1,5 +1,4 @@
 import React from 'react'
-import { Jumbotron } from  'reactstrap';
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -25,4 +24,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Home)

@@ -43,10 +43,10 @@ function SvgRules(props) {
               </g>
               <text fontFamily="Bitter-Regular, Bitter" fontSize={16} fill="#FFF">
                 <tspan x={56} y={23}>
-                  {"First"}
+                  {'First'}
                 </tspan>
                 <tspan x={56} y={42}>
-                  {"Mate"}
+                  {'Mate'}
                 </tspan>
               </text>
             </g>

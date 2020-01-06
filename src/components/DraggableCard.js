@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Card, Col, Row, Container, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
-import Draggable, {DraggableCore} from 'react-draggable'; // Both at the same time
+import { Card, Container, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
+import Draggable from 'react-draggable' // Both at the same time
 import ReactSwipe from 'react-swipe'
-import deck from '../style/deck.css'
 
 const DraggableCard = (props) => {
   let reactSwipeEl;
@@ -56,7 +55,7 @@ const DraggableCard = (props) => {
             <div><Card>
               <CardBody >
                 <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                <CardTitle><h2>I'm another role card</h2></CardTitle>
+                <CardTitle><h2>Im another role card</h2></CardTitle>
                 <CardTitle><h4>here is another role card</h4></CardTitle>
                 <CardSubtitle>This is some text about the role</CardSubtitle>
                 <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
@@ -87,7 +86,7 @@ const DraggableCard = (props) => {
         // defaultPosition={{x:0, y:350}}
         // handle='.handle'
 
-        bounds={{top:0, bottom: 275}}
+        bounds={{ top:0, bottom: 275 }}
       >
         <Container>
           {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
@@ -125,7 +124,7 @@ const DraggableCard = (props) => {
             <div><Card>
               <CardBody >
                 <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                <CardTitle><h2>I'm another role card</h2></CardTitle>
+                <CardTitle><h2>Im another role card</h2></CardTitle>
                 <CardTitle><h4>here is another role card</h4></CardTitle>
                 <CardSubtitle>This is some text about the role</CardSubtitle>
                 <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>

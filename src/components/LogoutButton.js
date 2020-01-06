@@ -11,8 +11,8 @@ const LogoutButton = ({
 
   const handleLogout = (user) => {
     console.log(user)
-      removeUserFromSession(user)
-      dispatch(logout())
+    removeUserFromSession(user)
+    dispatch(logout())
   }
 
   return (
@@ -27,4 +27,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(LogoutButton);
+export default connect(mapStateToProps)(LogoutButton)

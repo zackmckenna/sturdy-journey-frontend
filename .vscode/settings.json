@@ -5,5 +5,10 @@
     "eqeqeq",
     "firstmate",
     "number"
+  ],
+  "cSpell.ignoreWords": [
+    "el",
+    "react",
+    "swipe"
   ]
 }

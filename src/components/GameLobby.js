@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Button, Row, Col } from 'reactstrap'
 import { connect } from 'react-redux'
 import Alert from './AppAlert'
@@ -71,4 +71,4 @@ const mapStateToProps = function(state) {
   }
 }
 
-export default connect(mapStateToProps)(GameLobby);
+export default connect(mapStateToProps)(GameLobby)
