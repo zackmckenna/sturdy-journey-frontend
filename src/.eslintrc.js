@@ -30,10 +30,7 @@ module.exports = {
           "unix"
       ],
       "react-hooks/rules-of-hooks": "error",
-      "quotes": [
-          "error",
-          {"single" : false, "backtick" : false, "double" : true}
-      ],
+      "quotes": [2, "single", { "allowTemplateLiterals": true, "avoidEscape" : true}],
       "semi": [
           "error",
           "never"

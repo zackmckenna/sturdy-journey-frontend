@@ -4,33 +4,33 @@ import accountService from '../services/account'
 import socket from '../socket/socket'
 
 export const loginUser = async (username, password) => {
-    const user = await loginService.login({
-      username, password
-    })
-    window.localStorage.setItem('loggedAppUser', JSON.stringify(user))
-    if (user) {
-      notesService.setToken(user.token)
-    }
-    socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
+  const user = await loginService.login({
+    username, password
+  })
+  window.localStorage.setItem('loggedAppUser', JSON.stringify(user))
+  if (user) {
+    notesService.setToken(user.token)
+  }
+  socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
 }
 
 export const removeUserFromSession = (user) => {
-    socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
-    window.localStorage.removeItem('loggedAppUser')
-  }
+  socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
+  window.localStorage.removeItem('loggedAppUser')
+}
 
 export const createAccount = async (username, name, password) => {
-    const newUserObject = {
-      password: password,
-      name: name,
-      username: username
-    }
-    try{
-      const response = await accountService.createAccount(newUserObject)
-    } catch (exception){
-      console.log('error:')
-      console.log(exception)
-    }
+  const newUserObject = {
+    password: password,
+    name: name,
+    username: username
+  }
+  try{
+    const response = await accountService.createAccount(newUserObject)
+  } catch (exception){
+    console.log('error:')
+    console.log(exception)
+  }
 }
 
 

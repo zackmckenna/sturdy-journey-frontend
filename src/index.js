@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './style/app.css'
 import configureStore from './redux/configureStore'
 
-const store = configureStore();
+const store = configureStore()
 
 const rootElement = document.getElementById('root')
 

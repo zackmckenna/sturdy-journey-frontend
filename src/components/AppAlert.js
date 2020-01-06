@@ -9,6 +9,8 @@ const AppAlert = ({
   message,
   error
 }) => {
+  console.log('APP ALERT')
+  console.log(visible, error, message)
   if (visible) {
     if (error) {
       return (

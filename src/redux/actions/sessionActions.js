@@ -7,6 +7,14 @@ export const removeUserFromRedux = () => {
   }
 }
 
+
+export const setLocalUserState = (user) => {
+  return {
+    type: actionTypes.SET_LOCAL_USER_STATE,
+    data: user
+  }
+}
+
 export const toggleLoginForm = (data) => {
   console.log('login toggled to', data)
   return {

@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import NewAccountButton from './NewAccountButton'
 import SeaWitchedLogoColor from './SeaWitchedLogoColor'
-import { setLocalUserState } from '../redux/actionCreators'
+import { setLocalUserState } from '../redux/actions/sessionActions'
 import { loginUser } from '../user/user'
-import { loginUserAction } from '../redux/actions/authenticationActions'
+// import { loginUserAction } from '../redux/actions/authenticationActions'
 
 const LoginForm = ({
   session,

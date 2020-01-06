@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Container, Card, Button } from 'reactstrap'
+import { Row, Col, Container, Card } from 'reactstrap'
 import SvgFirstMate from './SvgFirstMate'
 import style from '../style/usersInRoom.css'
 
@@ -27,23 +27,22 @@ const UsersInRoom = ({ session }) => {
         </Row>
         <Row>
           <Col className='text-light text-center'>
-          <h2>People in Room: {session.currentNumberPlayers}</h2>
-          <ul>
-            {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
-            <Container>
-              <Row>
-              {session.currentUsers.map((user, index) => {
-                return (
-
-                    <Card key={user.userId} style={style.cardBlue} className='cardBlue text-light text-center' key={user.id}>
-                      <SvgFirstMate />
-                      <h8>{user.username}</h8>
-                    </Card>
-                )
-              })}
-              </Row>
-            </Container>
-          </ul>
+            <h2>People in Room: {session.currentNumberPlayers}</h2>
+            <ul>
+              {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
+              <Container>
+                <Row>
+                  {session.currentUsers.map((user, index) => {
+                    return (
+                      <Card key={user.userId} style={style.cardBlue} className='cardBlue text-light text-center' key={user.id}>
+                        <SvgFirstMate />
+                        <h8>{user.username}</h8>
+                      </Card>
+                    )
+                  })}
+                </Row>
+              </Container>
+            </ul>
           </Col>
         </Row>
       </>

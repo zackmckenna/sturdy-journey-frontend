@@ -2,16 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../style/navbar.css'
 
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Button
-} from 'reactstrap';
+import { Button } from 'reactstrap';
 import { connect } from 'react-redux'
 import { toggleCreateUserForm } from '../redux/actionCreators'
 

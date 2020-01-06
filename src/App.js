@@ -3,16 +3,21 @@ import { connect } from 'react-redux'
 import style from './style/app.css'
 
 //redux reducers
-import {
-          setCurrentUsers,
-          setCurrentNumberPlayers,
-          setCurrentPlayerRoles,
-          initializeRoles,
-          initializeNotes,
-          initializeGames,
-          initializeUsers,
-          toggleCreateUserForm
-           } from './redux/actionCreators'
+import  { toggleCreateUserForm } from './redux/actionCreators'
+
+import  { setCurrentUsers,
+  setCurrentNumberPlayers,
+  setCurrentPlayerRoles } from  './redux/actions/sessionActions'
+
+import  {  initializeUsers,
+  initializeRoles,
+  initializeNotes,
+  initializeGames } from  './redux/actions/initialActions'
+
+import  { setErrorMessage,
+  setSuccessMessage,
+  clearAlert,
+  setAlert  } from './redux/actions/notificationActions'
 
 // component imports
 import LoginForm from './components/LoginForm'
@@ -24,7 +29,7 @@ import RoleCard from './components/UserGameView'
 import HowToPlay from './components/HowToPlay'
 import AppAlert from './components/AppAlert'
 
-import { Container } from 'reactstrap'
+import { Container, Button } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import socket from './socket/socket'
@@ -71,13 +76,13 @@ const App = (props) => {
   // socket.io connections
   useEffect(() => {
 
-      console.log('opening visitors socket . . .')
-      socket.on('visitors', async users => {
-        console.log('socket.io visitors command received')
-        const filteredUsers = await users.filter(user => user != null)
-        await props.setCurrentUsers(filteredUsers);
-        await props.setCurrentNumberPlayers(filteredUsers.length)
-        console.log(store.getState().session)
+    console.log('opening visitors socket . . .')
+    socket.on('visitors', async users => {
+      console.log('socket.io visitors command received')
+      const filteredUsers = await users.filter(user => user != null)
+      await props.setCurrentUsers(filteredUsers);
+      await props.setCurrentNumberPlayers(filteredUsers.length)
+      console.log(store.getState().session)
 
       console.log('opening distribute roles socket . . .')
       socket.on('distribute roles', async roles => {
@@ -131,7 +136,7 @@ const App = (props) => {
       console.log(alignmentArray)
       alignmentArray = shuffle(alignmentArray)
       captainArray = captainArray.map((captain, index) => {
-         return alignmentArray[index] === 'good' ? 'captain' : 'seawitch'
+        return alignmentArray[index] === 'good' ? 'captain' : 'seawitch'
       })
       console.log(captainArray)
       rolesArray = rolesArray.concat(captainArray)
@@ -147,35 +152,42 @@ const App = (props) => {
     }
   }
 
+  const handleClickAlert = (event) => {
+    console.log('clicked alert button')
+    props.setAlert('message', true)
+  }
+
   return (
     <>
         <Router>
           <SkelNavbar />
           <Container style={style.container}>
-          <AppAlert />
-          {/* <Notification
+            <AppAlert />
+            {/* <Notification
             notificationColor={'danger'}
             notificationText={errorMessage}/>
 
           <Notification
             notificationColor={'success'}
             notificationText={successMessage}/> */}
-          <LoginForm />
+            <LoginForm />
 
-          <NewUser />
+            <NewUser />
 
-          <Switch>
-            <Route path='/home' component={Home} />
-            {/* <Route path='/user_notes' render={() =>
-              <UserNotes />}/> */}
-            <Route path='/how_to_play' component={HowToPlay}/>
-            <Route path='/game_lobby' render={() =>
+            <Button onClick={() => handleClickAlert()} />
+
+            <Switch>
+              <Route path='/home' component={Home} />
+              {/* <Route path='/user_notes' render={() =>
+                <UserNotes />}/> */}
+              <Route path='/how_to_play' component={HowToPlay}/>
+              <Route path='/game_lobby' render={() =>
                 <GameLobby
-                handleStartGame={handleStartGame}
-              />
-            }/>
-            <Route path='/role_card' component={RoleCard}/>
-          </Switch>
+                  handleStartGame={handleStartGame}
+                />
+              }/>
+              <Route path='/role_card' component={RoleCard}/>
+            </Switch>
           </Container>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         </Router>
@@ -196,14 +208,18 @@ const mapStateToProps = (state) => {
 
 export default connect((mapStateToProps),
   {
-  initializeNotes,
-  initializeGames,
-  initializeUsers,
-  initializeRoles,
-  setCurrentUsers,
-  setCurrentNumberPlayers,
-  setCurrentPlayerRoles,
-  toggleCreateUserForm
+    initializeNotes,
+    initializeGames,
+    initializeUsers,
+    initializeRoles,
+    setCurrentUsers,
+    setCurrentNumberPlayers,
+    setCurrentPlayerRoles,
+    toggleCreateUserForm,
+    setSuccessMessage,
+    setErrorMessage,
+    setAlert,
+    clearAlert
   }
 )(App)
 
