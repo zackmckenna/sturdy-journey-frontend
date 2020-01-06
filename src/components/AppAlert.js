@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert } from 'reactstrap'
 import { connect } from 'react-redux'
 
-const AppAlert = ({  
+const AppAlert = ({
   visible,
   message,
   error

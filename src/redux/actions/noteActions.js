@@ -1,4 +1,3 @@
-import * as actionTypes from '../actionTypes'
 import notesService from '../../services/notes'
 import { initializeNotes } from './initialActions'
 

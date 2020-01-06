@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import style from './style/app.css'
 
@@ -21,7 +21,7 @@ import  { setErrorMessage,
 
 // component imports
 import LoginForm from './components/LoginForm'
-import SkelNavbar from './components/SkelNavbar';
+import SkelNavbar from './components/SkelNavbar'
 import Home from './components/Home'
 import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
@@ -29,13 +29,13 @@ import RoleCard from './components/UserGameView'
 import HowToPlay from './components/HowToPlay'
 import AppAlert from './components/AppAlert'
 
-import { Container, Button } from 'reactstrap'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Container } from 'reactstrap'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import socket from './socket/socket'
 
 const App = (props) => {
-  const store = props.store
+  // const store = props.store
 
   useEffect(() => {
     async function getNotes() {
@@ -75,7 +75,6 @@ const App = (props) => {
 
   // socket.io connections
   useEffect(() => {
-
     console.log('opening visitors socket . . .')
     socket.on('visitors', async users => {
       console.log('socket.io visitors command received')
@@ -157,20 +156,12 @@ const App = (props) => {
         <Router>
           <SkelNavbar />
           <Container style={style.container}>
-            {/* <Notification
-            notificationColor={'danger'}
-            notificationText={errorMessage}/>
 
-          <Notification
-            notificationColor={'success'}
-            notificationText={successMessage}/> */}
-            <LoginForm />
+            {props.user ? null : <LoginForm /> }
             <NewUser />
             <AppAlert />
             <Switch>
               <Route path='/home' component={Home} />
-              {/* <Route path='/user_notes' render={() =>
-                <UserNotes />}/> */}
               <Route path='/how_to_play' component={HowToPlay}/>
               <Route path='/game_lobby' render={() =>
                 <GameLobby

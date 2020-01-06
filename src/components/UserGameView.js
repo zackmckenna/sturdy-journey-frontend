@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import {
   Container, Col, Row
-} from 'reactstrap';
+} from 'reactstrap'
 import Rules from './Rules'
 import DeckDrawer from './DeckDrawer'
 import { connect } from 'react-redux'
 // import style from '../style/roleCard.css'
-import style from '../style/roleCard.css'
+import '../style/roleCard.css'
 
 const RoleCard = (props) => {
   return (
@@ -36,4 +36,4 @@ const mapStateToProps = function(state) {
   }
 }
 
-export default connect(mapStateToProps)(RoleCard);
+export default connect(mapStateToProps)(RoleCard)

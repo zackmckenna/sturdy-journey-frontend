@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const TotalUsers = ({ users }) => {
   return (
@@ -9,4 +9,4 @@ const TotalUsers = ({ users }) => {
   )
 }
 
- export default TotalUsers;
+export default TotalUsers
