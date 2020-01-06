@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import styles from '../style/navbar.css'
-
 import {
   Collapse,
   Navbar,
@@ -9,9 +8,8 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  Button
-} from 'reactstrap';
+  NavLink
+} from 'reactstrap'
 import { connect } from 'react-redux'
 import LogoutButton from './LogoutButton'
 

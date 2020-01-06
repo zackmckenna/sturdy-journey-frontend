@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 const Home = ({ session }) => {
   const history = useHistory()
   if (session.localUser) {
-
     history.push('/game_lobby')
     return (
       <>

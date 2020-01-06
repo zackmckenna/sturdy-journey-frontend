@@ -34,7 +34,7 @@ const UsersInRoom = ({ session }) => {
                 <Row>
                   {session.currentUsers.map((user, index) => {
                     return (
-                      <Card key={user.userId} style={style.cardBlue} className='cardBlue text-light text-center' key={user.id}>
+                      <Card key={user.userId} style={style.cardBlue} className='cardBlue text-light text-center'>
                         <SvgFirstMate />
                         <h8>{user.username}</h8>
                       </Card>
@@ -52,10 +52,8 @@ const UsersInRoom = ({ session }) => {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    session: state.session
-  }
-}
+const mapStateToProps = (state) => ({
+  session: state.session
+})
 
 export default connect(mapStateToProps)(UsersInRoom)

@@ -1,9 +1,4 @@
 import * as actionTypes from './actionTypes'
-import notesService from '../services/notes'
-import rolesService from '../services/roles'
-import gamesService from '../services/bitGame'
-import usersService from '../services/users'
-import accountService from '../services/account'
 
 // export const logout = () => (dispatch) => {
 //   console.log('logging out...')

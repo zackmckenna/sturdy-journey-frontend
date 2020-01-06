@@ -1,11 +1,11 @@
 const gameReducer = (state =[], action) => {
   switch (action.type) {
-    case 'NEW_GAME':
-      return state.concat(action.data)
-    case 'INIT_GAMES':
-      return state.concat(action.data)
-    default:
-      return state
+  case 'NEW_GAME':
+    return state.concat(action.data)
+  case 'INIT_GAMES':
+    return state.concat(action.data)
+  default:
+    return state
   }
 }
 

@@ -5,8 +5,6 @@ export const removeUserFromRedux = () => ({
   data: null
 })
 
-
-
 export const setLocalUserState = (user) => ({
   type: actionTypes.SET_LOCAL_USER_STATE,
   data: user

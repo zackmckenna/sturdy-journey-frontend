@@ -16,7 +16,7 @@ import  {  initializeUsers,
 
 import  { setErrorMessage,
   setSuccessMessage,
-  clearAlert,
+  clearNotification,
   setAlert  } from './redux/actions/notificationActions'
 
 // component imports
@@ -82,12 +82,12 @@ const App = (props) => {
       const filteredUsers = await users.filter(user => user != null)
       await props.setCurrentUsers(filteredUsers)
       await props.setCurrentNumberPlayers(filteredUsers.length)
-      console.log(store.getState().session)
+      console.log(props.session)
 
       console.log('opening distribute roles socket . . .')
       socket.on('distribute roles', async roles => {
         await props.setCurrentPlayerRoles(roles)
-        console.log(store.getState().session)
+        console.log(props.session)
       })
 
       socket.on('chat message', async message => {
@@ -96,7 +96,7 @@ const App = (props) => {
       })
 
     })
-  }, []);
+  }, [])
 
   const handleStartGame = async () => {
     const distributedRoles = distributeRoles()
@@ -152,17 +152,11 @@ const App = (props) => {
     }
   }
 
-  const handleClickAlert = (event) => {
-    console.log('clicked alert button')
-    props.setAlert('message', true)
-  }
-
   return (
     <>
         <Router>
           <SkelNavbar />
           <Container style={style.container}>
-            <AppAlert />
             {/* <Notification
             notificationColor={'danger'}
             notificationText={errorMessage}/>
@@ -171,11 +165,8 @@ const App = (props) => {
             notificationColor={'success'}
             notificationText={successMessage}/> */}
             <LoginForm />
-
             <NewUser />
-
-            <Button onClick={() => handleClickAlert()} />
-
+            <AppAlert />
             <Switch>
               <Route path='/home' component={Home} />
               {/* <Route path='/user_notes' render={() =>
@@ -202,7 +193,8 @@ const mapStateToProps = (state) => {
     currentNumberPlayers: state.session.currentNumberPlayers,
     games: state.games,
     loginForm: state.loginForm,
-    toggles: state.toggles
+    toggles: state.toggles,
+    state: state
   }
 }
 
@@ -219,7 +211,7 @@ export default connect((mapStateToProps),
     setSuccessMessage,
     setErrorMessage,
     setAlert,
-    clearAlert
+    clearNotification
   }
 )(App)
 

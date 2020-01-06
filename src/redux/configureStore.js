@@ -7,7 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { reducer as formReducer } from 'redux-form'
 import io from 'socket.io-client'
 import socketIOEmitterMiddleware from 'socket.io-emitter-middleware'
-import socketIOSubscriberMiddleware from 'socket.io-subscriber-middleware';
+import socketIOSubscriberMiddleware from 'socket.io-subscriber-middleware'
 
 // reducers
 import noteReducer from './reducers/noteReducer'
@@ -16,6 +16,7 @@ import roleReducer from './reducers/roleReducer'
 import gameReducer from './reducers/gameReducer'
 import toggleReducer from './reducers/toggleReducer'
 import sessionReducer from './reducers/sessionReducer'
+import notificationReducer from './reducers/notificationReducer'
 
 import { loadState, saveState } from './localState'
 import throttle from 'lodash/throttle'
@@ -30,11 +31,11 @@ const configureStore = () => {
     users: usersReducer,
     roles: roleReducer,
     games: gameReducer,
-    // loginForm: loginFormReducer,
     toggles: toggleReducer,
     session: sessionReducer,
     form: formReducer,
-    loginForm: formReducer
+    loginForm: formReducer,
+    notification: notificationReducer
   })
 
   const store = createStore(

@@ -5,6 +5,7 @@ import { LocalForm, Control, Errors } from 'react-redux-form'
 import NewAccountButton from './NewAccountButton'
 import SeaWitchedLogoColor from './SeaWitchedLogoColor'
 import { setLocalUserState } from '../redux/actions/sessionActions'
+import { setAlert } from '../redux/actions/notificationActions'
 import { loginUser } from '../user/user'
 // import { loginUserAction } from '../redux/actions/authenticationActions'
 
@@ -15,9 +16,14 @@ const LoginForm = ({
 
 
   const handleSubmit = async (values) => {
-    await loginUser(values.username, values.password)
-    const user = window.localStorage.getItem('loggedAppUser')
-    dispatch(setLocalUserState(JSON.parse(user)))
+    try {
+      await loginUser(values.username, values.password)
+      const user = await window.localStorage.getItem('loggedAppUser')
+      dispatch(setLocalUserState(JSON.parse(user)))
+      dispatch(setAlert(`Welcome ${values.username}!`, false))
+    } catch (err) {
+      dispatch(setAlert('Wrong username or password', true))
+    }
   }
 
   if(toggles.showLoginForm || toggles.showCreateUserForm || session.localUser) {
@@ -87,7 +93,7 @@ const mapStateToProps = (state) => {
 
 // const mapDispatchToProps = dispatch => {
 //   return{
-//     setLocalUserState: (user) => dispatch(setLocalUserState(user))
+//     setAlert: (message) => setAlert(message)
 //   }
 // }
 

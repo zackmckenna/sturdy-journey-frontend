@@ -5,6 +5,7 @@ import {
 import Rules from './Rules'
 import DeckDrawer from './DeckDrawer'
 import { connect } from 'react-redux'
+// import style from '../style/roleCard.css'
 import style from '../style/roleCard.css'
 
 const RoleCard = (props) => {
@@ -25,8 +26,8 @@ const RoleCard = (props) => {
       </Container>
     </Container>
     </>
-  );
-};
+  )
+}
 
 const mapStateToProps = function(state) {
   return {

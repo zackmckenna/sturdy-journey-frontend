@@ -4,6 +4,7 @@ import { Card, Container, CardBody, CardTitle, CardSubtitle, CardText } from 're
 import Draggable from 'react-draggable' // Both at the same time
 import ReactSwipe from 'react-swipe'
 
+
 const DraggableCard = (props) => {
   let reactSwipeEl;
 

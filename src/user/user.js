@@ -11,11 +11,11 @@ export const loginUser = async (username, password) => {
   if (user) {
     notesService.setToken(user.token)
   }
-  socket.emit('add_user', {username: user.username, name: user.name, userId: user.id})
+  socket.emit('add_user', { username: user.username, name: user.name, userId: user.id })
 }
 
 export const removeUserFromSession = (user) => {
-  socket.emit('remove_user', {username:user.username, name: user.name, id: user.id})
+  socket.emit('remove_user', { username:user.username, name: user.name, id: user.id })
   window.localStorage.removeItem('loggedAppUser')
 }
 
@@ -27,6 +27,7 @@ export const createAccount = async (username, name, password) => {
   }
   try{
     const response = await accountService.createAccount(newUserObject)
+    console.log(response)
   } catch (exception){
     console.log('error:')
     console.log(exception)

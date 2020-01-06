@@ -1,13 +1,13 @@
-import notesService from '../../services/notes'
+import * as actionTypes from '../actionTypes'
 
 const noteReducer = (state =[], action) => {
   switch (action.type) {
-    case 'NEW_NOTE':
-      return state.concat(action.data)
-    case 'INIT_NOTES':
-      return action.data
-    default:
-      return state
+  case 'NEW_NOTE':
+    return state.concat(action.data)
+  case actionTypes.INIT_NOTES:
+    return action.data
+  default:
+    return state
   }
 }
 // const createAccount = async (event) => {

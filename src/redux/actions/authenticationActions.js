@@ -11,6 +11,7 @@ export const loginUserAction = (user) => ({
   user
 })
 
+
 export const logout = () => (dispatch) => {
   console.log('logging out...')
   dispatch(removeUserFromRedux())

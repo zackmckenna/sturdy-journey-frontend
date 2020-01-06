@@ -9,6 +9,12 @@ export const REGISTER_USER = 'REGISTER_USER'
 export const LOGIN_USER = 'LOGIN_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const ADD_USER = 'ADD_USER'
+export const NEW_USER = 'NEW_USER'
+
+// notifications
+export const SET_SUCCESS_MESSAGE = 'SET_SUCCESS_MESSAGE'
+export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
+export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION'
 
 // session control
 export const USER_IS_NOT_LOGGED_IN = 'USER_IS_NOT_LOGGED_IN'

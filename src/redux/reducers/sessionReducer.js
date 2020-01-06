@@ -2,21 +2,21 @@ const sessionReducer = (state =[], action) => {
   console.log(action.type)
   console.log(action.data)
   switch (action.type) {
-    case 'SET_LOCAL_USER_STATE':
-      console.log('setting local user')
-      return {...state, localUser: action.data}
-    case 'REMOVE_USER':
-      return {...state, localUser: null}
-    case 'SET_CURRENT_USERS':
-      return  {...state, currentUsers: action.data}
-    case 'SET_CURRENT_NUMBER_PLAYERS':
-      return {...state, currentNumberPlayers: action.data}
-    case 'SET_CURRENT_PLAYER_ROLES':
-      return {...state, currentPlayerRoles: action.data}
-    case 'ADD_CHAT_MESSAGE':
-      return {...state, messages: action.data}
-    default:
-      return state
+  case 'SET_LOCAL_USER_STATE':
+    console.log('setting local user')
+    return { ...state, localUser: action.data }
+  case 'REMOVE_USER':
+    return { ...state, localUser: null }
+  case 'SET_CURRENT_USERS':
+    return  { ...state, currentUsers: action.data }
+  case 'SET_CURRENT_NUMBER_PLAYERS':
+    return { ...state, currentNumberPlayers: action.data }
+  case 'SET_CURRENT_PLAYER_ROLES':
+    return { ...state, currentPlayerRoles: action.data }
+  case 'ADD_CHAT_MESSAGE':
+    return { ...state, messages: action.data }
+  default:
+    return state
   }
 }
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button } from 'reactstrap';
-import NoteForm from './NoteForm';
+import React from 'react'
+import { Button } from 'reactstrap'
+import NoteForm from './NoteForm'
 import { connect } from 'react-redux'
 import { deleteNote, toggleNewNoteForm } from '../redux/actionCreators'
 
@@ -15,7 +15,7 @@ const UserNotes = ({
   currentGameSession,
   note,
   toggles
-   }) => {
+}) => {
 
   const handleClickDelete = (event) => {
     deleteNote(event)
@@ -33,15 +33,15 @@ const UserNotes = ({
         <>
         <Button onClick={toggleNoteForm}>Add Note</Button>
           <NoteForm
-          handleNoteSubmit={handleNoteSubmit}
-          handleNoteChange={handleNoteChange}
-          toggleNoteForm={toggleNoteForm}
-          note={note}
+            handleNoteSubmit={handleNoteSubmit}
+            handleNoteChange={handleNoteChange}
+            toggleNoteForm={toggleNoteForm}
+            note={note}
           />
-        <h2>{user.name}'s Notes</h2>
+        <h2>{user.name}s Notes</h2>
         <ul>
           {notes.filter(note => note.user != null ? note.user.id === user.id : null)
-                .map(note => note ? <h6 key={note.id}>{note.content}<Button key={note.id} id={note.id} onClick={handleDeleteNote} className='btn-sm'>delete</Button></h6> : null)}
+            .map(note => note ? <h6 key={note.id}>{note.content}<Button key={note.id} id={note.id} onClick={handleDeleteNote} className='btn-sm'>delete</Button></h6> : null)}
         </ul>
         </>
       )
@@ -49,10 +49,10 @@ const UserNotes = ({
     return (
       <>
       {<Button onClick={() => handleAddNoteClick()}>Add Note</Button>}
-      <h2>{user.name}'s Notes</h2>
+      <h2>{user.name}s Notes</h2>
         <ul>
           {notes.filter(note => note.user != null ? note.user.id === user.id : null)
-                .map(note => note ? <h6 key={note.id}>{note.content}<Button key={note.id} id={note.id} onClick={handleClickDelete} className='btn-sm'>delete</Button></h6> : null)}
+            .map(note => note ? <h6 key={note.id}>{note.content}<Button key={note.id} id={note.id} onClick={handleClickDelete} className='btn-sm'>delete</Button></h6> : null)}
         </ul>
       </>
     )
