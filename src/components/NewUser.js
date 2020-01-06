@@ -1,15 +1,18 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Row, Container, Col } from 'reactstrap';
-import { createAccount,toggleCreateUserForm, toggleNewNoteForm } from '../redux/actionCreators'
+import { toggleCreateUserForm, toggleNewNoteForm } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form';
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
+import { createAccount } from '../user/user'
 
 const NewUser = ({
-  createAccount,
-  session,
-  toggles,
+  // session,
+  // toggles,
   toggleCreateUserForm
   }) => {
+
+  const toggles = useSelector(state => state.toggles)
+  const session = useSelector(state => state.session)
 
   const handleSubmit = (values) => {
     createAccount(values.username, values.name, values.password)
@@ -25,6 +28,7 @@ const NewUser = ({
       </>
     )
   }
+
   return (
     <Container>
       <Row>
@@ -91,17 +95,17 @@ const NewUser = ({
     </Container>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    toggles: state.toggles,
-    session: state.session
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     toggles: state.toggles,
+//     session: state.session
+//   }
+// }
 const mapDispatchToProps = {
-  createAccount: (username, name, password) => createAccount(username, name, password),
+  // createAccount: (username, name, password) => createAccount(username, name, password),
   toggleCreateUserForm: (data) => toggleCreateUserForm(data)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewUser)
+export default connect(null, mapDispatchToProps)(NewUser)
 
 

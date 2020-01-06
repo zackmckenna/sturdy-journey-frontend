@@ -18,6 +18,41 @@ export const setLocalUserState = (user) => {
   }
 }
 
+export const setErrorMessage = (message) => {
+  return {
+    type: 'SET_ERROR_ALERT',
+    data: message
+  }
+}
+
+export const setSuccessMessage = (message) => {
+  return {
+    type: 'SET_SUCCESS_MESSAGE',
+    data: message
+  }
+}
+
+export const clearAlert = () => {
+  return {
+    type: 'CLEAR_ALERT'
+  }
+}
+
+export const setAlert = (message, error) => (dispatch) => {
+  console.log('setting alert')
+  if (error === true) {
+    dispatch(setErrorMessage(message))
+    setTimeout(() => {
+      dispatch(clearAlert())
+    }, 5000)
+  } else {
+    dispatch(setSuccessMessage(message))
+    setTimeout(() => {
+      dispatch(clearAlert())
+    }, 5000)
+  }
+}
+
 export const toggleCreateUserForm = (data) => {
   console.log('user form toggled to', data)
   return {
@@ -126,17 +161,6 @@ export const initializeUsers = () => {
       type: actionTypes.INIT_USERS,
       data: users,
     })
-  }
-}
-
-export const createAccount = (username, name, password) => {
-  return async dispatch => {
-    const newUserObject = {
-      password: password,
-      name: name,
-      username: username
-    }
-    await accountService.createAccount(newUserObject)
   }
 }
 

@@ -1,17 +1,43 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
+import { connect } from 'react-redux'
 
 const AppAlert = ({
   alertType,
-  alertText
+  alertText,
+  visible,
+  message,
+  error
 }) => {
-  return (
-    <div>
-      <Alert color={alertType}>
-        {alertText}
-      </Alert>
-    </div>
-  );
+  if (visible) {
+    if (error) {
+      return (
+        <div>
+          <Alert color='danger'>
+            {message}
+          </Alert>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Alert color='success'>
+            {message}
+          </Alert>
+        </div>
+      )
+    }
+  }
+  return null
 };
 
-export default AppAlert;
+const mapStateToProps = state => {
+  return {
+    visible: state.visible,
+    message: state.message,
+    error: state.error,
+    success: state.success
+  }
+}
+
+export default connect(mapStateToProps)(AppAlert);

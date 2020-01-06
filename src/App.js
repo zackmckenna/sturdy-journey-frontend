@@ -16,13 +16,13 @@ import {
 
 // component imports
 import LoginForm from './components/LoginForm'
-import Notification from './components/Notification'
 import SkelNavbar from './components/SkelNavbar';
 import Home from './components/Home'
 import NewUser from './components/NewUser'
 import GameLobby from './components/GameLobby'
 import RoleCard from './components/UserGameView'
 import HowToPlay from './components/HowToPlay'
+import AppAlert from './components/AppAlert'
 
 import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -31,10 +31,6 @@ import socket from './socket/socket'
 
 const App = (props) => {
   const store = props.store
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-
 
   useEffect(() => {
     async function getNotes() {
@@ -156,13 +152,14 @@ const App = (props) => {
         <Router>
           <SkelNavbar />
           <Container style={style.container}>
-          <Notification
+          <AppAlert />
+          {/* <Notification
             notificationColor={'danger'}
             notificationText={errorMessage}/>
 
           <Notification
             notificationColor={'success'}
-            notificationText={successMessage}/>
+            notificationText={successMessage}/> */}
           <LoginForm />
 
           <NewUser />

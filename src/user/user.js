@@ -1,5 +1,6 @@
 import notesService from '../services/notes'
 import loginService from '../services/login'
+import accountService from '../services/account'
 import socket from '../socket/socket'
 
 export const loginUser = async (username, password) => {
@@ -18,5 +19,18 @@ export const removeUserFromSession = (user) => {
     window.localStorage.removeItem('loggedAppUser')
   }
 
+export const createAccount = async (username, name, password) => {
+    const newUserObject = {
+      password: password,
+      name: name,
+      username: username
+    }
+    try{
+      const response = await accountService.createAccount(newUserObject)
+    } catch (exception){
+      console.log('error:')
+      console.log(exception)
+    }
+}
 
 
