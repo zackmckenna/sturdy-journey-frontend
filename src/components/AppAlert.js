@@ -1,5 +1,5 @@
-import React from 'react';
-import { Alert } from 'reactstrap';
+import React from 'react'
+import { Alert } from 'reactstrap'
 import { connect } from 'react-redux'
 
 const AppAlert = ({
@@ -31,7 +31,7 @@ const AppAlert = ({
     }
   }
   return null
-};
+}
 
 const mapStateToProps = state => {
   return {
@@ -42,4 +42,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(AppAlert);
+export default connect(mapStateToProps)(AppAlert)

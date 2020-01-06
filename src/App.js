@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import style from './style/app.css'
 
@@ -80,7 +80,7 @@ const App = (props) => {
     socket.on('visitors', async users => {
       console.log('socket.io visitors command received')
       const filteredUsers = await users.filter(user => user != null)
-      await props.setCurrentUsers(filteredUsers);
+      await props.setCurrentUsers(filteredUsers)
       await props.setCurrentNumberPlayers(filteredUsers.length)
       console.log(store.getState().session)
 
@@ -99,7 +99,7 @@ const App = (props) => {
   }, []);
 
   const handleStartGame = async () => {
-    const distributedRoles = distributeRoles();
+    const distributedRoles = distributeRoles()
     socket.emit('start game', distributedRoles)
   }
 
@@ -114,7 +114,7 @@ const App = (props) => {
   }
 
   const shuffle = (array) => {
-    return array.sort(() => Math.random() - 0.5);
+    return array.sort(() => Math.random() - 0.5)
   }
 
   const distributeRoles = () => {

@@ -16,7 +16,7 @@ import connect from 'react-redux'
 //     }
 //   }
 const UserContainer = () => {
-  
+
   export const loginUser = async (username, password) => {
     console.log('logging in . . .')
     console.log(username)
@@ -36,6 +36,7 @@ const UserContainer = () => {
       toggleLogo()
   }
 }
+
 
 
 // export const loginUser = (username, password) => {
