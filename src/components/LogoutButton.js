@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap'
 import { removeUserFromSession } from '../user/user'
-import { logout } from '../redux/actionCreators'
+import { logout } from '../redux/actions/authenticationActions'
 import { connect } from 'react-redux'
 
 const LogoutButton = ({

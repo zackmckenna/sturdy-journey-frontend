@@ -6,7 +6,7 @@ import NewAccountButton from './NewAccountButton'
 import SeaWitchedLogoColor from './SeaWitchedLogoColor'
 import { setLocalUserState } from '../redux/actionCreators'
 import { loginUser } from '../user/user'
-import { loginUserAction } from '../redux/authenticationActions'
+import { loginUserAction } from '../redux/actions/authenticationActions'
 
 const LoginForm = ({
   session,
