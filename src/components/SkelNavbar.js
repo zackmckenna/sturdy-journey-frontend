@@ -16,9 +16,9 @@ import LogoutButton from './LogoutButton'
 const SkelNavbar = ({
   toggles,
   session }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => setIsOpen(!isOpen)
 
   console.log(toggles)
 
@@ -27,7 +27,7 @@ const SkelNavbar = ({
       <Navbar dark expand="md">
         <NavbarBrand href="/">nappzack</NavbarBrand>
         {session.localUser ? <NavLink tag={Link} to='home'><LogoutButton /></NavLink>
- : null}
+          : null}
         {session.localUser ? <p>user: {session.localUser.name}</p> : null}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -48,7 +48,7 @@ const SkelNavbar = ({
         </Collapse>
       </Navbar>
     </div>
-  );
+  )
 }
 
 const mapStateToProps = function(state) {
@@ -58,4 +58,4 @@ const mapStateToProps = function(state) {
   }
 }
 
-export default connect(mapStateToProps)(SkelNavbar);
+export default connect(mapStateToProps)(SkelNavbar)
