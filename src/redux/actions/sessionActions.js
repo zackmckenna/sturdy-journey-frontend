@@ -26,6 +26,9 @@ export const setCurrentPlayerRoles = (currentPlayerRoles) => ({
   data: currentPlayerRoles
 })
 
+export const clearCurrentPlayerRoles = () => ({
+  type: actionTypes.CLEAR_CURRENT_PLAYER_ROLES
+})
 
 export const setCurrentUsers = (currentUsers) => ({
   type:actionTypes.SET_CURRENT_USERS,

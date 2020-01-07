@@ -37,9 +37,9 @@ const GameLobby = ({
       </>
     )
   }
-  if (playerRole) {
-    history.push('/role_card')
-  }
+  // if (playerRole) {
+  //   history.push('/role_card')
+  // }
   if (currentGameSession.currentUsers) {
     return (
       <>

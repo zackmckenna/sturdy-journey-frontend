@@ -5,7 +5,9 @@ import style from './style/app.css'
 //redux reducers
 import  { toggleCreateUserForm } from './redux/actionCreators'
 
-import  { setCurrentUsers,
+import  {
+  clearCurrentPlayerRoles,
+  setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles } from  './redux/actions/sessionActions'
 
@@ -28,12 +30,12 @@ import GameLobby from './components/GameLobby'
 import RoleCard from './components/UserGameView'
 import HowToPlay from './components/HowToPlay'
 import AppAlert from './components/AppAlert'
+import Socket from './components/Socket'
 
 import { Container } from 'reactstrap'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
 
 import socket from './socket/socket'
-import { withRouter } from 'react-router-dom'
 
 const App = (props) => {
   // const store = props.store
@@ -90,12 +92,20 @@ const App = (props) => {
         console.log(props.session)
         console.log('distribute roles recieved')
       })
+      socket.on('redirect', async route => {
+        console.log(route)
+        console.log('redirect')
+      })
+
+      socket.on('clear user roles', () => {
+        console.log('clearing roles')
+        props.clearCurrentPlayerRoles()
+      })
 
       socket.on('chat message', async message => {
         console.log(message)
         props.addChatMessage(message, window.localStorage.loggedAppUser)
       })
-
     })
   }, [])
 
@@ -157,6 +167,7 @@ const App = (props) => {
     <>
         <Router>
           <SkelNavbar />
+          <Socket />
           <Container style={style.container}>
             {props.user ? null : <LoginForm />}
             <NewUser />
@@ -197,6 +208,7 @@ export default withRouter(connect((mapStateToProps),
     initializeUsers,
     initializeRoles,
     setCurrentUsers,
+    clearCurrentPlayerRoles,
     setCurrentNumberPlayers,
     setCurrentPlayerRoles,
     toggleCreateUserForm,
