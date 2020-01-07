@@ -6,7 +6,7 @@ import style from '../style/usersInRoom.css'
 
 const UsersInRoom = ({ session }) => {
 
-  if (session.currentUsers) {
+  if (session.currentUsers && session.localUser) {
 
     let usersToDistribute = session.currentUsers
     let emptyComponents = 10 - usersToDistribute.length

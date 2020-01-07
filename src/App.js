@@ -33,6 +33,7 @@ import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import socket from './socket/socket'
+import { withRouter } from 'react-router-dom'
 
 const App = (props) => {
   // const store = props.store
@@ -87,6 +88,7 @@ const App = (props) => {
       socket.on('distribute roles', async roles => {
         await props.setCurrentPlayerRoles(roles)
         console.log(props.session)
+        console.log('distribute roles recieved')
       })
 
       socket.on('chat message', async message => {
@@ -188,7 +190,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect((mapStateToProps),
+export default withRouter(connect((mapStateToProps),
   {
     initializeNotes,
     initializeGames,
@@ -203,5 +205,5 @@ export default connect((mapStateToProps),
     setAlert,
     clearNotification
   }
-)(App)
+)(App))
 

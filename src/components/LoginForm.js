@@ -7,9 +7,11 @@ import SeaWitchedLogoColor from './SeaWitchedLogoColor'
 import { setLocalUserState } from '../redux/actions/sessionActions'
 import { setAlert } from '../redux/actions/notificationActions'
 import { loginUser } from '../user/user'
+import { Redirect, withRouter } from 'react-router-dom'
 // import { loginUserAction } from '../redux/actions/authenticationActions'
 
 const LoginForm = ({
+  history,
   session,
   toggles,
   dispatch }) => {
@@ -21,6 +23,7 @@ const LoginForm = ({
       const user = await window.localStorage.getItem('loggedAppUser')
       dispatch(setLocalUserState(JSON.parse(user)))
       dispatch(setAlert(`Welcome ${values.username}!`, false))
+      history.push('/game_lobby')
     } catch (err) {
       dispatch(setAlert('Wrong username or password', true))
     }
@@ -30,6 +33,7 @@ const LoginForm = ({
     return (
       <>
       </>
+      // <Redirect to="/game_lobby"/>
     )
   } else {
     return (
@@ -97,4 +101,4 @@ const mapStateToProps = (state) => {
 //   }
 // }
 
-export default connect(mapStateToProps)(LoginForm)
+export default withRouter(connect(mapStateToProps)(LoginForm))
