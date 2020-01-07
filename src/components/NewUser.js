@@ -4,19 +4,24 @@ import { toggleCreateUserForm } from '../redux/actionCreators'
 import { LocalForm, Control, Errors } from 'react-redux-form'
 import { connect, useSelector } from 'react-redux'
 import { createAccount } from '../user/user'
+// import { setAlert } from '../redux/actions/notificationActions'
 
 const NewUser = ({
   // session,
   // toggles,
+  dispatch,
   toggleCreateUserForm }) => {
 
   const toggles = useSelector(state => state.toggles)
   const session = useSelector(state => state.session)
 
   const handleSubmit = (values) => {
-    createAccount(values.username, values.name, values.password)
-    console.log('create account clicked')
-    toggleCreateUserForm(false)
+    try {
+      createAccount(values.username, values.name, values.password)
+      toggleCreateUserForm(false)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const handleCancelUserForm = () => {
@@ -104,7 +109,7 @@ const NewUser = ({
 // }
 const mapDispatchToProps = {
   // createAccount: (username, name, password) => createAccount(username, name, password),
-  toggleCreateUserForm: (data) => toggleCreateUserForm(data)
+  toggleCreateUserForm: (data) => toggleCreateUserForm(data),
 }
 
 export default connect(null, mapDispatchToProps)(NewUser)

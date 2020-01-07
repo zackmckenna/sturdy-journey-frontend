@@ -4,8 +4,10 @@
     "devtools",
     "eqeqeq",
     "firstmate",
+    "logo",
     "number",
-    "seawitch"
+    "seawitch",
+    "seawitched"
   ],
   "cSpell.ignoreWords": [
     "el",

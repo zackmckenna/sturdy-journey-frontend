@@ -156,8 +156,7 @@ const App = (props) => {
         <Router>
           <SkelNavbar />
           <Container style={style.container}>
-
-            {props.user ? null : <LoginForm /> }
+            {props.user ? null : <LoginForm />}
             <NewUser />
             <AppAlert />
             <Switch>

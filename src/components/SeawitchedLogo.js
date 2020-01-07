@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react'
 
 const SeawitchedLogo = props => (
@@ -16,4 +18,4 @@ const SeawitchedLogo = props => (
   </svg>
 );
 
-export default SeawitchedLogo;
+export default SeawitchedLogo
