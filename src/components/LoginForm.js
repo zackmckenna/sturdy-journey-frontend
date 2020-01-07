@@ -67,6 +67,7 @@ const LoginForm = ({
             <Row>
               <Col sm={{ size: 'auto' }}>
                 <Control.text
+                  type='password'
                   className='form-control'
                   model='.password'
                   rows='6'

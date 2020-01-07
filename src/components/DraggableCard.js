@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Card, Container, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
+import { Card, Row, Col, Container, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
 import Draggable from 'react-draggable' // Both at the same time
 import ReactSwipe from 'react-swipe'
 
@@ -39,6 +39,14 @@ const DraggableCard = (props) => {
           >
             <div>
               <Card>
+                <Row>
+                  <Col className='text-left'>
+                    <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                  </Col>
+                  <Col className='text-right'>
+                    <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  </Col>
+                </Row>
                 <CardBody >
                   <CardTitle className='text-center handle'>DRAG ME</CardTitle>
                   <CardTitle ><h2>The Deck</h2></CardTitle>
@@ -51,6 +59,14 @@ const DraggableCard = (props) => {
             </div>
             <div>
               <Card>
+                <Row>
+                  <Col className='text-left'>
+                    <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                  </Col>
+                  <Col className='text-right'>
+                    <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  </Col>
+                </Row>
                 <CardBody >
                   <CardTitle className='text-center handle'>DRAG ME</CardTitle>
                   <CardTitle><h2>Your Role Card</h2></CardTitle>
@@ -68,6 +84,14 @@ const DraggableCard = (props) => {
               return (
                 <div key={role.id}>
                   <Card>
+                    <Row>
+                      <Col className='text-left'>
+                        <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                      </Col>
+                      <Col className='text-right'>
+                        <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                      </Col>
+                    </Row>
                     <CardBody >
                       <CardTitle className='text-center handle'>DRAG ME</CardTitle>
                       <CardTitle><h2>{role.roleName}</h2></CardTitle>
@@ -81,6 +105,14 @@ const DraggableCard = (props) => {
             })}
             <div>
               <Card>
+                <Row>
+                  <Col className='text-left'>
+                    <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                  </Col>
+                  <Col className='text-right'>
+                    <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  </Col>
+                </Row>
                 <CardBody >
                   <CardTitle className='text-center handle'>DRAG ME</CardTitle>
                   <CardTitle><h2>Im another example card</h2></CardTitle>
@@ -126,6 +158,11 @@ const DraggableCard = (props) => {
           >
             <div>
               <Card>
+                <Row>
+                  <Col className='text-right'>
+                    <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  </Col>
+                </Row>
                 <CardBody >
                   <CardTitle className='text-center handle'>DRAG ME</CardTitle>
                   <CardTitle ><h2>The Deck</h2></CardTitle>
@@ -136,6 +173,14 @@ const DraggableCard = (props) => {
             </div>
             <div>
               <Card>
+                <Row>
+                  <Col className='text-left'>
+                    <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                  </Col>
+                  <Col className='text-right'>
+                    <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  </Col>
+                </Row>
                 <CardBody >
                   <CardTitle className='text-center handle'>DRAG ME</CardTitle>
                   <CardTitle><h2>Role Card</h2></CardTitle>
@@ -149,17 +194,27 @@ const DraggableCard = (props) => {
                 </CardBody>
               </Card>
             </div>
-            <div><Card>
-              <CardBody >
-                <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                <CardTitle><h2>Im another role card</h2></CardTitle>
-                <CardTitle><h4>here is another role card</h4></CardTitle>
-                <CardSubtitle>This is some text about the role</CardSubtitle>
-                <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
-                <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-              </CardBody>
-            </Card></div>
+            <div>
+              <Card>
+                <Row>
+                  <Col className='text-left'>
+                    <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                  </Col>
+                  <Col className='text-right'>
+                    <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  </Col>
+                </Row>
+                <CardBody >
+                  <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+                  <CardTitle><h2>Im another role card</h2></CardTitle>
+                  <CardTitle><h4>here is another role card</h4></CardTitle>
+                  <CardSubtitle>This is some text about the role</CardSubtitle>
+                  <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
+                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
+                </CardBody>
+              </Card>
+            </div>
             <div></div>
           </ReactSwipe>
 
