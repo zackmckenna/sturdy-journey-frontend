@@ -1,8 +1,12 @@
 // initialization
-export const INIT_GAMES = 'INIT_GAMES'
-export const INIT_USERS = 'INIT_USERS'
-export const INIT_NOTES = 'INIT_NOTES'
-export const INIT_ROLES = 'INIT_ROLES'
+export const GAMES_INIT = 'GAMES_INIT'
+export const USERS_INIT = 'USER_INIT'
+export const NOTES_INIT = 'NOTES_INIT'
+
+// roles
+export const ROLES_INIT = 'ROLES_INIT'
+export const ROLES_LOADING = 'ROLES_LOADING'
+export const ROLES_FAILED = 'ROLES_FAILED'
 
 // user authentication
 export const REGISTER_USER = 'REGISTER_USER'
@@ -17,6 +21,7 @@ export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION'
 
 // session control
+export const NEW_ROLE = 'NEW_ROLE'
 export const USER_IS_NOT_LOGGED_IN = 'USER_IS_NOT_LOGGED_IN'
 export const USER_IS_LOGGED_IN = 'USER_IS_LOGGED_IN'
 export const SET_LOCAL_USER_STATE = 'SET_LOCAL_USER_STATE'
@@ -29,4 +34,7 @@ export const TOGGLE_LOGIN_FORM = 'TOGGLE_LOGIN_FORM'
 export const TOGGLE_NEW_NOTE_FORM = 'TOGGLE_NEW_NOTE_FORM'
 export const DISTRIBUTE_ROLES = 'DISTRIBUTE_ROLES'
 export const SEND_CHAT_MESSAGE = 'SEND_CHAT_MESSAGE'
+export const ADD_CHAT_MESSAGE = 'ADD_CHAT_MESSAGE'
 
+// toggles
+export const TOGGLE_LOGO = 'TOGGLE_LOGO'

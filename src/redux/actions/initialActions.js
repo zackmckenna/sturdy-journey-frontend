@@ -9,7 +9,7 @@ export const initializeRoles = () => {
   return async dispatch => {
     const roles = await rolesService.getAll()
     dispatch({
-      type: actionTypes.INIT_ROLES,
+      type: actionTypes.ROLES_INIT,
       data: roles,
     })
   }
@@ -19,7 +19,7 @@ export const initializeNotes = () => {
   return async dispatch => {
     const notes = await notesService.getAll()
     dispatch({
-      type: actionTypes.INIT_NOTES,
+      type: actionTypes.NOTES_INIT,
       data: notes,
     })
   }
@@ -29,7 +29,7 @@ export const initializeGames = () => {
   return async dispatch => {
     const games = await gamesService.getAll()
     dispatch({
-      type: actionTypes.INIT_GAMES,
+      type: actionTypes.GAMES_INIT,
       data: games,
     })
   }
@@ -39,7 +39,7 @@ export const initializeUsers = () => {
   return async dispatch => {
     const users = await usersService.getAll()
     dispatch({
-      type: actionTypes.INIT_USERS,
+      type: actionTypes.USERS_INIT,
       data: users,
     })
   }
