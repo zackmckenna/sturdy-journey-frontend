@@ -14,13 +14,9 @@ const GameLobby = ({
   history
 } ) => {
   console.log(currentGameSession.currentNumberPlayers)
-  let playerRole
   let currentGame
   if (currentGameSession.currentNumberPlayers >= 4) {
     currentGame = games.filter(game => game.numberPlayer === currentGameSession.currentNumberPlayers)[0]
-  }
-  if (currentGameSession.currentPlayerRoles && currentGameSession.localUser) {
-    playerRole = currentGameSession.currentPlayerRoles.filter(playerRole => playerRole.userId === currentGameSession.localUser.id)[0]
   }
 
   const renderCurrentGame = () => {

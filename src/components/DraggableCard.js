@@ -11,7 +11,7 @@ const DraggableCard = (props) => {
   console.log(TEMPGAMES[1])
   console.log(TEMPGAMES[1].roles)
 
-  let reactSwipeEl;
+  let reactSwipeEl
 
   if (props.session.currentPlayerRoles)  {
     const userRole = props.session.currentPlayerRoles.filter(user => user.userId === props.session.localUser.id)[0]
