@@ -1,13 +1,14 @@
+import * as actionTypes from '../actionTypes'
 import rolesService from '../../services/roles'
 
 const roleReducer = (state =[], action) => {
   switch (action.type) {
-    case 'NEW_ROLE':
-      return state.concat(action.data)
-    case 'INIT_ROLES':
-      return state.concat(action.data)
-    default:
-      return state
+  case actionTypes.NEW_ROLE:
+    return state.concat(action.data)
+  case actionTypes.INIT_ROLES:
+    return state.concat(action.data)
+  default:
+    return state
   }
 }
 
