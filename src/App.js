@@ -11,10 +11,12 @@ import  {
   setCurrentNumberPlayers,
   setCurrentPlayerRoles } from  './redux/actions/sessionActions'
 
-import  {  initializeUsers,
+import  {
   initializeRoles,
-  initializeNotes,
-  initializeGames } from  './redux/actions/initialActions'
+  initializeNotes } from  './redux/actions/initialActions'
+
+import { initializeGames } from './redux/actions/gameActions'
+import { initializeUsers } from './redux/actions/userActions'
 
 import  { setErrorMessage,
   setSuccessMessage,
