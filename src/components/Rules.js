@@ -484,7 +484,7 @@ function SvgRules(props) {
 const mapStateToProps = (state) => {
   return {
     session: state.session,
-    games: state.games
+    games: state.games.games
   }
 }
 

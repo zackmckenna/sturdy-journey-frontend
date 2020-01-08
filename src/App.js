@@ -194,7 +194,7 @@ const mapStateToProps = (state) => {
     user: state.session.localUser,
     currentUsers: state.session.currentUsers,
     currentNumberPlayers: state.session.currentNumberPlayers,
-    games: state.games,
+    games: state.games.games,
     loginForm: state.loginForm,
     toggles: state.toggles,
     state: state

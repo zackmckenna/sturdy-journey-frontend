@@ -1,7 +1,20 @@
 // initialization
-export const GAMES_INIT = 'GAMES_INIT'
+
+// users
 export const USERS_INIT = 'USER_INIT'
+export const USERS_LOADING = 'GAMES_LOADING'
+export const USERS_FAILED = 'GAMES_FAILED'
+
+// notes
 export const NOTES_INIT = 'NOTES_INIT'
+export const NOTES_LOADING = 'GAMES_LOADING'
+export const NOTES_FAILED = 'GAMES_FAILED'
+
+// games
+export const GAMES_INIT = 'GAMES_INIT'
+export const GAMES_LOADING = 'GAMES_LOADING'
+export const GAMES_FAILED = 'GAMES_FAILED'
+export const NEW_GAME = 'NEW_GAME'
 
 // roles
 export const ROLES_INIT = 'ROLES_INIT'

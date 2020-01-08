@@ -71,7 +71,7 @@ const GameLobby = ({
 const mapStateToProps = function(state) {
   return {
     currentGameSession: state.session,
-    games: state.games
+    games: state.games.games
   }
 }
 
