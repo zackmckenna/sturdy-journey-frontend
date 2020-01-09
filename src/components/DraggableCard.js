@@ -33,7 +33,10 @@ const DraggableCard = (props) => {
           {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
           <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
           <ReactSwipe
+            continuous={false}
             className="carousel"
+            disableScroll={true}
+            stopPropagation={true}
             swipeOptions={{ continuous: false }}
             ref={el => (reactSwipeEl = el)}
           >

@@ -1,5 +1,5 @@
 import notesService from '../../services/notes'
-import { initializeNotes } from './initialActions'
+import * as actionTypes from '../actionTypes'
 
 export const deleteNote = (event) => {
   event.preventDefault()
@@ -12,6 +12,31 @@ export const deleteNote = (event) => {
     dispatch(initializeNotes())
   }
 }
+
+export const initializeNotes = () => {
+  return async dispatch => {
+    function onSuccess(success) {
+      dispatch({
+        type: actionTypes.NOTES_INIT,
+        data: success })
+    }
+    function onError(error) {
+      dispatch({
+        type: actionTypes.NOTES_FAILED,
+      })
+    }
+    try {
+      dispatch({
+        type: actionTypes.NOTES_LOADING
+      })
+      const success = await notesService.getAll()
+      return onSuccess(success)
+    } catch (error) {
+      return onError(error)
+    }
+  }
+}
+
 
 export const submitNote = (note, user) => {
   return async dispatch => {

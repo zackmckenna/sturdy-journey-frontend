@@ -2,13 +2,14 @@
 
 // users
 export const USERS_INIT = 'USER_INIT'
-export const USERS_LOADING = 'GAMES_LOADING'
-export const USERS_FAILED = 'GAMES_FAILED'
+export const USERS_LOADING = 'USERS_LOADING'
+export const USERS_FAILED = 'USERS_FAILED'
 
 // notes
 export const NOTES_INIT = 'NOTES_INIT'
-export const NOTES_LOADING = 'GAMES_LOADING'
-export const NOTES_FAILED = 'GAMES_FAILED'
+export const NOTES_LOADING = 'NOTES_LOADING'
+export const NOTES_FAILED = 'NOTES_FAILED'
+export const NEW_NOTE = 'NEW_NOTE'
 
 // games
 export const GAMES_INIT = 'GAMES_INIT'
@@ -22,6 +23,9 @@ export const ROLES_LOADING = 'ROLES_LOADING'
 export const ROLES_FAILED = 'ROLES_FAILED'
 
 // user authentication
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_LOADING = 'LOGIN_LOADING'
+export const LOGIN_FAILED = 'LOGIN_FAILED'
 export const REGISTER_USER = 'REGISTER_USER'
 export const LOGIN_USER = 'LOGIN_USER'
 export const REMOVE_USER = 'REMOVE_USER'
@@ -34,6 +38,8 @@ export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION'
 
 // session control
+export const START_GAME = 'START_GAME'
+export const END_GAME = 'END_GAME'
 export const NEW_ROLE = 'NEW_ROLE'
 export const USER_IS_NOT_LOGGED_IN = 'USER_IS_NOT_LOGGED_IN'
 export const USER_IS_LOGGED_IN = 'USER_IS_LOGGED_IN'

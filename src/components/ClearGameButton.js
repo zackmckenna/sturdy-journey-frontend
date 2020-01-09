@@ -5,7 +5,7 @@ import { Button } from 'reactstrap'
 import { setAlert } from '../redux/actions/notificationActions'
 import socket from '../socket/socket'
 
-const ClearGameButton = ({ history, dispatch }) => {
+const ClearGameButton = ({ className, history, dispatch, text }) => {
 
   const handleClick = () => {
     socket.emit('clear game')
@@ -13,7 +13,7 @@ const ClearGameButton = ({ history, dispatch }) => {
     history.push('/game_lobby')
   }
   return (
-    <Button onClick={() => handleClick()}>clear game</Button>
+    <Button className={className} color='success' onClick={() => handleClick()}>{text}</Button>
   )
 }
 

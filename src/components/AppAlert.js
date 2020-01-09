@@ -7,24 +7,18 @@ const AppAlert = ({
   message,
   error
 }) => {
-  console.log('APP ALERT')
-  console.log(visible, error, message)
   if (visible) {
     if (error) {
       return (
-        <div>
-          <Alert color='danger'>
-            {message}
-          </Alert>
-        </div>
+        <Alert color='danger'>
+          {message}
+        </Alert>
       )
     } else {
       return (
-        <div>
-          <Alert color='success'>
-            {message}
-          </Alert>
-        </div>
+        <Alert color='success'>
+          {message}
+        </Alert>
       )
     }
   }

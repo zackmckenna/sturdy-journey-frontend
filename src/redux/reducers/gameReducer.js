@@ -12,7 +12,7 @@ const gameReducer = (state = {
   case actionTypes.GAMES_LOADING:
     return { ...state, isLoading: true, errMess: null, roles: [] }
   case actionTypes.GAMES_INIT:
-    return { ...state, games: action.data }
+    return { ...state, isLoading: false, games: action.data }
   default:
     return state
   }

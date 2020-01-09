@@ -1,11 +1,18 @@
 import * as actionTypes from '../actionTypes'
 
-const noteReducer = (state =[], action) => {
+const noteReducer = (state = {
+  isLoading: true,
+  errMess: null,
+  roles: [] }, action) => {
   switch (action.type) {
-  case 'NEW_NOTE':
+  case actionTypes.NEW_NOTE:
     return state.concat(action.data)
+  case actionTypes.NOTES_FAILED:
+    return { ...state, isLoading: false, errMess: action.data }
+  case actionTypes.NOTES_LOADING:
+    return { ...state, isLoading: true, errMess: null, roles: [] }
   case actionTypes.NOTES_INIT:
-    return action.data
+    return { ...state, isLoading: false, notes: action.data }
   default:
     return state
   }

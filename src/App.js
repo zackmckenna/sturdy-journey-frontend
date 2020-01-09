@@ -1,29 +1,21 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import style from './style/app.css'
-
-//redux reducers
 import  { toggleCreateUserForm } from './redux/actionCreators'
-
 import  {
   clearCurrentPlayerRoles,
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles } from  './redux/actions/sessionActions'
-
-import  {
-  initializeRoles,
-  initializeNotes } from  './redux/actions/initialActions'
-
+import  { initializeRoles } from './redux/actions/roleActions'
+import { initializeNotes } from './redux/actions/noteActions'
 import { initializeGames } from './redux/actions/gameActions'
 import { initializeUsers } from './redux/actions/userActions'
-
 import  { setErrorMessage,
   setSuccessMessage,
   clearNotification,
   setAlert  } from './redux/actions/notificationActions'
-
-// component imports
+import  { startGame, endGame } from './redux/actions/sessionActions'
 import LoginForm from './components/LoginForm'
 import SkelNavbar from './components/SkelNavbar'
 import Home from './components/Home'
@@ -36,47 +28,26 @@ import Socket from './components/Socket'
 
 import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
-
+import './style/alerts.css'
 import socket from './socket/socket'
 
 const App = (props) => {
   // const store = props.store
 
   useEffect(() => {
-    async function getNotes() {
-      await props.initializeNotes()
-    }
-    getNotes()
+    props.initializeNotes()
+    props.initializeGames()
+    props.initializeRoles()
+    props.initializeUsers()
   }, [])
 
-  useEffect(() => {
-    async function getUsers() {
-      await props.initializeUsers()
-    }
-    getUsers()
-  }, [])
-
-  useEffect(() => {
-    async function getGames() {
-      await props.initializeGames()
-    }
-    getGames()
-  }, [])
-
-  useEffect(() => {
-    async function getRoles() {
-      await props.initializeRoles()
-    }
-    getRoles()
-  }, [])
-
-  useEffect(() => {
-    async function setLocalUser() {
-      console.log(`set user in redux:`)
-      props.user ? console.log(props.user) : console.log('no current user')
-    }
-    setLocalUser()
-  }, [])
+  // useEffect(() => {
+  //   async function setLocalUser() {
+  //     console.log(`set user in redux:`)
+  //     props.user ? console.log(props.user) : console.log('no current user')
+  //   }
+  //   setLocalUser()
+  // }, [])
 
   // socket.io connections
   useEffect(() => {
@@ -92,7 +63,7 @@ const App = (props) => {
       socket.on('distribute roles', async roles => {
         await props.setCurrentPlayerRoles(roles)
         console.log(props.session)
-        console.log('distribute roles recieved')
+        console.log('distribute roles received')
       })
       socket.on('redirect', async route => {
         console.log(route)
@@ -114,6 +85,7 @@ const App = (props) => {
   const handleStartGame = async () => {
     const distributedRoles = distributeRoles()
     socket.emit('start game', distributedRoles)
+    props.startGame()
   }
 
   const addRole = (name, numberOfRoles, array = []) => {
@@ -173,7 +145,9 @@ const App = (props) => {
           <Container style={style.container}>
             {props.user ? null : <LoginForm />}
             <NewUser />
-            <AppAlert />
+            <div className='alerts'>
+              <AppAlert />
+            </div>
             <Switch>
               <Route path='/home' component={Home} />
               <Route path='/how_to_play' component={HowToPlay}/>
@@ -217,7 +191,9 @@ export default withRouter(connect((mapStateToProps),
     setSuccessMessage,
     setErrorMessage,
     setAlert,
-    clearNotification
+    clearNotification,
+    startGame,
+    endGame
   }
 )(App))
 

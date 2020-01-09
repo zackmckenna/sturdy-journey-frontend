@@ -13,7 +13,6 @@ const GameLobby = ({
   currentGameSession,
   history
 } ) => {
-  console.log(currentGameSession.currentNumberPlayers)
   let currentGame
   if (currentGameSession.currentNumberPlayers >= 4) {
     currentGame = games.filter(game => game.numberPlayer === currentGameSession.currentNumberPlayers)[0]

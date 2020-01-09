@@ -29,7 +29,6 @@ const NewUser = ({
 
   const handleCancelUserForm = () => {
     toggleCreateUserForm(false)
-
     history.push('/home')
   }
 

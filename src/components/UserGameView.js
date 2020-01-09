@@ -6,7 +6,6 @@ import {
 } from 'reactstrap'
 import Rules from './Rules'
 import DeckDrawer from './DeckDrawer'
-import ClearGameButton from './ClearGameButton'
 import { connect } from 'react-redux'
 // import style from '../style/roleCard.css'
 import '../style/roleCard.css'
@@ -15,7 +14,6 @@ const RoleCard = (props) => {
   return (
     <>
     <Container className='mt-3 roleContainer'>
-      <ClearGameButton/>
       <Container className='ruleContainer'>
         <Rules />
       </Container>

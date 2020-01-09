@@ -11,7 +11,7 @@ const Socket = ({ history }) => {
       console.log('redirect')
       history.push(route)
     })
-  }, [])
+  }, [history])
 
   return (
     <>

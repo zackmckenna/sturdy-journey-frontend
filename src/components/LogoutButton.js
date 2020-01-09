@@ -6,7 +6,9 @@ import { connect } from 'react-redux'
 
 const LogoutButton = ({
   session,
-  dispatch
+  dispatch,
+  className,
+  text
 }) => {
 
   const handleLogout = (user) => {
@@ -16,7 +18,7 @@ const LogoutButton = ({
   }
 
   return (
-    <Button onClick={() => handleLogout(session.localUser)}>Log Out</Button>
+    <Button className={className} color='danger' onClick={() => handleLogout(session.localUser)}>{text}</Button>
   )
 
 }
