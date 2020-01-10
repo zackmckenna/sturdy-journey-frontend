@@ -4,15 +4,17 @@ const deckReducer = (state = {
   isLoading: true,
   errMess: null,
   hasRoleCard: false,
-  cards: [],
-  roles: [] }, action) => {
+  cards: []
+  }, action) => {
   switch (action.type) {
   case actionTypes.DECK_FAILED:
     return { ...state, isLoading: false, errMess: action.data }
   case actionTypes.DECK_LOADING:
-    return { ...state, isLoading: true, errMess: null, deck: [] }
+    return { ...state, isLoading: true, errMess: null, cards: [] }
   case actionTypes.DECK_INIT:
-    return { ...state, isLoading: false, deck: action.data }
+    return { ...state, isLoading: false, cards: action.data }
+  case actionTypes.DECK_CLEAR:
+    return { ...state, hasRoleCard: false, isLoading: false, cards: [] }
   case actionTypes.ADD_CARD:
     return { ...state, cards: [...state.cards, action.data] }
   case actionTypes.ADD_ROLE_CARD_TO_FRONT:

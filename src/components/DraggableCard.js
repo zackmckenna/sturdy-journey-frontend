@@ -75,34 +75,59 @@ const DraggableCard = (props) => {
                 </CardBody>
               </Card>
             </div>
-            {TEMPGAMES[1].roles.map(role => {
-
-              return (
-                <div key={role.id}>
-                  <Card >
-                    <Row>
-                      <Col className='text-left'>
-                        <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
-                      </Col>
-                      <Col className='text-right'>
-                        <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
-                      </Col>
-                    </Row>
-                    <CardBody >
-                      <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                      <CardTitle><h2>{role.roleName}</h2></CardTitle>
-                      <CardTitle><h4>{role.team}</h4></CardTitle>
-                      <CardSubtitle>{role.description}</CardSubtitle>
-                      <CardText>{role.strategy}</CardText>
-                    </CardBody>
-                  </Card>
-                  <Card>
-                    <CardTitle>
-                      BACK OF CARD
-                    </CardTitle>
-                  </Card>
-                </div>
-              )
+            {props.deck.cards.map(card => {
+              if (card.type === 'userRoleCard') {
+                return (
+                  <div>
+                    <Card>
+                      <Row>
+                        <Col className='text-left'>
+                          <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                        </Col>
+                        <Col className='text-right'>
+                          <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                        </Col>
+                      </Row>
+                      <CardBody >
+                        <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+                        <CardTitle><h2>Your Role Card</h2></CardTitle>
+                        <CardTitle><h4>you are the {card.roleName}</h4></CardTitle>
+                        <CardSubtitle>{card.team}</CardSubtitle>
+                        <CardText>{card.roleName}</CardText>
+                        <CardText>{card.roleName}</CardText>
+                        {card.canStop ? <CardText>You can stop game by calling out:</CardText> : <CardText>You can not stop the game.</CardText>}
+                        {card.canCall ? card.canCall.map(role => <CardText key={role.id}>{role.key}</CardText>) : null}
+                      </CardBody>
+                    </Card>
+                  </div>
+                )
+              } else {
+                return (
+                  <div key={card.id}>
+                    <Card >
+                      <Row>
+                        <Col className='text-left'>
+                          <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                        </Col>
+                        <Col className='text-right'>
+                          <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                        </Col>
+                      </Row>
+                      <CardBody >
+                        <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+                        <CardTitle><h2>{card.name}</h2></CardTitle>
+                        <CardTitle><h4>{card.team}</h4></CardTitle>
+                        <CardSubtitle>{card.description}</CardSubtitle>
+                      </CardBody>
+                    </Card>
+                    <Card>
+                      <CardTitle>
+                        BACK OF CARD
+                      </CardTitle>
+                    </Card>
+                  </div>
+                )
+              }
             })}
             <div>
               <Card>

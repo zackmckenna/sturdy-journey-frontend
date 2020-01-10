@@ -11,11 +11,12 @@ import  { initializeRoles } from './redux/actions/roleActions'
 import { initializeNotes } from './redux/actions/noteActions'
 import { initializeGames } from './redux/actions/gameActions'
 import { initializeUsers } from './redux/actions/userActions'
+import { initializeAirtableRoleCards } from './redux/actions/airtableActions'
 import  { setErrorMessage,
   setSuccessMessage,
   clearNotification,
   setAlert  } from './redux/actions/notificationActions'
-import { initializeDeck, addRoleCardToDeck } from './redux/actions/deckActions'
+import { initializeDeck, addRoleCardToDeck, deckClear } from './redux/actions/deckActions'
 import  { startGame, endGame } from './redux/actions/sessionActions'
 import LoginForm from './components/LoginForm'
 import SkelNavbar from './components/SkelNavbar'
@@ -34,19 +35,17 @@ import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router
 import './style/alerts.css'
 import socket from './socket/socket'
 
-import airtableService from './services/airtable'
-
 const App = (props) => {
   // const store = props.store
 
   useEffect(() => {
+    props.initializeAirtableRoleCards()
     props.initializeNotes()
     props.initializeGames()
     props.initializeRoles()
     props.initializeUsers()
-    props.initializeDeck(TEMPGAMES[1])
-    console.log(props.deck)
-    console.log(airtableService.getAll())
+    // props.initializeDeck(TEMPGAMES[1])
+
   }, [])
 
   // useEffect(() => {
@@ -71,6 +70,8 @@ const App = (props) => {
       socket.on('distribute roles', async roles => {
         await props.setCurrentPlayerRoles(roles)
         console.log('distribute roles received')
+        props.deckClear()
+        props.initializeDeck(props.airtable.roleCards)
         props.addRoleCardToDeck(roles)
       })
 
@@ -82,6 +83,7 @@ const App = (props) => {
       socket.on('clear user roles', () => {
         console.log('clearing roles')
         props.clearCurrentPlayerRoles()
+        props.deckClear()
       })
 
       socket.on('chat message', async message => {
@@ -183,7 +185,8 @@ const mapStateToProps = (state) => {
     loginForm: state.loginForm,
     toggles: state.toggles,
     state: state,
-    deck: state.deck
+    deck: state.deck,
+    airtable: state.airtable
   }
 }
 
@@ -193,6 +196,9 @@ export default withRouter(connect((mapStateToProps),
     initializeGames,
     initializeUsers,
     initializeRoles,
+    initializeDeck,
+    initializeAirtableRoleCards,
+    deckClear,
     setCurrentUsers,
     clearCurrentPlayerRoles,
     setCurrentNumberPlayers,
@@ -204,7 +210,6 @@ export default withRouter(connect((mapStateToProps),
     clearNotification,
     startGame,
     endGame,
-    initializeDeck,
     addRoleCardToDeck
   }
 )(App))

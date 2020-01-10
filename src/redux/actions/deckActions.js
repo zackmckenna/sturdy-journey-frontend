@@ -5,18 +5,37 @@ export const deckInit = (deck) => ({
   data: deck
 })
 
-export const initializeDeck = (deck) => {
-  return async dispatch => {
-    deck.roles.map(card => {
+// export const initializeDeck = (deck) => {
+
+//   return async (dispatch, getState) => {
+//     console.log(getState().airtable)
+//     deck.roles.map(card => {
+//       card.isFlipped = false
+//       return dispatch({
+//         type: actionTypes.ADD_CARD,
+//         data: card
+//       })
+//     })
+//     console.log(deck.roles)
+//   }
+// }
+
+export const initializeDeck = () => {
+  return async (dispatch, getState) => {
+    const deck = getState().airtable.roleCards
+    deck.map(card => {
       card.isFlipped = false
       return dispatch({
         type: actionTypes.ADD_CARD,
         data: card
       })
     })
-    console.log(deck.roles)
   }
 }
+
+export const deckClear = () => ({
+  type: actionTypes.DECK_CLEAR,
+})
 
 export const addRoleCardToDeck = currentPlayerRoles => {
   console.log('adding role card to deck')
@@ -36,7 +55,7 @@ export const addRoleCardToDeck = currentPlayerRoles => {
         strategy: `you need to do this action`,
         canStop: null,
         canCall: null,
-        type: 'UserRoleCard'
+        type: 'userRoleCard'
       }
       console.log(role)
       console.log(roleCard)
