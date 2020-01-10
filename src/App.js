@@ -15,6 +15,7 @@ import  { setErrorMessage,
   setSuccessMessage,
   clearNotification,
   setAlert  } from './redux/actions/notificationActions'
+import { initializeDeck, addRoleCardToDeck } from './redux/actions/deckActions'
 import  { startGame, endGame } from './redux/actions/sessionActions'
 import LoginForm from './components/LoginForm'
 import SkelNavbar from './components/SkelNavbar'
@@ -26,10 +27,14 @@ import HowToPlay from './components/HowToPlay'
 import AppAlert from './components/AppAlert'
 import Socket from './components/Socket'
 
+import { TEMPGAMES } from './shared/tempGames'
+
 import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
 import './style/alerts.css'
 import socket from './socket/socket'
+
+import airtableService from './services/airtable'
 
 const App = (props) => {
   // const store = props.store
@@ -39,6 +44,9 @@ const App = (props) => {
     props.initializeGames()
     props.initializeRoles()
     props.initializeUsers()
+    props.initializeDeck(TEMPGAMES[1])
+    console.log(props.deck)
+    console.log(airtableService.getAll())
   }, [])
 
   // useEffect(() => {
@@ -62,9 +70,10 @@ const App = (props) => {
       console.log('opening distribute roles socket . . .')
       socket.on('distribute roles', async roles => {
         await props.setCurrentPlayerRoles(roles)
-        console.log(props.session)
         console.log('distribute roles received')
+        props.addRoleCardToDeck(roles)
       })
+
       socket.on('redirect', async route => {
         console.log(route)
         console.log('redirect')
@@ -83,7 +92,7 @@ const App = (props) => {
   }, [])
 
   const handleStartGame = async () => {
-    const distributedRoles = distributeRoles()
+    const distributedRoles = await distributeRoles()
     socket.emit('start game', distributedRoles)
     props.startGame()
   }
@@ -173,7 +182,8 @@ const mapStateToProps = (state) => {
     games: state.games.games,
     loginForm: state.loginForm,
     toggles: state.toggles,
-    state: state
+    state: state,
+    deck: state.deck
   }
 }
 
@@ -193,7 +203,9 @@ export default withRouter(connect((mapStateToProps),
     setAlert,
     clearNotification,
     startGame,
-    endGame
+    endGame,
+    initializeDeck,
+    addRoleCardToDeck
   }
 )(App))
 

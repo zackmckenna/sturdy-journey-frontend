@@ -22,6 +22,17 @@ export const ROLES_INIT = 'ROLES_INIT'
 export const ROLES_LOADING = 'ROLES_LOADING'
 export const ROLES_FAILED = 'ROLES_FAILED'
 
+// decks
+
+export const DECK_FAILED = 'DECK_FAILED'
+export const DECK_LOADING = 'DECK_LOADING'
+export const DECK_INIT = 'DECK_INIT'
+export const ADD_CARD = 'ADD_CARD'
+export const ADD_CARD_TO_FRONT = 'ADD_CARD_TO_FRONT'
+export const ADD_ROLE_CARD_TO_FRONT = 'ADD_ROLE_CARD_TO_FRONT'
+export const REMOVE_CARD = 'REMOVE_CARD'
+export const FLIP_CARD = 'FLIP_CARD'
+
 // user authentication
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_LOADING = 'LOGIN_LOADING'

@@ -4,10 +4,6 @@ import DraggableCard from './DraggableCard'
 
 
 const DeckDrawer = (props) => {
-  console.log(props.session)
-  const height = window.innerHeight
-  console.log(height)
-
 
   if (props.session.currentPlayerRoles && props.session.localUser)  {
     const userRole = props.session.currentPlayerRoles.filter(user => user.userId === props.session.localUser.id)[0]

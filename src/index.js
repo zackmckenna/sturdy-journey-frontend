@@ -6,6 +6,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css'
 import './style/app.css'
 import configureStore from './redux/configureStore'
 
+require('dotenv').config()
 const store = configureStore()
 
 const rootElement = document.getElementById('root')

@@ -8,16 +8,10 @@ import { TEMPGAMES } from '../shared/tempGames'
 
 const DraggableCard = (props) => {
 
-  console.log(TEMPGAMES[1])
-  console.log(TEMPGAMES[1].roles)
-
   let reactSwipeEl
 
   if (props.session.currentPlayerRoles)  {
     const userRole = props.session.currentPlayerRoles.filter(user => user.userId === props.session.localUser.id)[0]
-    console.log(userRole)
-    console.log(userRole.role)
-    console.log(props.roles)
 
     // gets temporary local data for testing games
     const roleDescriptors = TEMPGAMES[1].roles.filter(role => role.key === userRole.role)[0]
@@ -33,7 +27,6 @@ const DraggableCard = (props) => {
           {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
           <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
           <ReactSwipe
-            continuous={false}
             className="carousel"
             disableScroll={true}
             stopPropagation={true}
@@ -83,10 +76,10 @@ const DraggableCard = (props) => {
               </Card>
             </div>
             {TEMPGAMES[1].roles.map(role => {
-              console.log(role)
+
               return (
                 <div key={role.id}>
-                  <Card>
+                  <Card >
                     <Row>
                       <Col className='text-left'>
                         <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
@@ -102,6 +95,11 @@ const DraggableCard = (props) => {
                       <CardSubtitle>{role.description}</CardSubtitle>
                       <CardText>{role.strategy}</CardText>
                     </CardBody>
+                  </Card>
+                  <Card>
+                    <CardTitle>
+                      BACK OF CARD
+                    </CardTitle>
                   </Card>
                 </div>
               )
@@ -240,7 +238,8 @@ const DraggableCard = (props) => {
 const mapStateToProps = (state) => {
   return {
     session: state.session,
-    roles: state.roles
+    roles: state.roles,
+    deck: state.deck
   }
 }
 
