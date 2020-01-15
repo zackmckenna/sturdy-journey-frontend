@@ -4,7 +4,6 @@ import { Container } from 'reactstrap'
 import Draggable from 'react-draggable' // Both at the same time
 import ReactSwipe from 'react-swipe'
 import RoleCard from './cards/RoleCard'
-import RoleCardTest from './cards/RoleCardTest'
 import TopDeckCard from './cards/TopDeckCard'
 import UserCard from './cards/UserCard'
 
@@ -19,13 +18,9 @@ const DraggableCard = (props) => {
     return (
       <Draggable
         axis='y'
-        // defaultPosition={{x:0, y:350}}
-        // handle='.handle'
         bounds={{ top:0 }}
       >
         <Container>
-          {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
-          <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
           <ReactSwipe
             className="carousel"
             disableScroll={true}
@@ -60,14 +55,9 @@ const DraggableCard = (props) => {
     return (
       <Draggable
         axis='y'
-        // defaultPosition={{x:0, y:350}}
-        // handle='.handle'
-
         bounds={{ top:0, bottom: 275 }}
       >
-        <Container>
-          {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
-        <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
+        <Container >
           <ReactSwipe
             className="carousel"
             disableScroll={true}
