@@ -36,7 +36,7 @@ const DraggableCard = (props) => {
               if (card.type === 'userRoleCard') {
                 return (
                   <div>
-                    <UserCard card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
+                    <UserCard key={card.id} card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
                   </div>
                 )
               } else {
