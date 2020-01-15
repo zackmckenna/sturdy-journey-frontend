@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Card, Row, Col, Container, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
 import Draggable from 'react-draggable' // Both at the same time
 import ReactSwipe from 'react-swipe'
+import ReactCardFlip from 'react-card-flip'
 
 import { TEMPGAMES } from '../shared/tempGames'
 
@@ -197,6 +198,28 @@ const DraggableCard = (props) => {
                 </CardBody>
               </Card>
             </div>
+            {props.airtable.roleCards.map(role => {
+              return (
+                <div key={role.id}>
+                  <Card>
+                    <Row>
+                      <Col className='text-left'>
+                        <button onClick={() => reactSwipeEl.prev()}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
+                      </Col>
+                      <Col className='text-right'>
+                        <button onClick={() => reactSwipeEl.next()}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                      </Col>
+                    </Row>
+                    <CardBody >
+                      <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+                      <CardTitle ><h2>{role.name}</h2></CardTitle>
+                      <CardTitle><h4>{role.description}</h4></CardTitle>
+                      <CardSubtitle>{role.team}</CardSubtitle>
+                    </CardBody>
+                  </Card>
+                </div>
+              )
+            })}
             <div>
               <Card>
                 <Row>
@@ -264,7 +287,8 @@ const mapStateToProps = (state) => {
   return {
     session: state.session,
     roles: state.roles,
-    deck: state.deck
+    deck: state.deck,
+    airtable: state.airtable
   }
 }
 
