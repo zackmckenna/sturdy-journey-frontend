@@ -48,13 +48,13 @@ const App = (props) => {
 
   }, [])
 
-  // useEffect(() => {
-  //   async function setLocalUser() {
-  //     console.log(`set user in redux:`)
-  //     props.user ? console.log(props.user) : console.log('no current user')
-  //   }
-  //   setLocalUser()
-  // }, [])
+  useEffect(() => {
+    function setLocalUser() {
+      console.log(`set user in redux:`)
+      props.user ? console.log(props.user) : console.log('no current user')
+    }
+    setLocalUser()
+  }, [])
 
   // socket.io connections
   useEffect(() => {
