@@ -59,38 +59,32 @@ const App = (props) => {
   // socket.io connections
   useEffect(() => {
     console.log('opening visitors socket . . .')
-    socket.on('visitors', async users => {
-      console.log('socket.io visitors command received')
-      const filteredUsers = await users.filter(user => user != null)
-      await props.setCurrentUsers(filteredUsers)
-      await props.setCurrentNumberPlayers(filteredUsers.length)
-      console.log(props.session)
+    // socket.on('visitors', async users => {
+    //   console.log('socket.io visitors command received')
+    //   const filteredUsers = await users.filter(user => user != null)
+    //   await props.setCurrentUsers(filteredUsers)
+    //   await props.setCurrentNumberPlayers(filteredUsers.length)
+    //   console.log(props.session)
 
-      console.log('opening distribute roles socket . . .')
-      socket.on('distribute roles', async roles => {
-        await props.setCurrentPlayerRoles(roles)
-        console.log('distribute roles received')
-        props.deckClear()
-        props.initializeDeck(props.airtable.roleCards)
-        props.addRoleCardToDeck(roles)
-      })
-
-      socket.on('redirect', async route => {
-        console.log(route)
-        console.log('redirect')
-      })
-
-      socket.on('clear user roles', () => {
-        console.log('clearing roles')
-        props.clearCurrentPlayerRoles()
-        props.deckClear()
-      })
-
-      socket.on('chat message', async message => {
-        console.log(message)
-        props.addChatMessage(message, window.localStorage.loggedAppUser)
-      })
+    console.log('opening distribute roles socket . . .')
+    socket.on('distribute roles', async roles => {
+      await props.setCurrentPlayerRoles(roles)
+      console.log('distribute roles received')
+      props.deckClear()
+      props.initializeDeck(props.airtable.roleCards)
+      props.addRoleCardToDeck(roles)
     })
+
+    // socket.on('clear user roles', () => {
+    //   console.log('clearing roles')
+    //   props.clearCurrentPlayerRoles()
+    //   props.deckClear()
+    // })
+
+    // socket.on('chat message', async message => {
+    //   console.log(message)
+    //   props.addChatMessage(message, window.localStorage.loggedAppUser)
+    // })
   }, [])
 
   const handleStartGame = async () => {
