@@ -2,10 +2,18 @@ import React, { useEffect } from 'react'
 import socket from '../socket/socket'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { deckClear } from '../redux/actions/deckActions'
-import { clearCurrentPlayerRoles, setCurrentUsers, setCurrentNumberPlayers } from '../redux/actions/sessionActions'
+import { deckClear, initializeDeck, addRoleCardToDeck } from '../redux/actions/deckActions'
+import { clearCurrentPlayerRoles, setCurrentPlayerRoles, setCurrentUsers, setCurrentNumberPlayers } from '../redux/actions/sessionActions'
 
-const Socket = ({ history, clearCurrentPlayerRoles, deckClear, setCurrentUsers, setCurrentNumberPlayers }) => {
+const Socket = ({ history,
+  clearCurrentPlayerRoles,
+  deckClear,
+  setCurrentUsers,
+  setCurrentNumberPlayers,
+  setCurrentPlayerRoles,
+  initializeDeck,
+  addRoleCardToDeck,
+  roleCards }) => {
 
   useEffect(() => {
     socket.on('redirect', async route => {
@@ -23,12 +31,19 @@ const Socket = ({ history, clearCurrentPlayerRoles, deckClear, setCurrentUsers, 
       console.log(filteredUsers)
       setCurrentUsers(filteredUsers)
       setCurrentNumberPlayers(filteredUsers.length)
+    })
+    console.log('opening distribute roles socket . . .')
+    socket.on('distribute roles', async roles => {
+      await setCurrentPlayerRoles(roles)
+      console.log('distribute roles received')
+      deckClear()
+      initializeDeck(roleCards)
+      addRoleCardToDeck(roles)
+    })
     // socket.on('chat message', async message => {
     //   console.log(message)
     //   props.addChatMessage(message, window.localStorage.loggedAppUser)
     // })
-    })
-
   }, [history])
 
   return (
@@ -40,8 +55,15 @@ const Socket = ({ history, clearCurrentPlayerRoles, deckClear, setCurrentUsers, 
 const mapDispatchToProps = ({
   clearCurrentPlayerRoles: () => clearCurrentPlayerRoles(),
   deckClear: () => deckClear(),
-  setCurrentNumberPlayers: (numberUsers) => setCurrentNumberPlayers(numberUsers),
-  setCurrentUsers: (filteredUsers) => setCurrentUsers(filteredUsers)
+  setCurrentNumberPlayers: numberUsers => setCurrentNumberPlayers(numberUsers),
+  setCurrentUsers: filteredUsers => setCurrentUsers(filteredUsers),
+  setCurrentPlayerRoles: roles => setCurrentPlayerRoles(roles),
+  initializeDeck: deck => initializeDeck(deck),
+  addRoleCardToDeck: roles => addRoleCardToDeck(roles)
 })
 
-export default withRouter(connect(null, mapDispatchToProps)(Socket))
+const mapStateToProps = state => ({
+  roleCards: state.airtable.roleCards
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Socket))
