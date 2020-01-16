@@ -190,27 +190,27 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect((mapStateToProps),
-  {
-    initializeNotes,
-    initializeGames,
-    initializeUsers,
-    initializeRoles,
-    initializeDeck,
-    initializeAirtableRoleCards,
-    deckClear,
-    setCurrentUsers,
-    clearCurrentPlayerRoles,
-    setCurrentNumberPlayers,
-    setCurrentPlayerRoles,
-    toggleCreateUserForm,
-    setSuccessMessage,
-    setErrorMessage,
-    setAlert,
-    clearNotification,
-    startGame,
-    endGame,
-    addRoleCardToDeck
-  }
-)(App))
+const mapDispatchToProps = ({
+  initializeNotes,
+  initializeGames,
+  initializeUsers,
+  initializeRoles,
+  initializeDeck,
+  initializeAirtableRoleCards,
+  deckClear,
+  setCurrentUsers,
+  clearCurrentPlayerRoles,
+  setCurrentNumberPlayers,
+  setCurrentPlayerRoles,
+  toggleCreateUserForm,
+  setSuccessMessage,
+  setErrorMessage,
+  setAlert,
+  clearNotification,
+  startGame,
+  endGame,
+  addRoleCardToDeck
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
 
