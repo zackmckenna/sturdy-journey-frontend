@@ -3,11 +3,13 @@ import socket from '../socket/socket'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { deckClear, initializeDeck, addRoleCardToDeck } from '../redux/actions/deckActions'
-import { clearCurrentPlayerRoles, setCurrentPlayerRoles, setCurrentUsers, setCurrentNumberPlayers } from '../redux/actions/sessionActions'
+import { clearCurrentPlayerRoles, setCurrentPlayerRoles, setCurrentUsers, setCurrentNumberPlayers, endGame, startGame } from '../redux/actions/sessionActions'
 
 const Socket = ({ history,
   clearCurrentPlayerRoles,
   deckClear,
+  startGame,
+  endGame,
   setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles,
@@ -23,6 +25,7 @@ const Socket = ({ history,
       console.log('clearing roles')
       clearCurrentPlayerRoles()
       deckClear()
+      endGame()
     })
     socket.on('visitors', async users => {
       console.log(users)
@@ -39,6 +42,7 @@ const Socket = ({ history,
       deckClear()
       initializeDeck(roleCards)
       addRoleCardToDeck(roles)
+      startGame()
     })
     // socket.on('chat message', async message => {
     //   console.log(message)
@@ -59,7 +63,9 @@ const mapDispatchToProps = ({
   setCurrentUsers: filteredUsers => setCurrentUsers(filteredUsers),
   setCurrentPlayerRoles: roles => setCurrentPlayerRoles(roles),
   initializeDeck: deck => initializeDeck(deck),
-  addRoleCardToDeck: roles => addRoleCardToDeck(roles)
+  addRoleCardToDeck: roles => addRoleCardToDeck(roles),
+  startGame: () => startGame(),
+  endGame: () => endGame()
 })
 
 const mapStateToProps = state => ({
