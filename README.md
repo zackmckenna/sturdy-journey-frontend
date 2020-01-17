@@ -5,16 +5,16 @@ role distribution, learning and setup. The ability for the game to adapt and cha
 
 ## Future Goals
 
-Goal 1
+Goal 1:
 Get SeaWitched up and running for single room play.
 
-Goal 2
+Goal 2:
 Expand the app's flexibility to handle multiple game types.
 
-Goal 3
+Goal 3:
 Build out back and front-end to handle multiple rooms for different games.
 
-Goal 4
+Goal 4:
 Create an in app editor that allows people to create new cards and decks.
 
 ## Authors
