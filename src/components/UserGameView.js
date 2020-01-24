@@ -1,9 +1,11 @@
 import React from 'react'
 import {
-  Container, Col, Row
+  Container,
+  Col,
+  Row
 } from 'reactstrap'
 import Rules from './Rules'
-import DeckDrawer from './DeckDrawer'
+import DraggableCard from './DraggableCard'
 import { connect } from 'react-redux'
 // import style from '../style/roleCard.css'
 import '../style/roleCard.css'
@@ -22,7 +24,7 @@ const RoleCard = (props) => {
         </Row>
       </Container>
       <Container className='fixed-bottom deckContainer'>
-        <DeckDrawer />
+        <DraggableCard />
       </Container>
     </Container>
     </>

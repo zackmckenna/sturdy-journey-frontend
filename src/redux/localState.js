@@ -1,6 +1,9 @@
 export const loadState = () => {
   try {
+    console.log('loading local state')
     const serializedState = localStorage.getItem('state')
+    const localUser = localStorage.getItem('loggedAppUser')
+    console.log(localUser)
     if (serializedState === null) {
       return undefined
     }
@@ -12,8 +15,10 @@ export const loadState = () => {
 
 export const saveState = (state) => {
   try {
+    console.log('saving local state')
     const serializedState = JSON.stringify(state)
-    localStorage.sertItem('state', serializedState)
+    localStorage.insertItem('state', serializedState)
+    console.log(serializedState)
   } catch (err) {
     // ignore
   }

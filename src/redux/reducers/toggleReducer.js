@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes"
+import * as actionTypes from '../actionTypes'
 
 const toggleReducer = (state = {
   showCreateNoteForm : false,
@@ -9,14 +9,14 @@ const toggleReducer = (state = {
   switch(action.type) {
   case actionTypes.TOGGLE_CREATE_USER_FORM:
     console.log(action.data)
-    return {...state, showCreateUserForm: action.data}
+    return { ...state, showCreateUserForm: action.data }
   case actionTypes.TOGGLE_NEW_NOTE_FORM:
     console.log(action.data)
-    return {...state, showCreateNoteForm: action.data}
+    return { ...state, showCreateNoteForm: action.data }
   case actionTypes.TOGGLE_LOGIN_FORM:
-    return {...state, showLoginForm: action.data}
-  case 'TOGGLE_LOGO':
-    return {...state, showLogo: action.data}
+    return { ...state, showLoginForm: action.data }
+  case actionTypes.TOGGLE_LOGO:
+    return { ...state, showLogo: action.data }
   default:
     return state
   }

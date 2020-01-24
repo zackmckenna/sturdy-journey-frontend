@@ -23,7 +23,7 @@ const create = async newObject => {
 
 const deleteNote = async id => {
   console.log(token)
-  const request = axios.delete(`${baseUrl}/${id}`, {headers: {Authorization: token}})
+  const request = axios.delete(`${baseUrl}/${id}`, { headers: { Authorization: token } })
   return request.then(response => response.data)
 }
 

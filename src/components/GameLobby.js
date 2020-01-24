@@ -3,22 +3,19 @@ import { Button, Row, Col } from 'reactstrap'
 import { connect } from 'react-redux'
 import Alert from './AppAlert'
 import UsersInRoom from './UsersInRoom'
+import { withRouter } from 'react-router-dom'
 
 // import SocketTests from './SocketTests';
 
 const GameLobby = ({
   games,
   handleStartGame,
-  currentGameSession
+  currentGameSession,
+  history
 } ) => {
-  console.log(currentGameSession.currentNumberPlayers)
-  let playerRole
   let currentGame
-  if (currentGameSession.currentNumberPlayers >= 4) {
+  if (currentGameSession.currentNumberPlayers >= 4 && games) {
     currentGame = games.filter(game => game.numberPlayer === currentGameSession.currentNumberPlayers)[0]
-  }
-  if (currentGameSession.currentPlayerRoles && currentGameSession.localUser) {
-    playerRole = currentGameSession.currentPlayerRoles.filter(playerRole => playerRole.userId === currentGameSession.localUser.id)[0]
   }
 
   const renderCurrentGame = () => {
@@ -35,6 +32,9 @@ const GameLobby = ({
       </>
     )
   }
+  // if (playerRole) {
+  //   history.push('/role_card')
+  // }
   if (currentGameSession.currentUsers) {
     return (
       <>
@@ -48,7 +48,6 @@ const GameLobby = ({
         </ul> */}
         {currentGameSession.currentNumberPlayers < 4 ? <h4>need at least 4 players to start.</h4> : null}
         {currentGameSession.currentNumberPlayers >= 4 ? renderCurrentGame() : null}
-        {playerRole ? <h4>You are the {playerRole.role}</h4> : null}
       </Col>
     </Row>
       </>
@@ -67,8 +66,8 @@ const GameLobby = ({
 const mapStateToProps = function(state) {
   return {
     currentGameSession: state.session,
-    games: state.games
+    games: state.games.games
   }
 }
 
-export default connect(mapStateToProps)(GameLobby)
+export default withRouter(connect(mapStateToProps)(GameLobby))

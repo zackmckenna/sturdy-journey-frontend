@@ -17,6 +17,8 @@ import gameReducer from './reducers/gameReducer'
 import toggleReducer from './reducers/toggleReducer'
 import sessionReducer from './reducers/sessionReducer'
 import notificationReducer from './reducers/notificationReducer'
+import deckReducer from './reducers/deckReducer'
+import airtableReducer from './reducers/airtableReducer'
 
 import { loadState, saveState } from './localState'
 import throttle from 'lodash/throttle'
@@ -35,7 +37,9 @@ const configureStore = () => {
     session: sessionReducer,
     form: formReducer,
     loginForm: formReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    deck: deckReducer,
+    airtable: airtableReducer
   })
 
   const store = createStore(

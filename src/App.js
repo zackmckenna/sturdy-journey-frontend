@@ -1,25 +1,23 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import style from './style/app.css'
-
-//redux reducers
 import  { toggleCreateUserForm } from './redux/actionCreators'
-
-import  { setCurrentUsers,
+import  {
+  clearCurrentPlayerRoles,
+  setCurrentUsers,
   setCurrentNumberPlayers,
   setCurrentPlayerRoles } from  './redux/actions/sessionActions'
-
-import  {  initializeUsers,
-  initializeRoles,
-  initializeNotes,
-  initializeGames } from  './redux/actions/initialActions'
-
+import  { initializeRoles } from './redux/actions/roleActions'
+import { initializeNotes } from './redux/actions/noteActions'
+import { initializeGames } from './redux/actions/gameActions'
+import { initializeUsers } from './redux/actions/userActions'
+import { initializeAirtableRoleCards } from './redux/actions/airtableActions'
 import  { setErrorMessage,
   setSuccessMessage,
   clearNotification,
   setAlert  } from './redux/actions/notificationActions'
-
-// component imports
+import { initializeDeck, addRoleCardToDeck, deckClear } from './redux/actions/deckActions'
+import  { startGame, endGame } from './redux/actions/sessionActions'
 import LoginForm from './components/LoginForm'
 import SkelNavbar from './components/SkelNavbar'
 import Home from './components/Home'
@@ -28,78 +26,28 @@ import GameLobby from './components/GameLobby'
 import RoleCard from './components/UserGameView'
 import HowToPlay from './components/HowToPlay'
 import AppAlert from './components/AppAlert'
+import Socket from './components/Socket'
 
 import { Container } from 'reactstrap'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
+import './style/alerts.css'
 import socket from './socket/socket'
 
 const App = (props) => {
   // const store = props.store
 
   useEffect(() => {
-    async function getNotes() {
-      await props.initializeNotes()
-    }
-    getNotes()
-  }, [])
-
-  useEffect(() => {
-    async function getUsers() {
-      await props.initializeUsers()
-    }
-    getUsers()
-  }, [])
-
-  useEffect(() => {
-    async function getGames() {
-      await props.initializeGames()
-    }
-    getGames()
-  }, [])
-
-  useEffect(() => {
-    async function getRoles() {
-      await props.initializeRoles()
-    }
-    getRoles()
-  }, [])
-
-  useEffect(() => {
-    async function setLocalUser() {
-      console.log(`set user in redux:`)
-      props.user ? console.log(props.user) : console.log('no current user')
-    }
-    setLocalUser()
-  }, [])
-
-  // socket.io connections
-  useEffect(() => {
-    console.log('opening visitors socket . . .')
-    socket.on('visitors', async users => {
-      console.log('socket.io visitors command received')
-      const filteredUsers = await users.filter(user => user != null)
-      await props.setCurrentUsers(filteredUsers)
-      await props.setCurrentNumberPlayers(filteredUsers.length)
-      console.log(props.session)
-
-      console.log('opening distribute roles socket . . .')
-      socket.on('distribute roles', async roles => {
-        await props.setCurrentPlayerRoles(roles)
-        console.log(props.session)
-      })
-
-      socket.on('chat message', async message => {
-        console.log(message)
-        props.addChatMessage(message, window.localStorage.loggedAppUser)
-      })
-
-    })
+    props.initializeAirtableRoleCards()
+    props.initializeNotes()
+    props.initializeGames()
+    props.initializeRoles()
+    props.initializeUsers()
   }, [])
 
   const handleStartGame = async () => {
-    const distributedRoles = distributeRoles()
+    const distributedRoles = await distributeRoles()
     socket.emit('start game', distributedRoles)
+    props.startGame()
   }
 
   const addRole = (name, numberOfRoles, array = []) => {
@@ -155,11 +103,13 @@ const App = (props) => {
     <>
         <Router>
           <SkelNavbar />
+          <Socket />
           <Container style={style.container}>
-
-            {props.user ? null : <LoginForm /> }
+            {props.user ? null : <LoginForm />}
             <NewUser />
-            <AppAlert />
+            <div className='alerts'>
+              <AppAlert />
+            </div>
             <Switch>
               <Route path='/home' component={Home} />
               <Route path='/how_to_play' component={HowToPlay}/>
@@ -182,27 +132,36 @@ const mapStateToProps = (state) => {
     user: state.session.localUser,
     currentUsers: state.session.currentUsers,
     currentNumberPlayers: state.session.currentNumberPlayers,
-    games: state.games,
+    games: state.games.games,
     loginForm: state.loginForm,
     toggles: state.toggles,
-    state: state
+    state: state,
+    deck: state.deck,
+    airtable: state.airtable
   }
 }
 
-export default connect((mapStateToProps),
-  {
-    initializeNotes,
-    initializeGames,
-    initializeUsers,
-    initializeRoles,
-    setCurrentUsers,
-    setCurrentNumberPlayers,
-    setCurrentPlayerRoles,
-    toggleCreateUserForm,
-    setSuccessMessage,
-    setErrorMessage,
-    setAlert,
-    clearNotification
-  }
-)(App)
+const mapDispatchToProps = ({
+  initializeNotes,
+  initializeGames,
+  initializeUsers,
+  initializeRoles,
+  initializeDeck,
+  initializeAirtableRoleCards,
+  deckClear,
+  setCurrentUsers,
+  clearCurrentPlayerRoles,
+  setCurrentNumberPlayers,
+  setCurrentPlayerRoles,
+  toggleCreateUserForm,
+  setSuccessMessage,
+  setErrorMessage,
+  setAlert,
+  clearNotification,
+  startGame,
+  endGame,
+  addRoleCardToDeck
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
 

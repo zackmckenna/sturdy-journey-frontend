@@ -1,82 +1,53 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Card, Container, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
+import { Container } from 'reactstrap'
 import Draggable from 'react-draggable' // Both at the same time
 import ReactSwipe from 'react-swipe'
-
+import RoleCard from './cards/RoleCard'
+import TopDeckCard from './cards/TopDeckCard'
+import UserCard from './cards/UserCard'
 
 const DraggableCard = (props) => {
-  let reactSwipeEl;
+
+  let reactSwipeEl
 
   if (props.session.currentPlayerRoles)  {
-    const userRole = props.session.currentPlayerRoles.filter(user => user.userId === props.session.localUser.id)[0]
-    console.log(userRole)
-    console.log(userRole.role)
-    console.log(props.roles)
+
+    // gets temporary local data for testing games
+
     return (
       <Draggable
         axis='y'
-        // defaultPosition={{x:0, y:350}}
-        // handle='.handle'
         bounds={{ top:0 }}
       >
         <Container>
-          {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
-          <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
           <ReactSwipe
             className="carousel"
+            disableScroll={true}
+            stopPropagation={true}
             swipeOptions={{ continuous: false }}
             ref={el => (reactSwipeEl = el)}
+            childCount={props.deck.cards.length}
           >
             <div>
-              <Card>
-                <CardBody >
-                  <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                  <CardTitle ><h2>The Deck</h2></CardTitle>
-                  <CardTitle><h4>swipe left to reveal your role</h4></CardTitle>
-                  <CardSubtitle>you can move this card up and down to keep your role hidden from prying eyes</CardSubtitle>
-                </CardBody>
-              </Card>
+              <TopDeckCard onClickNext={() => reactSwipeEl.next()}/>
             </div>
-            <div>
-              <Card>
-                <CardBody >
-                  <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                  <CardTitle><h2>Role Card</h2></CardTitle>
-                  <CardTitle><h4>you are the {userRole.role}</h4></CardTitle>
-                  <CardSubtitle>This is some text about the role</CardSubtitle>
-                  <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                </CardBody>
-              </Card>
-            </div>
-            <div><Card>
-              <CardBody >
-                <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                <CardTitle><h2>Im another role card</h2></CardTitle>
-                <CardTitle><h4>here is another role card</h4></CardTitle>
-                <CardSubtitle>This is some text about the role</CardSubtitle>
-                <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
-                <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-              </CardBody>
-            </Card></div>
-            <div></div>
+            {props.deck.cards.map(card => {
+              if (card.type === 'userRoleCard') {
+                return (
+                  <div>
+                    <UserCard key={card.id} card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
+                  </div>
+                )
+              } else {
+                return (
+                  <div key={card.id}>
+                    <RoleCard card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
+                  </div>
+                )
+              }
+            })}
           </ReactSwipe>
-
-          {/* <Card>
-          <CardBody >
-          <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-          <CardTitle><h2>Role Card</h2></CardTitle>
-          <CardTitle><h4>you are the DEMO</h4></CardTitle>
-          <CardSubtitle>This is some text about the role</CardSubtitle>
-          <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
-          <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-        </CardBody>
-      </Card> */}
         </Container>
       </Draggable>
     )
@@ -84,68 +55,28 @@ const DraggableCard = (props) => {
     return (
       <Draggable
         axis='y'
-        // defaultPosition={{x:0, y:350}}
-        // handle='.handle'
-
         bounds={{ top:0, bottom: 275 }}
       >
-        <Container>
-          {/* <button onClick={() => reactSwipeEl.next()}>Next</button>
-        <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
+        <Container >
           <ReactSwipe
             className="carousel"
+            disableScroll={true}
+            stopPropagation={true}
             swipeOptions={{ continuous: false }}
             ref={el => (reactSwipeEl = el)}
+            childCount={props.airtable.roleCards.length}
           >
             <div>
-              <Card>
-                <CardBody >
-                  <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                  <CardTitle ><h2>The Deck</h2></CardTitle>
-                  <CardTitle><h4>swipe left to reveal your role</h4></CardTitle>
-                  <CardSubtitle>you can move this card up and down to keep your role hidden from prying eyes</CardSubtitle>
-                </CardBody>
-              </Card>
+              <TopDeckCard onClickNext={() => reactSwipeEl.next()}/>
             </div>
-            <div>
-              <Card>
-                <CardBody >
-                  <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                  <CardTitle><h2>Role Card</h2></CardTitle>
-                  <CardTitle><h4>you are the DEMO</h4></CardTitle>
-                  <CardSubtitle>This is some text about the role</CardSubtitle>
-                  <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                  <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                </CardBody>
-              </Card>
-            </div>
-            <div><Card>
-              <CardBody >
-                <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-                <CardTitle><h2>Im another role card</h2></CardTitle>
-                <CardTitle><h4>here is another role card</h4></CardTitle>
-                <CardSubtitle>This is some text about the role</CardSubtitle>
-                <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
-                <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-                <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-              </CardBody>
-            </Card></div>
-            <div></div>
+            {props.airtable.roleCards.map(role => {
+              return (
+                <div key={role.id}>
+                  <RoleCard card={role} onClickPrev={() => reactSwipeEl.prev()} onClickNext={() => reactSwipeEl.next()}/>
+                </div>
+              )
+            })}
           </ReactSwipe>
-
-          {/* <Card>
-            <CardBody >
-            <CardTitle className='text-center handle'>DRAG ME</CardTitle>
-            <CardTitle><h2>Role Card</h2></CardTitle>
-            <CardTitle><h4>you are the DEMO</h4></CardTitle>
-            <CardSubtitle>This is some text about the role</CardSubtitle>
-            <CardText>Allies Example Text: First Mate, Lookout, Captian</CardText>
-            <CardText>Description: example text ipsum whatever lorem whatever</CardText>
-          </CardBody>
-        </Card> */}
         </Container>
       </Draggable>
     )
@@ -155,7 +86,9 @@ const DraggableCard = (props) => {
 const mapStateToProps = (state) => {
   return {
     session: state.session,
-    roles: state.roles
+    roles: state.roles,
+    deck: state.deck,
+    airtable: state.airtable
   }
 }
 

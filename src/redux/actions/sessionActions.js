@@ -20,12 +20,23 @@ export const setCurrentNumberPlayers = (currentNumberPlayers) => ({
   data: currentNumberPlayers
 })
 
-
 export const setCurrentPlayerRoles = (currentPlayerRoles) => ({
   type: actionTypes.SET_CURRENT_PLAYER_ROLES,
   data: currentPlayerRoles
 })
 
+export const startGame = (game) => ({
+  type: actionTypes.START_GAME,
+  data: game
+})
+
+export const endGame = () => ({
+  type: actionTypes.END_GAME,
+})
+
+export const clearCurrentPlayerRoles = () => ({
+  type: actionTypes.CLEAR_CURRENT_PLAYER_ROLES
+})
 
 export const setCurrentUsers = (currentUsers) => ({
   type:actionTypes.SET_CURRENT_USERS,

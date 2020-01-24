@@ -4,7 +4,7 @@ import React from "react"
 import { connect } from 'react-redux'
 
 function SvgRules(props) {
-  if(props.session) {
+  if(props.session.inGame) {
     const currentGame = props.games.filter(game => game.numberPlayer === props.session.currentNumberPlayers)[0]
     console.log(currentGame)
     if (currentGame){
@@ -484,7 +484,7 @@ function SvgRules(props) {
 const mapStateToProps = (state) => {
   return {
     session: state.session,
-    games: state.games
+    games: state.games.games
   }
 }
 

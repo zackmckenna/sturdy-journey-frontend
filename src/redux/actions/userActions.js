@@ -1,23 +1,23 @@
 import * as actionTypes from '../actionTypes'
-import gameService from '../../services/bitGame'
+import usersService from '../../services/users'
 
-export const initializeGames = () => {
+export const initializeUsers = () => {
   return async dispatch => {
     function onSuccess(success) {
       dispatch({
-        type: actionTypes.GAMES_INIT,
+        type: actionTypes.USERS_INIT,
         data: success })
     }
     function onError(error) {
       dispatch({
-        type: actionTypes.GAMES_FAILED,
+        type: actionTypes.USERS_FAILED,
       })
     }
     try {
       dispatch({
-        type: actionTypes.GAMES_LOADING
+        type: actionTypes.USERS_LOADING
       })
-      const success = await gameService.getAll()
+      const success = await usersService.getAll()
       return onSuccess(success)
     } catch (error) {
       return onError(error)

@@ -1,23 +1,20 @@
-import rolesService from '../../services/roles'
+import * as actionTypes from '../actionTypes'
 
-const roleReducer = (state =[], action) => {
+const roleReducer = (state = {
+  isLoading: true,
+  errMess: null,
+  roles: [] }, action) => {
   switch (action.type) {
-    case 'NEW_ROLE':
-      return state.concat(action.data)
-    case 'INIT_ROLES':
-      return state.concat(action.data)
-    default:
-      return state
-  }
-}
-
-export const initializeRoles = () => {
-  return async dispatch => {
-    const roles = await rolesService.getAll()
-    dispatch({
-      type: 'INIT_ROLES',
-      data: roles,
-    })
+  case actionTypes.NEW_ROLE:
+    return state.concat(action.data)
+  case actionTypes.ROLES_FAILED:
+    return { ...state, isLoading: false, errMess: action.data }
+  case actionTypes.ROLES_LOADING:
+    return { ...state, isLoading: true, errMess: null, roles: [] }
+  case actionTypes.ROLES_INIT:
+    return { ...state, isLoading: false, roles: action.data }
+  default:
+    return state
   }
 }
 

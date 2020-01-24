@@ -6,13 +6,11 @@ import style from '../style/usersInRoom.css'
 
 const UsersInRoom = ({ session }) => {
 
-  if (session.currentUsers) {
+  if (session.currentUsers && session.localUser) {
 
-    let usersToDistribute = session.currentUsers
-    let emptyComponents = 10 - usersToDistribute.length
+    // let usersToDistribute = session.currentUsers
+    // let emptyComponents = 10 - usersToDistribute.length
 
-    console.log(usersToDistribute)
-    console.log(emptyComponents)
     return (
       <>
         <Row>
@@ -28,21 +26,19 @@ const UsersInRoom = ({ session }) => {
         <Row>
           <Col className='text-light text-center'>
             <h2>People in Room: {session.currentNumberPlayers}</h2>
-            <ul>
-              {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
-              <Container>
-                <Row>
-                  {session.currentUsers.map((user, index) => {
-                    return (
-                      <Card key={user.userId} style={style.cardBlue} className='cardBlue text-light text-center'>
-                        <SvgFirstMate />
-                        <h8>{user.username}</h8>
-                      </Card>
-                    )
-                  })}
-                </Row>
-              </Container>
-            </ul>
+            {/* {session.currentUsers.map(user => <li ky={user.id}>{user.username}</li>)} */}
+            <Container>
+              <Row>
+                {session.currentUsers.map((user, index) => {
+                  return (
+                    <Card key={user.userId} style={style.cardBlue} className='cardBlue text-light text-center'>
+                      <SvgFirstMate />
+                      <h4>{user.username}</h4>
+                    </Card>
+                  )
+                })}
+              </Row>
+            </Container>
           </Col>
         </Row>
       </>
