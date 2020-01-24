@@ -8,11 +8,9 @@ const UsersInRoom = ({ session }) => {
 
   if (session.currentUsers && session.localUser) {
 
-    let usersToDistribute = session.currentUsers
-    let emptyComponents = 10 - usersToDistribute.length
+    // let usersToDistribute = session.currentUsers
+    // let emptyComponents = 10 - usersToDistribute.length
 
-    console.log(usersToDistribute)
-    console.log(emptyComponents)
     return (
       <>
         <Row>

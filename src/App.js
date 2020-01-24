@@ -28,8 +28,6 @@ import HowToPlay from './components/HowToPlay'
 import AppAlert from './components/AppAlert'
 import Socket from './components/Socket'
 
-import { TEMPGAMES } from './shared/tempGames'
-
 import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
 import './style/alerts.css'
@@ -44,8 +42,6 @@ const App = (props) => {
     props.initializeGames()
     props.initializeRoles()
     props.initializeUsers()
-    // props.initializeDeck(TEMPGAMES[1])
-
   }, [])
 
   const handleStartGame = async () => {

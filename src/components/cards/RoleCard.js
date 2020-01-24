@@ -14,7 +14,7 @@ const RoleCard = ({ card, onClickNext, onClickPrev }) => {
         </Col>
       </Row>
       <CardBody >
-        <CardTitle className='text-center handle'>DRAG ME</CardTitle>
+        <CardTitle className='text-center handle'></CardTitle>
         <CardTitle ><h2>{card.name}</h2></CardTitle>
         <CardTitle><h4>{card.description}</h4></CardTitle>
         <CardSubtitle>{card.team}</CardSubtitle>
