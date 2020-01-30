@@ -4,11 +4,14 @@ import { Container, Card, Row, Col } from 'reactstrap'
 
 
 const StoryStatic = (props) => {
-  console.log(props.deck.cards.filter(card => card.type === 'userRoleCard')[0])
-  if(props.deck.cards.filter(card => card.type === 'userRoleCard')[0]){
-    const userRole = props.deck.cards.filter(card => card.type === 'userRoleCard')[0]
+  console.log(props.deck)
+  if (props.deck.userRoleCard) {
     return (
-      <h1 className='text-center'>{userRole.roleName}</h1>
+      <Row>
+        <Col className='text-light'>
+          {props.deck.userRoleCard.story}
+        </Col>
+      </Row>
     )
   }
   return (

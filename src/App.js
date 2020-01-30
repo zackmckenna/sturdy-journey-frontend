@@ -27,6 +27,7 @@ import RoleCard from './components/UserGameView'
 import HowToPlay from './components/HowToPlay'
 import AppAlert from './components/AppAlert'
 import Socket from './components/Socket'
+import StoryStatic from './components/StoryStatic'
 
 import { Container } from 'reactstrap'
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
@@ -111,6 +112,7 @@ const App = (props) => {
               <AppAlert />
             </div>
             <Switch>
+              <Route path ='/story' component={StoryStatic} />
               <Route path='/home' component={Home} />
               <Route path='/how_to_play' component={HowToPlay}/>
               <Route path='/game_lobby' render={() =>

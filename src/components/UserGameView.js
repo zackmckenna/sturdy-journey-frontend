@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Container,
   Col,
-  Row
+  Row,
+  Button
 } from 'reactstrap'
 import Rules from './Rules'
 import DraggableCard from './DraggableCard'
@@ -11,15 +12,32 @@ import { connect } from 'react-redux'
 import '../style/roleCard.css'
 
 const RoleCard = (props) => {
+  const [users, setUsers] =  useState(0)
+
+  useEffect(() => {
+    if (props.currentGameSession.currentUsers){
+      setUsers(props.currentGameSession.currentUsers.length)
+    }
+  }, [])
+
+  console.log(props.currentGameSession)
   return (
     <>
     <Container className='mt-3 roleContainer'>
       <Container className='ruleContainer'>
+        <Row>
+          <Col className='text-light sm-12'>
+            There are {users} buccaneers aboard.
+          </Col>
+        </Row>
         <Rules />
       </Container>
       <Container className='mt-3'>
         <Row>
           <Col className='text-light text-center'>
+            <Button className='mt-4'>
+              Clear Game
+            </Button>
           </Col>
         </Row>
       </Container>
