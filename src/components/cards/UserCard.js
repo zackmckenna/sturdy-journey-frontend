@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardTitle, CardSubtitle, CardText, CardBody, Row, Col } from 'reactstrap'
 
 const UserCard = ({ card, onClickNext, onClickPrev }) => {
+  console.log(card)
   return (
     <div>
       <Card>
@@ -14,12 +15,18 @@ const UserCard = ({ card, onClickNext, onClickPrev }) => {
           </Col>
         </Row>
         <CardBody >
-          <CardTitle className='text-center handle'>DRAG ME</CardTitle>
           <CardTitle><h2>Your Role Card</h2></CardTitle>
-          <CardTitle><h4>you are the {card.roleName}</h4></CardTitle>
+          <CardTitle><h4>You Are The {card.name}</h4></CardTitle>
           <CardSubtitle>{card.team}</CardSubtitle>
-          <CardText>{card.roleName}</CardText>
-          <CardText>{card.roleName}</CardText>
+          <CardText>{card.description}</CardText>
+          <CardText className='inline'>Enemies:
+            <ul>
+              {card.enemies.map((enemy, index) => <li key={index}>{enemy}</li>)}
+            </ul>
+          </CardText>
+          <CardText className='inline'>
+            Allies: <ul>{card.allies.map((ally, index) => <li key={index}>{ally}</li>)}</ul>
+          </CardText>
           {card.canStop ? <CardText>You can stop game by calling out:</CardText> : <CardText>You can not stop the game.</CardText>}
           {card.canCall ? card.canCall.map(role => <CardText key={role.id}>{role.key}</CardText>) : null}
         </CardBody>

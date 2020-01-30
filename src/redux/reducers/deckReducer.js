@@ -18,7 +18,7 @@ const deckReducer = (state = {
   case actionTypes.ADD_CARD:
     return { ...state, cards: [...state.cards, action.data] }
   case actionTypes.ADD_ROLE_CARD_TO_FRONT:
-    return { ...state, hasRoleCard: true, cards: [action.data, ...state.cards] }
+    return { ...state, hasRoleCard: true, userRoleCard: action.data }
   case actionTypes.REMOVE_CARD:
     return { ...state, cards: state.cards.filter(card => card.id !== action.data) }
   case actionTypes.FLIP_CARD:

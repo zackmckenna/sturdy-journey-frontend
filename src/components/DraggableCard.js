@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Container } from 'reactstrap'
+import { Container, Row } from 'reactstrap'
 import Draggable from 'react-draggable' // Both at the same time
 import ReactSwipe from 'react-swipe'
 import RoleCard from './cards/RoleCard'
@@ -10,11 +10,12 @@ import UserCard from './cards/UserCard'
 const DraggableCard = (props) => {
 
   let reactSwipeEl
+  console.log(props.deck)
 
   if (props.session.currentPlayerRoles)  {
 
     // gets temporary local data for testing games
-
+    const deckLength = props.deck.cards.length
     return (
       <Draggable
         axis='y'
@@ -32,14 +33,24 @@ const DraggableCard = (props) => {
             <div>
               <TopDeckCard onClickNext={() => reactSwipeEl.next()}/>
             </div>
-            {props.deck.cards.map(card => {
-              if (card.type === 'userRoleCard') {
+            <div>
+              <UserCard key={props.deck.userRoleCard.id} card={props.deck.userRoleCard} onClickPrev = {() => reactSwipeEl.prev()} onClickNext={() => reactSwipeEl.next()}/>
+            </div>
+            {props.deck.cards.map((card, index) => {
+              if (card.userRoleCard) {
                 return (
                   <div>
                     <UserCard key={card.id} card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
                   </div>
                 )
-              } else {
+              } else if (deckLength === index + 1){
+                return (
+                  <div key={card.id}>
+                    <RoleCard card={card} onClickPrev={() => reactSwipeEl.prev()}/>
+                  </div>
+                )
+              }
+              else {
                 return (
                   <div key={card.id}>
                     <RoleCard card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>

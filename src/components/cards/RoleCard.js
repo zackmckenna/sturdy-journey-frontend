@@ -9,9 +9,9 @@ const RoleCard = ({ card, onClickNext, onClickPrev }) => {
         <Col className='text-left'>
           <button onClick={onClickPrev}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
         </Col>
-        <Col className='text-right'>
+        {onClickNext ?  <Col className='text-right'>
           <button onClick={onClickNext}><i className="fa fa-arrow-right" aria-hidden="true"></i></button>
-        </Col>
+        </Col> : null}
       </Row>
       <CardBody >
         <CardTitle className='text-center handle'></CardTitle>

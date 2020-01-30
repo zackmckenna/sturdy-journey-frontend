@@ -20,7 +20,8 @@ export const deckInit = (deck) => ({
 //   }
 // }
 
-export const initializeDeck = () => {
+export const initializeDeck = deck => {
+  console.log(deck)
   return async (dispatch, getState) => {
     const deck = getState().airtable.roleCards
     deck.map(card => {
@@ -42,21 +43,12 @@ export const addRoleCardToDeck = currentPlayerRoles => {
   return async (dispatch, getState) => {
     if (getState().deck.hasRoleCard === false) {
       const user = getState().session.localUser
+      const cards = [...getState().deck.cards]
+      console.log(cards)
       console.log('current roles:', currentPlayerRoles)
-      console.log('user', user.id)
       const role = currentPlayerRoles.filter(role => role.userId === user.id)[0]
       console.log(role)
-      const roleCard = {
-        id: user.id,
-        key: role.role,
-        roleName: role.role,
-        team: role.role,
-        description: `You are the ${role.role}`,
-        strategy: `you need to do this action`,
-        canStop: null,
-        canCall: null,
-        type: 'userRoleCard'
-      }
+      const roleCard = cards.filter(card => card.key === role.role)[0]
       console.log(role)
       console.log(roleCard)
       return dispatch({

@@ -6,6 +6,7 @@ import { deckClear, initializeDeck, addRoleCardToDeck } from '../redux/actions/d
 import { clearCurrentPlayerRoles, setCurrentPlayerRoles, setCurrentUsers, setCurrentNumberPlayers, endGame, startGame } from '../redux/actions/sessionActions'
 
 const Socket = ({ history,
+  session,
   clearCurrentPlayerRoles,
   deckClear,
   startGame,
@@ -16,6 +17,9 @@ const Socket = ({ history,
   initializeDeck,
   addRoleCardToDeck,
   roleCards }) => {
+
+  console.log(`roleCards: ${roleCards}`)
+  console.log(`session: ${session}`)
 
   useEffect(() => {
     socket.on('redirect', async route => {
@@ -63,13 +67,18 @@ const mapDispatchToProps = ({
   setCurrentUsers: filteredUsers => setCurrentUsers(filteredUsers),
   setCurrentPlayerRoles: roles => setCurrentPlayerRoles(roles),
   initializeDeck: deck => initializeDeck(deck),
-  addRoleCardToDeck: roles => addRoleCardToDeck(roles),
+  addRoleCardToDeck: (roles, roleCards, localUser) => addRoleCardToDeck(roles, roleCards, localUser),
   startGame: () => startGame(),
   endGame: () => endGame()
 })
 
-const mapStateToProps = state => ({
-  roleCards: state.airtable.roleCards
-})
+const mapStateToProps = (state) => {
+  return {
+    session: state.session,
+    roles: state.roles,
+    deck: state.deck,
+    airtable: state.airtable
+  }
+}
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Socket))
