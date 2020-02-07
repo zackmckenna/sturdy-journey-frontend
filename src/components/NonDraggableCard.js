@@ -6,8 +6,10 @@ import ReactSwipe from 'react-swipe'
 import RoleCard from './cards/RoleCard'
 import TopDeckCard from './cards/TopDeckCard'
 import UserCard from './cards/UserCard'
+import RuleCard from './cards/RuleCard'
+import TestingRoleCard from './cards/TestingRoleCard'
 
-const DraggableCard = (props) => {
+const NonDraggableCard = (props) => {
 
   let reactSwipeEl
   console.log(props.deck)
@@ -26,34 +28,19 @@ const DraggableCard = (props) => {
           ref={el => (reactSwipeEl = el)}
           childCount={props.deck.cards.length}
         >
-          {/* <div>
-            <TopDeckCard onClickNext={() => reactSwipeEl.next()}/>
-          </div> */}
           <div>
             <UserCard style={{ maxHeight: '556px' }} key={props.deck.userRoleCard.id} card={props.deck.userRoleCard} onClickPrev = {() => reactSwipeEl.prev()} onClickNext={() => reactSwipeEl.next()}/>
           </div>
-          {props.deck.cards.map((card, index) => {
+          {props.deck.cards.map(card => {
             if (card.userRoleCard) {
               return (
                 <div>
                   <UserCard key={card.id} card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
                 </div>
               )
-            } else if (deckLength === index + 1){
-              return (
-                <div key={card.id}>
-                  <RoleCard card={card} onClickPrev={() => reactSwipeEl.prev()}/>
-                </div>
-              )
-            }
-            else {
-              return (
-                <div key={card.id}>
-                  <RoleCard card={card} onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
-                </div>
-              )
             }
           })}
+          <RuleCard onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
         </ReactSwipe>
       </Container>
     )
@@ -68,7 +55,13 @@ const DraggableCard = (props) => {
         childCount={props.airtable.roleCards.length}
       >
         <div>
+          <TestingRoleCard />
+        </div>
+        <div>
           <TopDeckCard onClickNext={() => reactSwipeEl.next()}/>
+        </div>
+        <div>
+          <RuleCard onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
         </div>
         {props.airtable.roleCards.map(role => {
           return (
@@ -91,4 +84,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(DraggableCard)
+export default connect(mapStateToProps)(NonDraggableCard)

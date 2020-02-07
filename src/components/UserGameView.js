@@ -6,7 +6,7 @@ import {
   Button
 } from 'reactstrap'
 import Rules from './Rules'
-import DraggableCard from './DraggableCard'
+import NonDraggableCard from './NonDraggableCard'
 import { connect } from 'react-redux'
 // import style from '../style/roleCard.css'
 import '../style/roleCard.css'
@@ -30,20 +30,8 @@ const RoleCard = (props) => {
             There are {users} buccaneers aboard.
           </Col>
         </Row>
-        <Rules />
       </Container>
-      <Container className='mt-3'>
-        <Row>
-          <Col className='text-light text-center'>
-            <Button className='mt-4'>
-              Clear Game
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-      <Container className='fixed-bottom deckContainer'>
-        <DraggableCard />
-      </Container>
+      <NonDraggableCard />
     </Container>
     </>
   )

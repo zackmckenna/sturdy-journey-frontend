@@ -46,6 +46,9 @@ const SkelNavbar = ({
             <NavItem>
               <NavLink onClick={() => toggle()} tag={Link} to='story'>Story</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink onClick={() => toggle()} tag={Link} to='popDeck'>Pop Deck</NavLink>
+            </NavItem>
             <NavItem onClick={() => toggle()}>
               {session.localUser ? <LogoutButton text={'Log Out'} className={'navbar-btn'} /> : null}
             </NavItem>
