@@ -1,6 +1,7 @@
 .basicCard {
-  max-height: '556px';
   font-family: 'bitter';
+  margin: 10px;
+  height: 556px;
 }
 
 .cardSubtitle {
@@ -30,6 +31,7 @@
 .cardTextHighlight {
   color: #463B83;
   font-weight: bold;
+  font-family: bitter;
 }
 
 .cardText {

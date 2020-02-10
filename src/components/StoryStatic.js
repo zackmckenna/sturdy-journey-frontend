@@ -7,15 +7,25 @@ const StoryStatic = (props) => {
   console.log(props.deck)
   if (props.deck.userRoleCard) {
     return (
-      <Row>
-        <Col className='text-light'>
-          {props.deck.userRoleCard.story}
-        </Col>
-      </Row>
+      <Container className='storyContainer'>
+        <Row>
+          <Col >
+            Heres Your Story
+            {props.deck.userRoleCard.story}
+          </Col>
+        </Row>
+      </Container>
     )
   }
   return (
     <>
+      <Container fluid style={{ backgroundColor: '#E3E0E6' }} className='storyContainer'>
+        <Row>
+          <Col className='text-center storyTitle'>
+            Heres Your Story
+          </Col>
+        </Row>
+      </Container>
     </>
   )
   // if (props.deck.cards.filter(card => card.type === 'userRoleCard'))

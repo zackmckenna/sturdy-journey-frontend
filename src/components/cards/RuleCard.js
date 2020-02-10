@@ -5,7 +5,7 @@ import Rules from '../Rules'
 const RuleCard = ({ onClickNext, onClickPrev }) => {
 
   return (
-    <Card style={{ height: '556px' }} className='ml-2 mr-2'>
+    <Card className='basicCard'>
       <Row>
         <Col className='text-left'>
           <button onClick={onClickPrev}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>

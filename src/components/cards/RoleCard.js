@@ -14,12 +14,6 @@ const RoleCard = ({ card, onClickNext, onClickPrev }) => {
         </Col> : null}
       </Row>
       <CardBody >
-        <CardTitle className='text-center handle'></CardTitle>
-        <CardTitle ><h2>{card.name}</h2></CardTitle>
-        <CardSubtitle>{card.team}</CardSubtitle>
-        <CardTitle><h4>{card.description}</h4></CardTitle>
-      </CardBody>
-      <CardBody >
         <p className='cardSubtitle' style={{ margin: '0px' }}>Player Details</p>
         <CardTitle className='border-bottom cardTitle' style={{ fontSize: '27px' }}>{card.name}</CardTitle>
         <CardSubtitle className='cardSubtitle'>Objective:</CardSubtitle>

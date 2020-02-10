@@ -29,9 +29,12 @@ const NonDraggableCard = (props) => {
           childCount={props.deck.cards.length}
         >
           <div>
+            <TopDeckCard onClickNext={() => reactSwipeEl.next()}/>
+          </div>
+          <div>
             <UserCard style={{ maxHeight: '556px' }} key={props.deck.userRoleCard.id} card={props.deck.userRoleCard} onClickPrev = {() => reactSwipeEl.prev()} onClickNext={() => reactSwipeEl.next()}/>
           </div>
-          {props.deck.cards.map(card => {
+          {/* {props.deck.cards.map(card => {
             if (card.userRoleCard) {
               return (
                 <div>
@@ -39,7 +42,7 @@ const NonDraggableCard = (props) => {
                 </div>
               )
             }
-          })}
+          })} */}
           <RuleCard onClickNext={() => reactSwipeEl.next()} onClickPrev={() => reactSwipeEl.prev()}/>
         </ReactSwipe>
       </Container>

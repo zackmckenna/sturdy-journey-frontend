@@ -9,7 +9,7 @@ function SvgRules(props) {
     console.log(currentGame)
     if (currentGame){
       return (
-        <svg width="100%" height="100%" viewBox="0 0 329 257" {...props}>
+        <svg viewBox="0 0 329 257" {...props}>
           <g fill="none" fillRule="evenodd">
             <g transform="translate(1 196.384)">
               <rect stroke="#E3E0E6" width={147} height={60} rx={5} />

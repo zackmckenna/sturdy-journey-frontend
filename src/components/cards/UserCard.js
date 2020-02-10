@@ -1,11 +1,11 @@
 import React from 'react'
 import { Card, CardTitle, CardSubtitle, CardText, CardBody, Row, Col } from 'reactstrap'
+import RoleIcon from '../RoleIcon'
 
 const UserCard = ({ card, onClickNext, onClickPrev }) => {
-  console.log(card)
   return (
     <div>
-      <Card>
+      <Card className='basicCard'>
         <Row>
           <Col className='text-left'>
             <button onClick={onClickPrev}><i className="fa fa-arrow-left" aria-hidden="true"></i></button>
@@ -15,20 +15,14 @@ const UserCard = ({ card, onClickNext, onClickPrev }) => {
           </Col>
         </Row>
         <CardBody >
-          <CardTitle><h2>Your Role Card</h2></CardTitle>
-          <CardTitle><h4>You Are The {card.name}</h4></CardTitle>
-          <CardSubtitle>{card.team}</CardSubtitle>
-          <CardText>{card.description}</CardText>
-          <CardText className='inline'>Enemies:
-            <ul>
-              {card.enemies.map((enemy, index) => <li key={index}>{enemy}</li>)}
-            </ul>
-          </CardText>
-          <CardText className='inline'>
-            Allies: <ul>{card.allies.map((ally, index) => <li key={index}>{ally}</li>)}</ul>
-          </CardText>
-          {card.canStop ? <CardText>You can stop game by calling out:</CardText> : <CardText>You can not stop the game.</CardText>}
-          {card.canCall ? card.canCall.map(role => <CardText key={role.id}>{role.key}</CardText>) : null}
+          <p className='cardSubtitle' style={{ margin: '0px' }}>Player Details</p>
+          <CardTitle className='border-bottom cardTitle' style={{ fontSize: '27px' }}><RoleIcon />{card.name}</CardTitle>
+          <CardSubtitle className='cardSubtitle'>Objective:</CardSubtitle>
+          <CardTitle className='cardText'>{card.description} </CardTitle>
+          <CardSubtitle className='cardSubtitle'>Allies:</CardSubtitle>
+          <CardText className='cardTextHighlight'>{card.allies.map((ally, index) => index < (card.allies.length - 1) ? ally + ', ' : ally)}</CardText>
+          <CardSubtitle className='cardSubtitle'>Tips:</CardSubtitle>
+          <CardText className='cardText'>You must aim to blend in amongst the Crew at all cost!</CardText>
         </CardBody>
       </Card>
     </div>

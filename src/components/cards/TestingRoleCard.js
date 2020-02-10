@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, CardTitle, CardSubtitle, CardText, CardBody, Row, Col } from 'reactstrap'
 import captain from '../../images/Small.png'
+
 const TestingRoleCard = ({ card, onClickNext, onClickPrev }) => {
 
   return (
